@@ -4,8 +4,11 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var jqy = require('jquery');
 var path = require('path');
+var fm = require(path.join(__dirname, 'framework'));
 
 app.use('/public', express.static(__dirname + '/public'));
+
+var npc = fm.NPC.load('test');
 
 app.get('/', function(req, res) {
     console.log('__dirname = ' + __dirname);
