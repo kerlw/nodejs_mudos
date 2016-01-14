@@ -1,5 +1,4 @@
-var clz = require('j-oo');
-
-var MObject = clz(function(){});
+var MObject = function() {
+}
 
 module.exports = MObject;

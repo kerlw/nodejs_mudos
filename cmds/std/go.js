@@ -1,3 +1,3 @@
-function execute(sender, ...) {
+function execute(sender, target) {
 	
 }

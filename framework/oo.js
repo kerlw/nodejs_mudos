@@ -13,12 +13,10 @@
 		derived.prototype.constructor = derived;
 		derived.super = base;
 	}
-	;
 
 	if (typeof module !== 'undefined') {
 		module.exports = create;
 	} else if (typeof window !== 'undefined') {
-		window.Class = create;
+		window.extend = create;
 	}
-
 })();

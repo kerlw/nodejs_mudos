@@ -1,14 +1,18 @@
+process.env.NODE_PATH = __dirname;
+require('module').Module._initPaths();
+
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var jqy = require('jquery');
 var path = require('path');
-var fm = require(path.join(__dirname, 'framework'));
+var fm = require('framework');
 
 app.use('/public', express.static(__dirname + '/public'));
 
-var npc = fm.NPC.load('test');
+global.cmds = {};
+global.objs = { 'players' : {}, 'rooms': {}, 'item' : {} };
 
 app.get('/', function(req, res) {
     console.log('__dirname = ' + __dirname);

@@ -24,7 +24,11 @@
     <script>
         var socket = io();
         $('form').submit(function(){
-            socket.emit('chat message', $('#m').val());
+        	var str = $('#m').val();
+        	if (str.slice(0, 3) === 'cmd') {
+        		socket.emit('cmd', str.slice(4));
+        	} else
+        		socket.emit('chat message', str);
             $('#m').val('');
             return false;
         });

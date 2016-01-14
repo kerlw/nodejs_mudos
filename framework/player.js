@@ -9,8 +9,8 @@ var Player = function(socket) {
 	
 	socket.player = this;
 	
-    socket.on('cmd', function() {
-        console.log('cmd: ' + arguments);
+    socket.on('cmd', function(arg) {
+        console.log('cmd: ' + arg.toString());
 //        io.emit('chat message', msg);
     });
     socket.on('disconnect', function() {
