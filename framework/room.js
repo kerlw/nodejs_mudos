@@ -3,22 +3,20 @@ var MObject = require('./mobject.js');
 var fs = require('fs');
 var path = require ('path');
 
-var NPC = function() {}
-extend(NPC, MObject);
+var ROOM = function() {};
+extend(ROOM, MObject);
 
-NPC.__PATH = '/data/npc'; 
+ROOM.__PATH = '/data/room';
 
-NPC.loadFromJSON = function(data) {
+ROOM.loadFromJSON = function(data) {
 	for (var key in data) {
 		console.log('key is ' + key + ', value is' + data[key]);
 	}
 }
 
-NPC.load = function(filename) {
-	var data = require(path.join(__dirname, '..', NPC.__PATH, filename + '.json'));
+ROOM.load = function(filename) {
+	var data = require(path.join(__dirname, '..', ROOM.__PATH, filename + '.json'));
 	return NPC.loadFromJSON(data);
 }
 
-
-
-module.exports = NPC;
+module.exports = ROOM;
