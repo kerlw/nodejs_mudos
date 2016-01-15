@@ -1,4 +1,3 @@
-var Functions = {};
-
-
-module.exports = Funtions;
+(function() {
+//	_funs[]
+})();
