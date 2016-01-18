@@ -1,6 +1,8 @@
 (function(r){
 	var funcs = r('./functions.js');
 	
-	FUNCIONTS.tell_object = funcs.tell_object;
+	FUNCTIONS.tell_object = funcs.tell_object;
+	FUNCTIONS.environment = funcs.environment;
+	FUNCTIONS.move_object = funcs.move_object;
 	
 })(require);
