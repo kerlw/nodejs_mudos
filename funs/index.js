@@ -1,4 +1,6 @@
 (function(r){
-//	_funs. = r('./xxx.js')();
+	var funcs = r('./functions.js');
+	
+	FUNCIONTS.tell_object = funcs.tell_object;
 	
 })(require);

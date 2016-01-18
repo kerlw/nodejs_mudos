@@ -1,10 +1,7 @@
 process.env.NODE_PATH = __dirname;
 require('module').Module._initPaths();
 
-global._cmds = {};
-global._funs = {};
-global._objs = { 'players' : {}, 'rooms': {}, 'item' : {} };
-
+require('globals');
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -12,9 +9,6 @@ var io = require('socket.io')(http);
 var jqy = require('jquery');
 var path = require('path');
 var fm = require('framework');
-
-require('funs');
-require('cmds');
 
 app.use('/public', express.static(__dirname + '/public'));
 
