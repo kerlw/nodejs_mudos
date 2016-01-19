@@ -5,6 +5,9 @@ var path = require ('path');
 var CMD = require('./cmd.js');
 
 var Player = function(socket) {
+	if (!(this instanceof Player))
+		return new Player();
+	
 	this.name = "unamed";
 	this.socket = socket;
 	
@@ -14,7 +17,6 @@ var Player = function(socket) {
         CMD.exec(socket.player, arg);
     });
     socket.on('disconnect', function() {
-    	console.log("type of this is " + (typeof this));
     	socket.player.onDisconnected();
     });
 }

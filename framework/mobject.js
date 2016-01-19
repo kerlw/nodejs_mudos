@@ -6,19 +6,19 @@ var MObject = function() {
 	this.contains = new Array();
 	this.flags = 0;
 	
-	this.is_character = function() {
-		return false;
-	}
-	
-	this.look_response = function() {
-		return null;
-	}
-	
-	this.move_to = function(obj) {
-		return FUNCTIONS.move_object(this, obj);
-	}
-	
 	this.init = function() {}
+}
+
+MObject.prototype.is_character = function() {
+	return false;
+}
+
+MObject.prototype.look_response = function() {
+	return null;
+}
+
+MObject.prototype.move_to = function(dest) {
+	return FUNCTIONS.move_object(this, dest);
 }
 
 module.exports = MObject;

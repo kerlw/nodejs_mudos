@@ -1,7 +1,9 @@
 process.env.NODE_PATH = __dirname;
 require('module').Module._initPaths();
 
+global.__BASE_PATH = __dirname;
 require('globals');
+
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -11,9 +13,11 @@ var path = require('path');
 var fm = require('framework');
 
 app.use('/public', express.static(__dirname + '/public'));
+io.set('heartbeats', false);
+io.set('heartbeats timeout', 50);
+io.set('heartbeats interval', 20);
 
 app.get('/', function(req, res) {
-    global.BASE_PATH = __dirname;
     res.sendFile(path.join(__dirname,'/index.html'));
 });
 

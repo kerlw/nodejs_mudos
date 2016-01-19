@@ -3,7 +3,7 @@ var fm = require("../framework");
 exports.error = function(msg) {
 	if (msg)
 		console.log(msg);
-	exit(-1);
+	process.exit();
 }
 
 exports.tell_object = function(obj, msg, type) {
@@ -33,6 +33,7 @@ exports.tell_room = function(room, msg, type, avoid) {
 
 exports.notify_fail = function(obj, msg) {
 	this.tell_object(obj, msg, 'fail');
+	return 1;
 }
 
 exports.environment = function(obj) {
@@ -43,14 +44,16 @@ exports.environment = function(obj) {
 }
 
 exports.remove_sent = function(obj, dest) {
-	if (!obj || !dest || !(obj in dest.contains))
-		return;
+	if (!obj || !dest || !dest.contains || dest.contains.indexOf(obj) == -1) {
+		return 0;
+	}
 	
 	var index = dest.contains.indexOf(obj);
 	if (index < (dest.contains.length - 1))
 		dest.contains = dest.contains.slice(0, index).concat(dest.contains.slice(index + 1));
 	else
-		dest.contains = dest.contains.slice(0, index);
+		dest.contains = dest.contains.slice(0, index);	//even if index is 0, this does work!
+	return 1;
 }
 
 exports.move_object = function(obj, dest) {

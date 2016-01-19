@@ -36,10 +36,15 @@
         socket.on('resp', function(msg) {
             $('#messages').append($('<li>').text(msg));
           });
+        socket.on('fail', function(msg) {
+            $('#messages').append($('<li>').text(msg));
+          });
         socket.on('room', function(msg) {
         	$('#messages').append($('<li>').text(msg.name));
         	$('#messages').append($('<li>').text(msg.desc));
+        	$('#messages').append($('<li>').text(msg.exits));
         });
+        
     </script>
   </body>
 </html>
