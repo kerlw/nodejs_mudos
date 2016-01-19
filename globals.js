@@ -9,10 +9,11 @@
 			O_LISTENER : 0x04,
 	};
 	
-	global.ROOM_PATH = '/data/room';
+	global.ROOM_PATH = __dirname + '/data/room/';
 	
 	var fm = r('./framework');
-	global._objs.rooms['/data/room/office'] = fm.ROOM.load(__dirname + ROOM_PATH + "/office.json"); 
+	global._objs.rooms['office'] = fm.ROOM.load(ROOM_PATH + "office.json"); 
+	global._objs.rooms['meeting-room-a'] = fm.ROOM.load(ROOM_PATH + "meeting-room-a.json");
 	
 	r('funs');
 	r('cmds');

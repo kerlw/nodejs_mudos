@@ -7,7 +7,6 @@ exports.error = function(msg) {
 }
 
 exports.tell_object = function(obj, msg, type) {
-	console.log("tell_object called " + msg);
 	if (!obj || !msg)
 		return;
 	
@@ -18,7 +17,6 @@ exports.tell_object = function(obj, msg, type) {
 		else
 			obj.socket.emit(type, msg);
 	}
-	
 }
 
 exports.tell_room = function(room, msg, type, avoid) {
@@ -29,12 +27,12 @@ exports.tell_room = function(room, msg, type, avoid) {
 		if (obj in avoid)
 			continue;
 		
-		tell_object(obj, msg, type);
+		this.tell_object(obj, msg, type);
 	}
 }
 
 exports.notify_fail = function(obj, msg) {
-	tell_object(obj, msg, 'fail');
+	this.tell_object(obj, msg, 'fail');
 }
 
 exports.environment = function(obj) {
@@ -56,14 +54,16 @@ exports.remove_sent = function(obj, dest) {
 }
 
 exports.move_object = function(obj, dest) {
-	var ob;
-	for (ob = dest; ob; ob = ob.holder) {
+	if (!obj || !dest)
+		return;
+	
+	for (var ob = dest; ob; ob = ob.holder) {
 		if (ob == obj)
 			this.error("Can't move object inside itself.\n");
 	}
 	
-	if (obj.holder) {
-		this.remove_sent(obj, obj.holder);
+	if (obj.holder && !this.remove_sent(obj, obj.holder)) {
+		this.error("remove_sent failed");
 	}
 	
 	obj.holder = dest;

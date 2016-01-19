@@ -13,14 +13,13 @@ var fm = require('framework');
 app.use('/public', express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
-    console.log('__dirname = ' + __dirname);
+    global.BASE_PATH = __dirname;
     res.sendFile(path.join(__dirname,'/index.html'));
 });
 
-    console.log('a user connected' + typeof socket);
-    io.on('connection', function(socket) {
+io.on('connection', function(socket) {
     var player = new fm.Player(socket);
-	FUNCTIONS.move_object(player, _objs.rooms['/data/room/office']);
+	FUNCTIONS.move_object(player, _objs.rooms['office']);
 	fm.CMD.exec(player, 'look');
 });
 

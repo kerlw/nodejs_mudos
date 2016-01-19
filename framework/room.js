@@ -10,7 +10,7 @@ ROOM.loadFromJSON = function(data) {
 	var ret = new ROOM();
 	ret.name = data.name;
 	ret.desc = data.desc;
-	ret.exist = data.exist;
+	ret.exists = data.exists;
 	ret.contains = new Array();
 	return ret;
 }
