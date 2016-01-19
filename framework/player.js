@@ -9,12 +9,10 @@ var Player = function(socket) {
 	this.socket = socket;
 	
 	socket.player = this;
-	
     socket.on('cmd', function(arg) {
         console.log('cmd: ' + arg.toString());
         CMD.exec(socket.player, arg);
     });
-    
     socket.on('disconnect', function() {
     	console.log("type of this is " + (typeof this));
     	socket.player.onDisconnected();

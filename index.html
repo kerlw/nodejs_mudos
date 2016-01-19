@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <head>
+  	<meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
     <title>MUD on Node.js</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,9 +33,12 @@
             $('#m').val('');
             return false;
         });
-        socket.on('resp', function(msg){
+        socket.on('resp', function(msg) {
             $('#messages').append($('<li>').text(msg));
           });
+        socket.on('room'), function(msg) {
+        	$('#messages').append($('<li>').text(msg));
+        }
     </script>
   </body>
 </html>

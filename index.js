@@ -17,9 +17,11 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname,'/index.html'));
 });
 
-io.on('connection', function(socket) {
     console.log('a user connected' + typeof socket);
+    io.on('connection', function(socket) {
     var player = new fm.Player(socket);
+	FUNCTIONS.move_object(player, _objs.rooms['/data/room/office']);
+	fm.CMD.exec(player, 'look');
 });
 
 http.listen(3000, function() {

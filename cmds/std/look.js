@@ -1,5 +1,7 @@
 module.exports = cmd_look;
 
+var fm = require('../../framework');
+
 function cmd_look() {
 	if (!(this instanceof cmd_look))
 	    return new cmd_look();
@@ -7,12 +9,21 @@ function cmd_look() {
 	this.name = 'look';
 	this.look_room = function(sender) {
 		var env = FUNCTIONS.environment(sender);
-		if (!env) {
+		if (!env || !(env instanceof fm.MObject)) {
 			FUNCTIONS.tell_object(sender, "你的四周灰蒙蒙的一片，什么也没有。\n"); //TODO add all strings to global
 			return 1;
 		}
 			
+		//TODO env is a container
+		var avoid = new Array();
+		avoid.push(sender);
+		FUNCTIONS.tell_object(sender, env.look_response(avoid), 'room');
+		return 1;
 	};
+	
+	this.look_living = function(sender, target) {
+		
+	}
 	
 	this.look_item = function(sender, target) {
 		
