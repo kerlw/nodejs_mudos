@@ -1,4 +1,6 @@
-var cmd_chat = function() {
+module.exports = cmd_chat;
+
+function cmd_chat() {
 	if (!(this instanceof cmd_chat))
 		return new cmd_chat();
 	
@@ -8,4 +10,3 @@ var cmd_chat = function() {
 	};
 };
 
-module.exports = cmd_chat;
