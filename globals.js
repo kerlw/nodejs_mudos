@@ -9,7 +9,10 @@
 			O_LISTENER : 0x04,
 	};
 	
-	global.ROOM_PATH = global.__BASE_PATH + '/data/room/';
+	global.HB_ENGINE = r('heartbeat')();
+	global.HB_ENGINE.init();
+	
+	global.ROOM_PATH = global.__BASE_PATH + global.__config.room_dir;
 	
 	var fm = r('./framework'),
 		fs = r('fs');
