@@ -3,15 +3,24 @@
 		return typeof obj === 'function';
 	}
 
-	function create(derived, base) {
-		if (!$isFunction(base))
-			return;
+	function create(constructor, base) {
+		if (!$isFunction(base) || !$isFunction(constructor))
+			return null;
+		
+		var Class = function() {
+			"use strick"
+			
+			base.apply(this, arguments);
+			constructor.apply(this, arguments);
+		}
 		
 		var F = function() {};
 		F.prototype = base.prototype;
-		derived.prototype = new F();
-		derived.prototype.constructor = derived;
-		derived.super = base;
+		Class.prototype = new F();
+		Class.prototype.constructor = Class;
+		Class.base = base;
+		
+		return Class;
 	}
 
 	if (typeof module !== 'undefined') {

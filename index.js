@@ -24,8 +24,8 @@ app.get('/', function(req, res) {
 
 io.on('connection', function(socket) {
     var player = new fm.Player(socket);
-    global.HB_ENGINE.set_heart_beat(player, 1);
 	FUNCTIONS.move_object(player, _objs.rooms['office']);
+	global.HB_ENGINE.set_heart_beat(player, 1);
 	fm.CMD.exec(player, 'look');
 });
 

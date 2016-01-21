@@ -1,10 +1,8 @@
 var extend = require('./oo.js');
-var MObject = require('./mobject.js');
-var fs = require('fs');
-var path = require ('path');
+var Char = require('./character.js');
 var CMD = require('./cmd.js');
 
-var Player = function(socket) {
+var Player = extend(function(socket) {
 	if (!(this instanceof Player))
 		return new Player();
 	
@@ -19,8 +17,7 @@ var Player = function(socket) {
     socket.on('disconnect', function() {
     	socket.player.onDisconnected();
     });
-}
-extend(Player, MObject);
+}, Char);
 
 Player.prototype.onDisconnected = function() {
 	console.log('user disconnected');

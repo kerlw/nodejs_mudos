@@ -1,10 +1,7 @@
 var extend = require('./oo.js');
 var MObject = require('./mobject.js');
-var fs = require('fs');
-var path = require ('path');
 
-var ROOM = function() {};
-extend(ROOM, MObject);
+var ROOM = extend(function(){}, MObject);
 
 ROOM.__DIRECTORIES__ = {
 	"east" : "东",
@@ -29,7 +26,6 @@ ROOM.loadFromJSON = function(data) {
 	ret.name = data.name;
 	ret.desc = data.desc;
 	ret.exits = data.exits;
-	ret.contains = new Array();
 	return ret;
 }
 
