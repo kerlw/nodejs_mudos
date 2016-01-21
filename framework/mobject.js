@@ -21,4 +21,16 @@ MObject.prototype.move_to = function(dest) {
 	return FUNCTIONS.move_object(this, dest);
 }
 
+MObject.prototype.living = function() {
+	return this.flags & FLAGS.O_ENABLE_COMMANDS;
+}
+
+MObject.prototype.enable_commands = function() {
+	this.flags |= FLAGS.O_ENABLE_COMMANDS;
+}
+
+MObject.prototype.disable_commands = function() {
+	this.flags &= ~FLAGS.O_ENABLE_COMMANDS;
+}
+
 module.exports = MObject;
