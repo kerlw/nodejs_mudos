@@ -27,7 +27,7 @@ hb.call_heart_beat = function() {
 		if (!cur_hb.obj || !(cur_hb.obj.flags & FLAGS.O_HEART_BEAT))
 			continue;
 		
-		HB_ENGINE.hb_append_array.push(hb);
+		HB_ENGINE.hb_append_array.push(cur_hb);
 		var ob = cur_hb.obj;
 		if (--cur_hb.hb_ticks > 0)
 			continue;
@@ -39,12 +39,17 @@ hb.call_heart_beat = function() {
 		HB_ENGINE.current_hb = cur_hb;
 		HB_ENGINE.current_hb_obj = ob;
 		ob.heart_beat();
+		HB_ENGINE.current_hb = null;
+		HB_ENGINE.current_hb_obj = null;
+
 	}
 	
-	//swap hb_array and hb_append_array
-	var tmp = HB_ENGINE.hb_array;
-	HB_ENGINE.hb_array = HB_ENGINE.hb_append_array;
-	HB_ENGINE.hb_apeend_array = tmp;
+	if (HB_ENGINE.hb_append_array.length > 0) {
+		//swap hb_array and hb_append_array
+		var tmp = HB_ENGINE.hb_array;
+		HB_ENGINE.hb_array = HB_ENGINE.hb_append_array;
+		HB_ENGINE.hb_append_array = tmp;
+	}
 };
 
 hb.prototype.init = function() {
