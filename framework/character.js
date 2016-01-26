@@ -28,6 +28,10 @@ Character.prototype.is_character = function() {
 	return 1;
 }
 
+Character.prototype.is_player = function() {
+	return 0;
+}
+
 Character.prototype.heart_beat = function() {
 	if (!FUNCTIONS.environment(this))	// if char is not in a container, skip heart_beat
 		return;
@@ -61,6 +65,23 @@ Character.prototype.heart_beat = function() {
 	//TODO heal, update age, idle and so on.
 }
 
+Character.prototype.fight = function(target) {
+	if (!target || target === this)
+		return;
+	
+	//TODO add to enemy
+}
+
+Character.prototype.is_fighting = function(target) {
+	//TODO set fighting flag
+	return 0;
+}
+
+Character.prototype.could_move = function() {
+	//TODO make some flag to limit user's move
+	return 1;
+}
+
 Character.prototype.is_busy = function() {
 	return this.busy != 0;
 }
@@ -84,7 +105,7 @@ Character.prototype.die = function() {
 }
 
 Character.prototype.attack = function() {
-	clean_up_enemy();
+	this.clean_up_enemy();
 	
 	if (this.enemy.length > 0) {
 		//TODO player could set a main attacking target.

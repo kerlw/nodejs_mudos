@@ -74,3 +74,12 @@ exports.move_object = function(obj, dest) {
 	return 1;
 }
 
+exports.present = function(objId, env) {
+	if (!objId || typeof objId != 'string' || !env || !(env instanceof fm.MObject))
+		return null;
+	
+	for (var obj in env.contains)
+		if (obj.id === objId)
+			return obj;
+	return null;
+}
