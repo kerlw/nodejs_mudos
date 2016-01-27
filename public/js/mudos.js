@@ -16,7 +16,7 @@
 	});
 	socket.on('room', function(msg) {
 		// TODO refresh_move_controller(msg.name, msg.exits);
-		$('#room_name').text(msg.name);
+		$('.room-title').text(msg.name);
 		$('#room_desc').text(msg.desc);
 		$('#env_objs').empty();
 		if (msg.objs) {
