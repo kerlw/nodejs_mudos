@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<link rel="shortcut icon" type="image/x-icon" href="public/image/appscat.png" />
+<title>Mud</title>
+<link href="public/lib/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="public/css/mudos.css?v20160108" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+		    <div class="col-xs-12 col-both-clear">
+			    <div class="head bs">
+					<div class="title">
+						〖新手村〗
+					</div>
+					<p class="desc">
+						这个地方真的叫荒凉，虽然离村庄很近，却有很明显的差别，四处都是些荒草。
+					</p>
+				</div>
+			</div>
+        </div>
+        <div class="row">
+		    <div class="main">
+				<div class="col-xs-4 col-left col-right">
+						<div class="cmd bs">
+							东南西北
+						</div>
+						<div class="obj bs">
+							<ul>
+								<li>野狗</li>
+								<li>小女孩</li>
+								<li>少妇</li>
+							</ul>
+						</div>
+				</div>
+				<div class="col-xs-8 col-both-clear">
+					<div id="messsage" class="msglist bs">
+						<p>正在连接服务器...连线成功</p>
+						<p>掌心泥巴-西游记 每周一晚10点维护重启。<br>
+						QQ群：326928001<br>
+						主页：www.palmmud.com<br>
+						论坛：www.palmmud.com/bbs</p>
+						<p>获取角色信息...</p>
+						
+						<p>获取成功，请在下面选择您的角色。</p>
+					</div>
+					<div class="say bs">
+						<form>
+						   
+						      <div class="col-xs-10 col-left col-right">
+							      <input type="text" class="msg" name="msg">
+							  </div>
+							  <div class="col-xs-2 col-left col-right">
+							      <button type="submit" class="btn btn-default send">发送</button>
+							  </div>
+						   
+						</form>
+					</div>
+				</div>
+            </div>
+        </div>
+		<div class="row">
+		    <div class="bottom">
+				<div class="col-xs-6 col-left col-right">
+					<div id="move_controller" class="map bs">
+						<span>走廊</span>
+						<span>前台</span>
+						<span>办公室</span>
+						<span>会议室</span>
+						<span>财务室</span>
+					</div>
+				</div>
+				<div class="col-xs-6 col-both-clear">
+					<div class="obj-info bs">
+						朱雀大街 |
+						发呆室 |
+						二楼雅座 |
+						客店睡房
+					</div>
+					<div class="sys-cmd bs">
+						<a href="#" class="btn">常用</a> |
+						<a href="#" class="btn">行囊</a> |
+						<a href="#" class="btn">频道</a>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    
+</body>
+<script>
+    var config = {
+        authenticateApi: 'cathayauth'
+    }
+</script>
+<script type="text/javascript" src="public/lib/jquery.min.js"></script>
+<script type="text/javascript" src="public/js/mudos.js?v20160108"></script>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+	    var socket = io();
+ /**       $('form').submit(function(){
+        	var str = $('#m').val();
+        	if (str.slice(0, 3) === 'cmd') {
+        		socket.emit('cmd', str.slice(4));
+        	} else
+        		socket.emit('chat message', str);
+            $('#m').val('');
+            return false;
+        });*/
+        socket.on('resp', function(msg) {
+            $('#messages').append($('<li>').text(msg));
+          });
+        socket.on('fail', function(msg) {
+            $('#messages').append($('<li>').text(msg));
+          });
+        socket.on('room', function(msg) {
+		//TODO refresh_move_controller(msg.name, msg.exits);
+		$('$title').text(msg.desc);
+		
+        	$('#messages').append($('<li>').text(msg.name));
+        	$('#messages').append($('<li>').text(msg.desc));
+        	$('#messages').append($('<li>').text(msg.exits));
+        });
+        
+</script>
+</html>

@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* CSS Document */
+html,body {height:100%;margin:0; padding:0;} 
+
+body{
+    background: url(../image/bg.jpg) 0 0;
+    background-color: #000000;
+}
+
+/* container */
+.container{height:100%;}
+.bs{border:1px solid #EEC900;}
+
+.head{
+    height:100px;
+}
+/* title */
+.title{
+    font:small-caps bold 1em Arial;
+    color:#00FF00;
+	padding:5px;
+}
+.desc{
+    color:#3300FF;
+	text-indent: 2em;
+}
+.main{
+    height:500px;width:100%;
+	margin:0 auto;
+}
+
+.context{
+    width:30%;
+	color:#3300FF;
+	display:inline-block;
+}
+.cmd{
+    width:100%;height:100px;
+}
+.obj{
+    width:100%;height:100%;overflow:hidden;
+}
+.communicate{
+    width:68%;
+    display:inline-block;
+}
+.msg{
+    color:#9ACD32;
+}
+.say{
+    
+}
+.bottom{
+    height:150px;width:100%;
+	position:absolute;bottom:3px;
+	margin:0 auto;
+}
+.map{
+    width:48%;height:98%;
+    float:left;
+}
+.info{
+    width:48%;height:100%;
+    display:inline-block;
+}
+.obj-info{
+    height:48%;
+    color:#8968CD;
+}
+.sys-cmd{
+    height:48%;
+    color:#8B008B;
+    text-align:center;
+}
+.sys-cmd a{
+    font:small-caps bold 1.5em Arial;
+    color:#8B008B;
+}
