@@ -1,9 +1,7 @@
 {
 	"port" : 3000,
 	
-	"room_dir" : "/data/room/",
-	
-	"npc_dir" : "/data/npc/",
+	"data_dir" : "/data",
 	
 	"hb_interval" : 2000
 }

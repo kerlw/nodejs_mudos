@@ -44,15 +44,11 @@ exports.environment = function(obj) {
 }
 
 exports.remove_sent = function(obj, dest) {
-	if (!obj || !dest || !dest.contains || dest.contains.indexOf(obj) == -1) {
+	if (!obj || !dest || !dest.contains || !dest.contains[obj.id]) {
 		return 0;
 	}
 	
-	var index = dest.contains.indexOf(obj);
-	if (index < (dest.contains.length - 1))
-		dest.contains = dest.contains.slice(0, index).concat(dest.contains.slice(index + 1));
-	else
-		dest.contains = dest.contains.slice(0, index);	//even if index is 0, this does work!
+	delete dest.contains[obj.id];
 	return 1;
 }
 
@@ -70,7 +66,7 @@ exports.move_object = function(obj, dest) {
 	}
 	
 	obj.holder = dest;
-	dest.contains.push(obj);
+	dest.contains[obj.id] = obj;
 	return 1;
 }
 
@@ -78,8 +74,5 @@ exports.present = function(objId, env) {
 	if (!objId || typeof objId != 'string' || !env || !(env instanceof fm.MObject))
 		return null;
 	
-	for (var obj in env.contains)
-		if (obj.id === objId)
-			return obj;
-	return null;
+	return env.contains[objId];
 }

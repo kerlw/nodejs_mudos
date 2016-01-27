@@ -6,6 +6,7 @@ var Player = extend(function(socket) {
 	if (!(this instanceof Player))
 		return new Player();
 	
+	this.id = new Date().getTime() + "";
 	this.name = "unamed";
 	this.socket = socket;
 	

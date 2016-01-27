@@ -14,9 +14,8 @@ function cmd_look() {
 			return 1;
 		}
 			
-		//TODO env is a container
-		var avoid = new Array();
-		avoid.push(sender);
+		var avoid = {};
+		avoid[sender.id] = 1;
 		FUNCTIONS.tell_object(sender, env.look_response(avoid), 'room');
 		return 1;
 	};
@@ -38,7 +37,7 @@ function cmd_look() {
 			return this.look_room(sender);
 		
 		var obj = null;
-		if ((obj = FUNCTIONS.object_present(target, FUNCTIONS.environment(sender)))
+		if ((obj = FUNCTIONS.present(target, FUNCTIONS.environment(sender)))
 					|| (obj = FUNCTIONS.object_present(target, sender))) {
 			if (obj.is_character())
 				return this.look_living(sender, obj);
@@ -46,6 +45,5 @@ function cmd_look() {
 				this.look_item(sender, obj);
 		} else
 			return this.look_room_item(sender, target);
-		
 	};
 }

@@ -1,11 +1,24 @@
-var MObject = require('./mobject.js');
-var NPC = require('./npc.js');
-var ROOM = require('./room.js');
-var Player = require('./player.js');
-var CMD = require('./cmd.js');
+var fs = require('fs'),
+	path = require('path');
 
-exports.MObject = MObject;
-exports.NPC = NPC;
-exports.ROOM = ROOM;
-exports.Player = Player;
-exports.CMD = CMD;
+exports.find_file = function(dir, name) {
+	var pathname = path.join(dir, name);
+	if (path.parse(pathname).ext !== '') {
+		if (fs.statSync(pathname).isFile())
+			return pathname;
+	}
+	
+	if (fs.statSync(pathname + '.js').isFile())
+		return pathname + '.js';
+	if (fs.statSync(pathname + '.json'))
+		return pathname + '.json';
+	
+	throw pathname + ' file not found!';
+}
+
+exports.MObject = require('./mobject.js');
+exports.NPC = require('./npc.js');
+exports.ROOM = require('./room.js');
+exports.Player = require('./player.js');
+exports.CMD = require('./cmd.js');
+exports.extend = require('./oo.js');

@@ -24,18 +24,18 @@ function cmd_fight() {
 		if (!target.is_character()) 
 			return FUNCTIONS.notify_fail(sender, "丧心病狂了吗，连非生物都攻击？");
 		
-		if (target.is_fight(sender))
+		if (target.is_fighting(sender))
 			return FUNCTIONS.notify_fail(sender, "加～油～～！加～油～～！");
 		
 		if (!target.living())
-			return FUNCTIONS.notify_fail(sender, obj.name + "已经无法战斗了");
+			return FUNCTIONS.notify_fail(sender, target.name + "已经无法战斗了");
 		
 		if (target.is_player() && target['fight_pending'] != sender) {
 			//TODO tell_object
 			return 1;
 		}
 		
-		sender.fight()
+		sender.fight(target);
 	}
 	
 }

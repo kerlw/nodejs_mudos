@@ -43,6 +43,9 @@
         	$('#messages').append($('<li>').text(msg.name));
         	$('#messages').append($('<li>').text(msg.desc));
         	$('#messages').append($('<li>').text(msg.exits));
+        	for (var name in msg.objs) {
+        		$('#messages').append($('<li>').text(name + '(' + msg.objs[name] + ')'));        		
+        	}
         });
         
     </script>

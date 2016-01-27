@@ -2,6 +2,9 @@
 	"name":"办公室",
 	"desc":"这里是一间办公室，四四方方，方圆20平米，摆了5张办公桌，室内光线主要靠顶部白炽灯。",
 	"exits": {
-		"east" : "meeting-room-a"
-			}
+		"east" : "softwarepark/meeting-room-a"
+	},
+	"objs": {
+		"softwarepark/npc/kedaxia" : 1
+	}
 }

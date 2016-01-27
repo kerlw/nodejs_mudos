@@ -2,8 +2,9 @@ var MObject = function() {
 	if (!(this instanceof MObject))
 		return new MObject();
 	
+	this.id = "";
 	this.holder = null;
-	this.contains = new Array();
+	this.contains = {};
 	this.flags = 0;
 	
 	this.init = function() {}

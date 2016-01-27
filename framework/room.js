@@ -1,5 +1,8 @@
-var extend = require('./oo.js');
-var MObject = require('./mobject.js');
+var extend = require('./oo.js'),
+	fm = require('framework');
+	MObject = require('./mobject.js'),
+	fs = require('fs'),
+	path = require('path');
 
 var ROOM = extend(function(){}, MObject);
 
@@ -23,9 +26,38 @@ ROOM.__DIRECTORIES__ = {
 
 ROOM.loadFromJSON = function(data) {
 	var ret = new ROOM();
-	ret.name = data.name;
-	ret.desc = data.desc;
-	ret.exits = data.exits;
+	ret.name = data.name || "unnamed";
+	ret.desc = data.desc || "";
+	ret.exits = data.exits || {};
+	ret.objs = {};
+	var objs = data.objs || {};
+	for (var name in objs) {
+		var count = objs[name],
+			i = 0,
+			pathname = fm.find_file(DATA_PATH, name);
+			fs.accessSync(pathname, fs.F_OK | fs.R_OK);
+		while (i < count) {
+			if (!pathname)
+				break;
+			
+			var id = name + '#' + i,
+				tmp = require(pathname);
+			
+			if (typeof tmp !== 'function')
+				break;
+			
+			var obj = new tmp();
+			if (obj && obj instanceof fm.MObject) {
+				obj.id = id;
+				if (obj instanceof fm.NPC)
+					_objs.npcs[id] = obj;
+				else
+					_objs.items[id] = obj;
+				obj.move_to(ret);
+			}
+			i++;
+		}
+	}
 	return ret;
 }
 
@@ -39,7 +71,7 @@ ROOM.prototype.look_response = function(avoid) {
 			'name' : this.name,
 			'desc' : this.desc,
 			'exits' : {},
-			'objects' : {}
+			'objs' : {}
 	};
 	
 	for (var dir in this.exits) {
@@ -57,13 +89,11 @@ ROOM.prototype.look_response = function(avoid) {
 		}
 	}
 	
-	if (avoid instanceof Array) {
-		for (var obj in this.contains) {
-			if (obj in avoid)
-				continue;
-			
-			ret['objects'][obj.name] = obj.id;
-		}
+	for (var objId in this.contains) {
+		if (avoid && avoid[objId])
+			continue;
+		
+		ret['objs'][this.contains[objId].name] = this.contains[objId].id;
 	}
 	return ret;
 }
