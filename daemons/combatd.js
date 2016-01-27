@@ -4,8 +4,8 @@ function combatd() {
 	
 }
 
-combatd.prototype.do_attack(me, other) {
-	if (!me || !other || Functions.environment(me) !== Functions.environment(other))
+combatd.prototype.do_attack = function(me, other) {
+	if (!me || !other || FUNCTIONS.environment(me) !== FUNCTIONS.environment(other))
 		return 0;
 	
 	if (!me.living() || me.is_busy() && other.is_busy())
@@ -14,9 +14,11 @@ combatd.prototype.do_attack(me, other) {
 	
 }
 
-combatd.prototype.fight(me, other) {
+combatd.prototype.fight = function(me, other) {
 	if (!me.living() || !other.living())
 		return;
 	
 	this.do_attack(me, other);
 }
+
+

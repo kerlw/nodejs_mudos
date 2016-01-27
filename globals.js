@@ -24,6 +24,8 @@
 	r('funs');
 	//init commands
 	r('cmds');
+	//init daemons
+	r('daemons');
 	
 	// load all rooms from ROOM_PATH
 	function init_rooms(basedir, prefix) {
@@ -69,10 +71,5 @@
 	
 	//init rooms
 	init_rooms(global.DATA_PATH);
-			
-//	global._objs.rooms['office'] = fm.ROOM.load(ROOM_PATH + "office.json"); 
-//	global._objs.rooms['meeting-room-a'] = fm.ROOM.load(ROOM_PATH + "meeting-room-a.json");
-	
-
 
 })(require);

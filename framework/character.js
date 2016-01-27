@@ -69,7 +69,7 @@ Character.prototype.fight = function(target) {
 	if (!target || target === this || !(this instanceof MObject))
 		return;
 	
-	if (!target.living() || !Functions.present(target, Functions.environment(this)))
+	if (!target.living() || !FUNCTIONS.present(target, FUNCTIONS.environment(this)))
 		return;
 	
 	if (this.is_fighting(target))
