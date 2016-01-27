@@ -19,7 +19,7 @@ app.use('/public', express.static(__dirname + '/public'));
 //io.set('heartbeats interval', 20);
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname,'/index.html'));
+    res.sendFile(path.join(__dirname,'/index.htm'));
 });
 
 io.on('connection', function(socket) {

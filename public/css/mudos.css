@@ -5,6 +5,7 @@ html,body {height:100%;margin:0; padding:0;}
 body{
     background: url(../image/bg.jpg) 0 0;
     background-color: #000000;
+    color:#33F0FF;
 }
 
 .bs{border:1px solid #EEC900;margin-top:5px;}
@@ -27,7 +28,7 @@ body{
     height:100px;
 }
 /* title */
-.title{
+.room-title{
     font:small-caps bold 1em Arial;
     color:#00FF00;
 	padding-top:5px;
