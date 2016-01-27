@@ -28,7 +28,7 @@
 	});
 
 	$('.mc-btn').on('click', function () {
-        var $me = $this;
+        var $me = $(this);
 		if ($me.attr('direction') === '') {
 			return;
 		}
