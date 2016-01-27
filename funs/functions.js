@@ -70,9 +70,18 @@ exports.move_object = function(obj, dest) {
 	return 1;
 }
 
-exports.present = function(objId, env) {
+exports.object_present = function(objId, env) {
 	if (!objId || typeof objId != 'string' || !env || !(env instanceof fm.MObject))
 		return null;
 	
 	return env.contains[objId];
+}
+
+exports.present = function(obj, env) {
+	if (!obj || !env || !(obj instanceof MObject) || !(env instanceof MObject))
+		return 0;
+	
+	if (obj.holder === env)
+		return 1;
+	return 0;
 }

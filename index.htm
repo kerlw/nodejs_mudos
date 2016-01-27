@@ -30,10 +30,7 @@
 							东南西北
 						</div>
 						<div class="obj bs">
-							<ul>
-								<li>野狗</li>
-								<li>小女孩</li>
-								<li>少妇</li>
+							<ul id="env_objs">
 							</ul>
 						</div>
 				</div>
@@ -118,12 +115,14 @@
             $('#messages').append($('<li>').text(msg));
           });
         socket.on('room', function(msg) {
-		//TODO refresh_move_controller(msg.name, msg.exits);
-		$('$title').text(msg.desc);
-		
-        	$('#messages').append($('<li>').text(msg.name));
-        	$('#messages').append($('<li>').text(msg.desc));
-        	$('#messages').append($('<li>').text(msg.exits));
+			//TODO refresh_move_controller(msg.name, msg.exits);
+//			$('$title').text(msg.desc);
+			$('#env_objs').empty();
+			if (msg.objs) {
+				for (var name in msg.objs) {
+					$('#env_objs').append($('<li value=\'' + msg.objs[name] + '\'>').text(name));
+				}	
+			}
         });
         
 </script>

@@ -1,5 +1,6 @@
 (function(r) {
 	global._cmds = {};
+	global._daemons = {};
 	global.FUNCTIONS = {};
 	global._objs = { 'players' : {}, 'rooms': {}, 'npcs' : {}, 'areas' : {} };
 	

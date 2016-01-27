@@ -34,4 +34,8 @@ MObject.prototype.disable_commands = function() {
 	this.flags &= ~FLAGS.O_ENABLE_COMMANDS;
 }
 
+MObject.prototype.set_heart_beat = function(to) {
+	HB_ENGINE.set_heart_beat(this, to);
+}
+
 module.exports = MObject;

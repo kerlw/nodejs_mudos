@@ -66,14 +66,30 @@ Character.prototype.heart_beat = function() {
 }
 
 Character.prototype.fight = function(target) {
-	if (!target || target === this)
+	if (!target || target === this || !(this instanceof MObject))
 		return;
 	
-	//TODO add to enemy
+	if (!target.living() || !Functions.present(target, Functions.environment(this)))
+		return;
+	
+	if (this.is_fighting(target))
+		return;
+	
+	this.enemy.push(target.id);
+	this.set_heart_beat(1);
 }
 
 Character.prototype.is_fighting = function(target) {
-	//TODO set fighting flag
+	if (!target)
+		return (this.enemy.length > 0);
+	
+	if (typeof target === 'string') {
+		for (var en in this.enemy)
+			if (en === target)
+				return 1;
+	} else if (target instanceof fm.MObject) {
+		return is_fighting(target.id);
+	}
 	return 0;
 }
 
@@ -90,7 +106,7 @@ Character.prototype.start_busy = function(new_busy) {
 	if (new_busy <= 0)
 		return;
 	this.busy = new_busy;
-	HB_ENGINE.set_heart_beat(1);
+	this.set_heart_beat(1);
 }
 
 Character.prototype.continue_action = function() {
@@ -110,7 +126,7 @@ Character.prototype.attack = function() {
 	if (this.enemy.length > 0) {
 		//TODO player could set a main attacking target.
 		var en = this.enemy[Math.floor(Math.random() * 100) % this.enemy.length] 
-		//TODO COMBAT_ENGIN.fight(this, en);
+		_daemons.combat.fight(this, en);
 	}
 }
 

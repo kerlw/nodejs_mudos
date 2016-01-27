@@ -1,0 +1,4 @@
+{
+	"name": "daemons",
+	"main": "./index.js"
+}
