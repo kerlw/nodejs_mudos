@@ -48,6 +48,10 @@
 					areaId = prefix,
 					room = null;
 				
+				// fix id's format on windows platform
+				if (path.sep === '\\')
+					id = id.replace('\\', '/');
+				
 				if (areaId === '')
 					areaId = 'no_area';
 				
