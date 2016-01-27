@@ -67,11 +67,25 @@
 		    <div class="bottom">
 				<div class="col-xs-6 col-left col-right">
 					<div id="move_controller" class="map bs">
-						<span>走廊</span>
-						<span>前台</span>
-						<span>办公室</span>
-						<span>会议室</span>
-						<span>财务室</span>
+						<table class="table table-bordered">
+							<tbody>
+							<tr>
+								<td><span>左走廊</span></td>
+								<td><span>前台</span></td>
+								<td><span>右走廊</span></td>
+							</tr>
+							<tr>
+								<td><span>财务室</span></td>
+								<td><span>办公室</span></td>
+								<td><span>会议室</span></td>
+							</tr>
+							<tr>
+								<td><span>机房</span></td>
+								<td><span>办公室</span></td>
+								<td><span>办公室</span></td>
+							</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				<div class="col-xs-6 col-both-clear">
@@ -98,33 +112,6 @@
     }
 </script>
 <script type="text/javascript" src="public/lib/jquery.min.js"></script>
-<script type="text/javascript" src="public/js/mudos.js?v20160108"></script>
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-<script type="text/javascript">
-	    var socket = io();
- /**       $('form').submit(function(){
-        	var str = $('#m').val();
-        	if (str.slice(0, 3) === 'cmd') {
-        		socket.emit('cmd', str.slice(4));
-        	} else
-        		socket.emit('chat message', str);
-            $('#m').val('');
-            return false;
-        });*/
-        socket.on('resp', function(msg) {
-            $('#messages').append($('<li>').text(msg));
-          });
-        socket.on('fail', function(msg) {
-            $('#messages').append($('<li>').text(msg));
-          });
-        socket.on('room', function(msg) {
-		//TODO refresh_move_controller(msg.name, msg.exits);
-		$('$title').text(msg.desc);
-		
-        	$('#messages').append($('<li>').text(msg.name));
-        	$('#messages').append($('<li>').text(msg.desc));
-        	$('#messages').append($('<li>').text(msg.exits));
-        });
-        
-</script>
+<script type="text/javascript" src="public/js/mudos.js?v20160108"></script>
 </html>
