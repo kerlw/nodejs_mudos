@@ -21,7 +21,7 @@ ROOM.__DIRECTORIES__ = {
 	"down" : "下",
 	
 	"enter" : "内",
-	"out" : "外",
+	"out" : "外"
 }
 
 ROOM.loadFromJSON = function(data) {

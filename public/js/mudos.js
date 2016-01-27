@@ -9,13 +9,13 @@
 	 * message', str); $('#m').val(''); return false; });
 	 */
 	socket.on('resp', function(msg) {
-		$('#messages').append($('<li>').text(msg));
+		$('#message').append('<br>' + msg);
 	});
 	socket.on('fail', function(msg) {
-		$('#messages').append($('<li>').text(msg));
+		$('#message').append('<br>' + msg);
 	});
 	socket.on('room', function(msg) {
-		// TODO refresh_move_controller(msg.name, msg.exits);
+		refresh_move_controller(msg.name, msg.exits);
 		$('.room-title').text(msg.name);
 		$('#room_desc').text(msg.desc);
 		$('#env_objs').empty();
@@ -26,8 +26,22 @@
 			}
 		}
 	});
+
+	$('.mc-btn').on('click', function () {
+        var $me = $this;
+		if ($me.attr('direction') === '') {
+			return;
+		}
+
+		socket.emit('cmd', "go " + $me.attr('direction'));
+	});
+
 	// **-------------------------------------------------------------
 	// ** Function
 	// **-------------------------------------------------------------
 
+	function refresh_move_controller(name,exits) {
+        $('#r2c2').text(name);
+
+	}
 }(window));
