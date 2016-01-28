@@ -87,8 +87,8 @@ Character.prototype.is_fighting = function(target) {
 		for (var en in this.enemy)
 			if (en === target)
 				return 1;
-	} else if (target instanceof fm.MObject) {
-		return is_fighting(target.id);
+	} else if (target instanceof MObject) {
+		return this.is_fighting(target.id);
 	}
 	return 0;
 }

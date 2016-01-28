@@ -21,9 +21,18 @@
 		$('#env_objs').empty();
 		if (msg.objs) {
 			for ( var name in msg.objs) {
-				$('#env_objs').append(
-						$('<li value=\'' + msg.objs[name] + '\'>').text(name));
+				$('#env_objs').append($('<li>').attr('class', 'room-obj').attr('value', msg.objs[name]).text(name));
 			}
+			// bind click handle function
+			$('.room-obj').on('click', function() {
+				//TODO here just use fight to test fight functions. it should be 
+				// 'look', and we should show a panel to handle the 'look' response,
+				// because the cmd is async, the panel should has a timestamp attr
+				// and this attr should send to server, and server should response
+				// with it.
+//				socket.emit('cmd', 'look ' + $(this).attr('value'));
+				socket.emit('cmd', 'fight ' + $(this).attr('value'));
+			});
 		}
 	});
 
@@ -35,6 +44,7 @@
 
 		socket.emit('cmd', "go " + $me.attr('direction'));
 	});
+	
 
 	// **-------------------------------------------------------------
 	// ** Function

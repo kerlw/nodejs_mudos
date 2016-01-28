@@ -14,7 +14,7 @@ function cmd_fight() {
 		if (!env || env['no_fight'])
 			return FUNCTIONS.notify_fail(sender, "这里禁止战斗!");
 		
-		var target = FUNCTIONS.object_present(arg, env);
+		var target = FUNCTIONS.present(arg, env);
 		if (!target || !(target instanceof fm.MObject))
 			return FUNCTIONS.notify_fail(sender, "你想攻击谁？");
 		

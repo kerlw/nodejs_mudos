@@ -37,12 +37,12 @@ function cmd_look() {
 			return this.look_room(sender);
 		
 		var obj = null;
-		if ((obj = FUNCTIONS.object_present(target, FUNCTIONS.environment(sender)))
-					|| (obj = FUNCTIONS.object_present(target, sender))) {
+		if ((obj = FUNCTIONS.present(target, FUNCTIONS.environment(sender)))
+					|| (obj = FUNCTIONS.present(target, sender))) {
 			if (obj.is_character())
 				return this.look_living(sender, obj);
 			else
-				this.look_item(sender, obj);
+				return this.look_item(sender, obj);
 		} else
 			return this.look_room_item(sender, target);
 	};
