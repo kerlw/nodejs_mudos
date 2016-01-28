@@ -24,4 +24,13 @@ Player.prototype.onDisconnected = function() {
 	console.log('user disconnected');
 }
 
+Player.prototype.recv_message = function(msgclz, msg) {
+	//TODO this is just a temporary solution
+	if (!msgclz || (msgclz !== 'fail' && msgclz !== 'room'))
+		msgclz = 'resp';
+	
+	if (this.socket)
+		this.socket.emit(msgclz, msg);
+}
+
 module.exports = Player;

@@ -16,7 +16,7 @@ function cmd_look() {
 			
 		var avoid = {};
 		avoid[sender.id] = 1;
-		FUNCTIONS.tell_object(sender, env.look_response(avoid), 'room');
+		FUNCTIONS.message_scene(sender, env.look_response(avoid));
 		return 1;
 	};
 	

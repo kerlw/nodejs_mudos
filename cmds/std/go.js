@@ -36,8 +36,11 @@ function cmd_go() {
 			return FUNCTIONS.notify_fail(sender, "这个方向无法移动，请报告巫师。");
 		}
 		
-		//TODO more complex just like real mudlib do.
-		sender.move_to(dest_room);
+		if (sender.move_to(dest_room)) {
+			FUNCTIONS.tell_room(env, sender.name + "离开了.", env);
+			FUNCTIONS.tell_room(dest_room, sender.name + "走了过来.", new Array(sender))
+		}
+		
 		fm.CMD.exec(sender, 'look');
 	};
 	

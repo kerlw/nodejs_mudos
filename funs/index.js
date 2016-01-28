@@ -7,5 +7,6 @@
 //	FUNCTIONS.move_object = funcs.move_object;
 //	FUNCTIONS.notify_fail = funcs.notify_fail;
 	FUNCTIONS = funcs;
+	r('./messages.js');
 	
 })(require);

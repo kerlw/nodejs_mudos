@@ -2,7 +2,7 @@
 	global._cmds = {};
 	global._daemons = {};
 	global.FUNCTIONS = {};
-	global._objs = { 'players' : {}, 'rooms': {}, 'npcs' : {}, 'areas' : {} };
+	global._objs = { 'players' : {}, 'rooms': {}, 'npcs' : {}, 'areas' : {}, 'items' : {}, 'skills' : {} };
 	
 	global.FLAGS = {
 			O_HEART_BEAT : 0x01,

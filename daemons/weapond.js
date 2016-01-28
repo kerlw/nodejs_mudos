@@ -3,7 +3,6 @@ module.exports = weapond;
 var fm = require('framework');
 
 function weapond() {
-	
 }
 
 weapond.weapon_actions = {
@@ -72,7 +71,7 @@ weapond.weapon_actions = {
 }
 
 weapond.prototype.query_action = function(weapon) {
-	if (!weapon || !(weapon instanceof fm.WEAPON))
+//	if (!weapon || !(weapon instanceof fm.WEAPON))
 }
 
 weapond.prototype.throw_weapon = function() {

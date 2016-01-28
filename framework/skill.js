@@ -4,19 +4,19 @@ function skill() {
 	
 }
 
-skill.prototype.valid_learn(me, weapon) {
+skill.prototype.valid_learn = function(me, weapon) {
 	return 1;
 }
 
-skill.prototype.valid_effect(me, weapon, action) {
+skill.prototype.valid_effect = function(me, weapon, action) {
 	return 1;
 }
 
 /**
  * There are two types of skill: martial, knowledge
  */
-skill.prototype.type() {
+skill.prototype.type = function() {
 	return 'martial';
 }
 
-skill.prototype.skill_improved(me) {}
+skill.prototype.skill_improved = function(me) {}
