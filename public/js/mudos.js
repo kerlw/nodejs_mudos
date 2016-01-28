@@ -29,7 +29,7 @@
 
 	$('.mc-btn').on('click', function () {
         var $me = $(this);
-		if ($me.attr('direction') === '') {
+		if (!$me.attr('enabled') || $me.attr('direction') === '') {
 			return;
 		}
 
@@ -41,7 +41,31 @@
 	// **-------------------------------------------------------------
 
 	function refresh_move_controller(name,exits) {
+		$('.mc-btn').attr('direction', '').attr('enabled', 0).empty();
         $('#r2c2').text(name);
+        
+        exits = exits || {};
+        var $ele;
+        for (var dir in exits) {
+        	$ele = null;
+        	switch (dir) {
+        	case 'east': $ele = $('#r2c3');break;
+        	case 'west': $ele = $('#r2c1');break;
+        	case 'north': 
+        	case 'up':
+        		$ele = $('#r1c2');break;
+        	case 'south': 
+        	case 'down':
+        		$ele = $('#r3c2');break;
 
+        	case 'northeast': $ele = $('#r1c3');break;
+        	case 'northwest': $ele = $('#r1c1');break;
+        	case 'southeast': $ele = $('#r3c3');break;
+        	case 'southwest': $ele = $('#r3c1');break;
+
+        	}
+        	if ($ele)
+        		$ele.text(exits[dir].name).attr('direction', dir).attr('enabled', 1);
+        }
 	}
 }(window));
