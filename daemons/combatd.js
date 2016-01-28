@@ -16,11 +16,24 @@ combatd.prototype.do_attack = function(me, other) {
 	if (other.skills.dodge)
 		dodge = other.skills.dodge.lv;
 	if (Math.random() * 100 <= dodge / 200) {
-		//dodged, calc beat back.
+		FUNCTIONS.message_combatd("$n躲开了$N的攻击.", me, other);
+		//TODO dodged, calc beat back.
+		return 1;
 	}
-	//2. if not dodged, other may parry
-	//3. if not parried either, OK, it's time to decide damage.
 	
+	//2. if not dodged, other may parry
+	var parry = 0;
+	if (other.skills.parry)
+		parry = other.skills.parry.lv;
+	if (Math.random() * 100 <= parry / 200) {
+		//parried
+		FUNCTIONS.message_combatd("$n招架住了$N的攻击.", me, other);
+		return 1;
+	}
+	
+	//3. if not parried either, OK, it's time to decide damage.
+	FUNCTIONS.message_combatd("$N击中了$n", me, other);
+	return 1;
 }
 
 combatd.prototype.fight = function(me, other) {

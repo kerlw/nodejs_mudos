@@ -36,6 +36,8 @@
 	f.combat_msg_flag.SHOW_NONE = 4;
 
 	f.message_combatd = function(msg, me, you, damage_info) {
+		//TODO implement real message_combatd
+		return f.message_vision(msg, me, you);
 	}
 
 	f.message_scene = function(me, msg) {
