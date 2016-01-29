@@ -26,14 +26,15 @@ body{
 
 .head{
     height:100px;
+    padding:15px;
 }
 /* title */
 .room-title{
     font:small-caps bold 1em Arial;
     color:#00FF00;
-	padding-top:5px;
 }
 .desc{
+    margin-top: 5px;
     color:#00DD00;
 	text-indent: 2em;
 }
@@ -50,9 +51,10 @@ body{
 }
 .msglist{
     color:#9ACD32;
-	height:280px;
-        overflow-y:scroll;
-        word-break:break-all
+    height:280px;
+    overflow-y:scroll;
+    word-break:break-all;
+    padding:10px;
 }
 .say{
     height:38px;

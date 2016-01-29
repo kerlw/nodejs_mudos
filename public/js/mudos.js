@@ -1,6 +1,8 @@
 (function(win) {
 	'use strict';
 
+	var $msgList = $('#message');
+	var msgLimit = 1000;
 	var socket = io();
 
 	/**
@@ -9,11 +11,16 @@
 	 * message', str); $('#m').val(''); return false; });
 	 */
 	socket.on('resp', function(msg) {
-		$('#message').append('<br>' + msg);
-		$('#message').scrollTop = $('#message').scrollHeight;
+		var oldMsg = $msgList.html();
+		if (oldMsg.length > msgLimit) {
+			oldMsg = oldMsg.substring(oldMsg.length - msgLimit);
+			$msgList.html('...' + oldMsg.substring(oldMsg.indexOf('<br>')));
+		}
+		$msgList.append(msg + '<br>');
+		$msgList.scrollTop(9999);
 	});
 	socket.on('fail', function(msg) {
-		$('#message').append('<br>' + msg);
+		$msgList.append(msg + '<br>');
 	});
 	socket.on('room', function(msg) {
 		refresh_move_controller(msg.name, msg.exits);
