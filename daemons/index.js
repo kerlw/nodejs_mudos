@@ -13,7 +13,7 @@
 		if (!stat.isFile() || path.extname(file) !== '.js')
 			return;
 		
-		var tmp = r(pathname);
+		var tmp = r(pathname)();
 		global._daemons[path.parse(file).name] = tmp;
 	});
 })(require);

@@ -8,6 +8,7 @@
 			O_HEART_BEAT : 0x01,
 			O_IS_WIZARD : 0x02,
 			O_LISTENER : 0x04,
+			O_ENABLE_COMMANDS : 0x08
 	};
 	
 	global.HB_ENGINE = r('heartbeat')();

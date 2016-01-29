@@ -15,6 +15,7 @@
 		if (you) {
 			str4you = str4other.replace('$n', '你');
 			str4other = str4other.replace('$n', you.name);
+			str4me = str4me.replace('$n', you.name);
 			message("vision", str4you, you);
 		}
 		message("vision", str4me, me);

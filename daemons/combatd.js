@@ -1,7 +1,8 @@
 module.exports = combatd;
 
 function combatd() {
-	
+	if (!(this instanceof combatd))
+		return new combatd();
 }
 
 combatd.prototype.do_attack = function(me, other) {

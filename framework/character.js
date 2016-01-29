@@ -12,15 +12,22 @@ var Character = extend(function() {
 	this.lck = 0;	//luck
 	this.cor = 0;	//courage
 	
-	this.vitality = 0;
-	this.eff_vitality = 0;	
-	this.max_vitality = 0; 
+	this.vitality = 100;
+	this.eff_vitality = 100;	
+	this.max_vitality = 100; 
 	this.force = 0;
+	this.eff_force = 0;
 	this.max_force = 0;
 	
 	this.busy = 0;
 	
 	this.enemy = new Array();
+	this.killer = new Array();
+	
+	this.skills = {};
+	
+	this.enable_player();
+	console.log(this.name + " living is " + this.living());
 }
 , MObject);
 
@@ -30,6 +37,20 @@ Character.prototype.is_character = function() {
 
 Character.prototype.is_player = function() {
 	return 0;
+}
+
+Character.prototype.enable_player = function() {
+	//TODO do more works here, set path for each char
+	this.enable_commands();
+}
+
+
+Character.prototype.enable_commands = function() {
+	this.flags |= FLAGS.O_ENABLE_COMMANDS;
+}
+
+Character.prototype.disable_commands = function() {
+	this.flags &= ~FLAGS.O_ENABLE_COMMANDS;
 }
 
 Character.prototype.heart_beat = function() {
@@ -93,6 +114,16 @@ Character.prototype.is_fighting = function(target) {
 	return 0;
 }
 
+Character.prototype.is_killing = function(id) {
+	if (!id)
+		return (this.killer.length > 0);
+	
+	if (this.killer.indexOf(id) != -1)
+		return 1;
+	
+	return 0;
+}
+
 Character.prototype.could_move = function() {
 	//TODO make some flag to limit user's move
 	return 1;
@@ -125,8 +156,8 @@ Character.prototype.attack = function() {
 	
 	if (this.enemy.length > 0) {
 		//TODO player could set a main attacking target.
-		var en = this.enemy[Math.floor(Math.random() * 100) % this.enemy.length] 
-		_daemons.combat.fight(this, en);
+		var en = this.enemy[Math.floor(Math.random() * 100 * this.enemy.length) % this.enemy.length] 
+		_daemons.combatd.fight(this, FUNCTIONS.present(en, FUNCTIONS.environment(this)));
 	}
 }
 
@@ -149,9 +180,12 @@ Character.prototype.clean_up_enemy = function() {
 	var new_enemy = new Array();
 	while (this.enemy.length > 0) {
 		var en = this.enemy.shift();
-		if (!en || !(en instanceof Character)
-				|| FUNCTIONS.environment(en) != FUNCTIONS.environment(this)
-				|| !this.is_killing(en.id))
+		var env = FUNCTIONS.environment(this);
+		if (!en || !(en = FUNCTIONS.present(en, env)) || !(en instanceof Character))
+			continue;
+		
+		if (FUNCTIONS.environment(en) != env 
+				|| (!en.living() && !this.is_killing(en.id)))
 			en.remove_enemy(this);
 		else
 			new_enemy.push(en);
@@ -160,14 +194,15 @@ Character.prototype.clean_up_enemy = function() {
 }
 
 Character.prototype.remove_enemy = function(ob) {
-	if (this.enemy.length == 0)
+	if (this.enemy.length == 0 || !ob || !(ob instanceof Character))
 		return;
 	
 	var new_enemy = new Array();
 	while (this.enemy.length > 0) {
 		var en = this.enemy.shift();
-		if (!en || en == ob)
+		if (!en || en === ob.id)
 			continue;
+		
 		new_enemy.push(en);
 	}
 	this.enemy = new_enemy;
