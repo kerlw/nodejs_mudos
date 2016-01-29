@@ -18,6 +18,7 @@
 		}
 		$msgList.append(msg + '<br>');
 		$msgList.scrollTop(9999);
+
 	});
 	socket.on('fail', function(msg) {
 		$msgList.append(msg + '<br>');
@@ -26,7 +27,7 @@
 		refresh_move_controller(msg.name, msg.exits);
 		$('.room-title').text(msg.name);
 		$('#room_desc').text(msg.desc);
-		$('#env_objs').empty();
+		//$('#env_objs').empty();
 		if (msg.objs) {
 			for ( var name in msg.objs) {
 				$('#env_objs').append($('<li>').attr('class', 'room-obj').attr('value', msg.objs[name]).text(name));
@@ -42,6 +43,13 @@
 				socket.emit('cmd', 'fight ' + $(this).attr('value'));
 			});
 		}
+	});
+
+    $('.obj').on('click', function () {
+		var $me = $(this);
+		$me.modal({
+			keyboard: false
+		});
 	});
 
 	$('.mc-btn').on('click', function () {

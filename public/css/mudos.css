@@ -6,18 +6,20 @@ body{
     background: url(../image/bg.jpg) 0 0;
     background-color: #000000;
     color:#33F0FF;
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,STHeiti,"Microsoft Yahei",sans-serif;
+    font-size: 6px;
 }
 
-.bs{border:1px solid #EEC900;margin-top:5px;}
+.bs{border:1px solid #EEC900;margin-top:1px;}
 .col-left{
-    padding-right:5px;
+    padding-right:1px;
 }
 .col-right{
     padding-left:0;
 }
 .col-both{
-    padding-right:5px;
-	padding-left:5px;
+    padding-right:1px;
+    padding-left:1px;
 }
 .col-both-clear{
     padding-right:0;
@@ -26,11 +28,10 @@ body{
 
 .head{
     height:100px;
-    padding:15px;
+    padding:8px;
 }
 /* title */
 .room-title{
-    font:small-caps bold 1em Arial;
     color:#00FF00;
 }
 .desc{
@@ -45,49 +46,63 @@ body{
     height:100px;
 	color:#3300FF;
 }
-.obj{
-    height:218px;
+.objs{
+    height:208px;
 	color:#33F0FF;
+    padding:0;
+}
+.env-objs{
+    list-style:none;
+    -webkit-padding-start: 0;
+    padding:6px;
 }
 .msglist{
     color:#9ACD32;
-    height:280px;
+    height:285px;
     overflow-y:scroll;
     word-break:break-all;
-    padding:10px;
+    padding:6px;
 }
 .say{
-    height:38px;
+    height:23px;
 }
 .msg{
-    width:100%;
-    height:36px;
-	line-height:36px;
+    width:78%;
+    height:21px;
+	line-height:21px;
 	border:0;
+    display:inline;
+}
+.btn-say{
+    width:18%;
+    height:21px;
+    padding:0;
 }
 .bottom{
-    height:150px;
+    height:120px;
 }
 .map{
-    height:150px;
+    height:116px;
 }
 .map table tbody tr td{
     width:30%;
-    height:49px;
+    height:38px;
     text-align:center;
     vertical-align: middle;
     border-color:#EEC900;
+    padding:0;
+    margin:0;
 }
 .obj-info{
-    height:90px;
+    height:77px;
     color:#8968CD;
 }
 .sys-cmd{
-    height:55px;
+    height:38px;
     color:#8B008B;
     text-align:center;
+    line-height: 38px;
 }
 .sys-cmd a{
-    font:small-caps bold 1.5em Arial;
     color:#8B008B;
 }
