@@ -47,9 +47,7 @@
 
     $('.obj').on('click', function () {
 		var $me = $(this);
-		$me.modal({
-			keyboard: false
-		});
+		$me.modal();
 	});
 
 	$('.mc-btn').on('click', function () {
