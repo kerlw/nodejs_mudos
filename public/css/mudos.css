@@ -45,12 +45,12 @@ body{
 	color:#3300FF;
 }
 .obj{
-    height:188px;
+    height:218px;
 	color:#33F0FF;
 }
 .msglist{
     color:#9ACD32;
-	height:250px;
+	height:280px;
 }
 .say{
     height:38px;
@@ -62,17 +62,23 @@ body{
 	border:0;
 }
 .bottom{
-    height:180px;
+    height:150px;
 }
 .map{
-    height:180px;
+    height:150px;
+}
+.map table tbody tr td{
+    width:30%;
+    height:49px;
+    text-align:center;
+    border-color:#EEC900;
 }
 .obj-info{
     height:90px;
     color:#8968CD;
 }
 .sys-cmd{
-    height:85px;
+    height:55px;
     color:#8B008B;
     text-align:center;
 }
