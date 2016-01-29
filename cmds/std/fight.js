@@ -35,7 +35,13 @@ function cmd_fight() {
 			return 1;
 		}
 		
+		if (!target.is_player() && !target.accept_fight(sender)) {
+			FUNCTIONS.notify_fail(sender, "看起来" + target.name + "并不想和你较量.");
+			return 0;
+		}
+		
 		sender.fight(target);
+		target.fight(sender);
 	}
 	
 }

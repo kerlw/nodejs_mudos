@@ -1,16 +1,17 @@
-var extend = require('./oo.js');
-var MObject = require('./mobject.js');
+var extend = require('./oo.js'),
+	fm = require('framework'),
+	MObject = require('./mobject.js');
 
 var Character = extend(function() {
 	if (!(this instanceof Character))
 		return new Character();
 	
-	this.str = 0;	//strength
-	this.con = 0;	//constitution
-	this.int = 0;	//intelligence
-	this.apc = 0;	//apperance
-	this.lck = 0;	//luck
-	this.cor = 0;	//courage
+	this.str = 10;	//strength
+	this.con = 10;	//constitution
+	this.int = 10;	//intelligence
+	this.apc = 10;	//apperance
+	this.lck = 10;	//luck
+	this.cor = 10;	//courage
 	
 	this.vitality = 100;
 	this.eff_vitality = 100;	
@@ -25,6 +26,10 @@ var Character = extend(function() {
 	this.killer = new Array();
 	
 	this.skills = {};
+	
+	this.wimpy_ratio = 50;
+	this.tmps = {};
+	this.equipments = {};
 	
 	this.enable_player();
 	console.log(this.name + " living is " + this.living());
@@ -156,7 +161,7 @@ Character.prototype.attack = function() {
 	
 	if (this.enemy.length > 0) {
 		//TODO player could set a main attacking target.
-		var en = this.enemy[Math.floor(Math.random() * 100 * this.enemy.length) % this.enemy.length] 
+		var en = this.enemy[FUNCTIONS.random(this.enemy.length)]; 
 		_daemons.combatd.fight(this, FUNCTIONS.present(en, FUNCTIONS.environment(this)));
 	}
 }
@@ -206,6 +211,10 @@ Character.prototype.remove_enemy = function(ob) {
 		new_enemy.push(en);
 	}
 	this.enemy = new_enemy;
+}
+
+Character.prototype.command = function(cmd, arg) {
+	fm.CMD.exec(this, cmd, arg);
 }
 
 module.exports = Character;

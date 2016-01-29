@@ -1,9 +1,11 @@
-var extend = require('./oo.js');
-var Char = require('./character.js');
-var fs = require('fs');
-var path = require ('path');
+var extend = require('./oo.js'),
+	Char = require('./character.js'),
+	fs = require('fs'),
+	path = require ('path');
 
-var NPC = extend(function() {}, Char);
+var NPC = extend(function() {
+	this.wimpy_ratio = 0;	//make npc do not flee as default.
+}, Char);
 
 NPC.__PATH = '/data/npc'; 
 
@@ -16,6 +18,25 @@ NPC.loadFromJSON = function(data) {
 NPC.load = function(filename) {
 	var data = require(path.join(__dirname, '..', NPC.__PATH, filename + '.json'));
 	return NPC.loadFromJSON(data);
+}
+
+NPC.prototype.accept_fight = function(who) {
+	if (!who)
+		return 0;
+	
+	var RANK_D = global._daemons.rankd;
+	if (this.is_fighting()) {
+		this.command("say " + RANK_D.query_respect(who) + "想要倚多取胜吗?");
+		return 0;
+	}
+	
+	if (this.vitality * 100 / this.max_vitality > 90) {
+		this.command("say 既然" + RANK_D.query_respect(who)
+				+ "赐教，" + RANK_D.query_self(this)
+				+ "只好奉陪，我们点到为止。");
+		return 1;
+	}
+	return 0;
 }
 
 module.exports = NPC;

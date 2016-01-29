@@ -24,3 +24,5 @@ exports.CMD = require('./cmd.js');
 exports.SKILL = require('./skill.js');
 exports.WEAPON = require('./weapon.js');
 exports.extend = require('./oo.js');
+
+exports.CHAR = require('./character.js');

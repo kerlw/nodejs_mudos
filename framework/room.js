@@ -6,7 +6,7 @@ var extend = require('./oo.js'),
 
 var ROOM = extend(function(){}, MObject);
 
-ROOM.__DIRECTORIES__ = {
+ROOM.__DIRECTIONS__ = {
 	"east" : "东",
 	"west" : "西",
 	"north" : "北",
@@ -22,6 +22,24 @@ ROOM.__DIRECTORIES__ = {
 	
 	"enter" : "内",
 	"out" : "外"
+}
+
+ROOM.__DIR_OPPOSITE__ = {
+	"east" : "西面",
+	"west" : "东面",
+	"north" : "南面",
+	"south" : "北面",
+	
+	"northeast" : "西南边",
+	"southeast" : "西北边",
+	"northwest" : "东南边",
+	"southwest" : "东北边",
+	
+	"up" : "下边",
+	"down" : "上面",
+	
+	"enter" : "外面",
+	"out" : "内面"
 }
 
 ROOM.loadFromJSON = function(data) {
@@ -75,7 +93,7 @@ ROOM.prototype.look_response = function(avoid) {
 	};
 	
 	for (var dir in this.exits) {
-		if (!(dir in ROOM.__DIRECTORIES__))
+		if (!(dir in ROOM.__DIRECTIONS__))
 			continue;
 			
 		var room_id = this.exits[dir];
@@ -83,7 +101,7 @@ ROOM.prototype.look_response = function(avoid) {
 			ret['exits'][dir] = {
 					id : room_id,
 					dir : dir,
-					dir_name : ROOM.__DIRECTORIES__[dir],
+					dir_name : ROOM.__DIRECTIONS__[dir],
 					name : _objs.rooms[room_id].name
 			};
 		}

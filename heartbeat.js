@@ -82,13 +82,14 @@ hb.prototype.set_heart_beat = function(obj, to) {
 		return;
 	
 	var target_hb = null;
-	if (obj == this.current_hb_obj) {
+	if (obj === this.current_hb_obj) {
 		target_hb = this.current_hb;
 	}
 	
 	if (!target_hb) {
-		for (var hb in this.hb_append_array) {
-			if (hb && hb.obj == obj) {
+		for (var i = 0; i < this.hb_append_array.length; i++) {
+			var hb = this.hb_append_array[i];
+			if (hb && hb.obj === obj) {
 				target_hb = hb;
 				break;
 			}
@@ -96,21 +97,21 @@ hb.prototype.set_heart_beat = function(obj, to) {
 	}
 	
 	if (!target_hb) {
-		for (var hb in this.hb_array) {
-			if (hb && hb.obj == obj) {
+		for (var i = 0; i < this.hb_array.length; i++) {
+			var hb = this.hb_array[i];
+			if (hb && hb.obj === obj) {
 				target_hb = hb;
 				break;
 			}
 		}
 	}
 	
-	if (to == 0) {
+	if (to === 0) {
 		obj.flags &= ~FLAGS.O_HEART_BEAT;
 		if (target_hb) {
-			target_hb.deleted = true;
+			target_hb.deleted = 1;
 			return 1;
 		}
-		return 0;
 	} else {
 		obj.flags |= FLAGS.O_HEART_BEAT;
 		if (!target_hb) {

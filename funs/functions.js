@@ -58,3 +58,10 @@ exports.present = function(obj, env) {
 exports.users = function() {
 	return global._objs.players;
 }
+
+exports.random = function(max) {
+	if (!max || max <= 0)
+		return 0;
+	
+	return Math.floor(Math.random() * max * 100) % max;
+}
