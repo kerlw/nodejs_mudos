@@ -34,7 +34,7 @@ body{
 	padding-top:5px;
 }
 .desc{
-    color:#3300FF;
+    color:#00DD00;
 	text-indent: 2em;
 }
 .main{
@@ -51,6 +51,8 @@ body{
 .msglist{
     color:#9ACD32;
 	height:280px;
+        overflow-y:scroll;
+        word-break:break-all
 }
 .say{
     height:38px;
@@ -71,6 +73,7 @@ body{
     width:30%;
     height:49px;
     text-align:center;
+    vertical-align: middle;
     border-color:#EEC900;
 }
 .obj-info{

@@ -10,6 +10,7 @@
 	 */
 	socket.on('resp', function(msg) {
 		$('#message').append('<br>' + msg);
+		$('#message').scrollTop = $('#message').scrollHeight;
 	});
 	socket.on('fail', function(msg) {
 		$('#message').append('<br>' + msg);
