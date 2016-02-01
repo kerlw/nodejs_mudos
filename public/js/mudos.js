@@ -27,7 +27,7 @@
 		refresh_move_controller(msg.name, msg.exits);
 		$('.room-title').text(msg.name);
 		$('#room_desc').text(msg.desc);
-		//$('#env_objs').empty();
+		$('#env_objs').empty();
 		if (msg.objs) {
 			for ( var name in msg.objs) {
 				$('#env_objs').append($('<li>').attr('class', 'room-obj').attr('value', msg.objs[name]).text(name));
@@ -47,9 +47,7 @@
 
     $('.obj').on('click', function () {
 		var $me = $(this);
-		$me.modal({
-			keyboard: false
-		});
+		$me.modal();
 	});
 
 	$('.mc-btn').on('click', function () {
