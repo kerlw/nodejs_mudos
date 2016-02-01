@@ -24,6 +24,10 @@ Player.prototype.onDisconnected = function() {
 	console.log('user disconnected');
 }
 
+Player.prototype.is_player = function() {
+	return 1;
+}
+
 Player.prototype.recv_message = function(msgclz, msg) {
 	//TODO this is just a temporary solution
 	if (!msgclz || (msgclz !== 'fail' && msgclz !== 'room'))

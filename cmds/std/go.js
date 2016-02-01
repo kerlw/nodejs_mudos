@@ -43,9 +43,9 @@ cmd_go.prototype.execute = function(sender, arg) {
 	
 	if (sender.move_to(dest_room)) {
 		if (sender.is_fighting())
-			FUNCTIONS.tell_room(env, sender.name + "向" + fm.ROOM.__DIRECTIONS_[arg] + "落荒而逃.", env);
+			FUNCTIONS.tell_room(env, sender.name + "向" + fm.ROOM.__DIRECTIONS__[arg] + "落荒而逃.", env);
 		else
-			FUNCTIONS.tell_room(env, sender.name + "向" + fm.ROOM.__DIRECTIONS_[arg] + "离开了.", env);
+			FUNCTIONS.tell_room(env, sender.name + "向" + fm.ROOM.__DIRECTIONS__[arg] + "离开了.", env);
 		
 		FUNCTIONS.tell_room(dest_room, sender.name + "从" + fm.ROOM.__DIR_OPPOSITE_NAME__[arg] + "走了过来.", new Array(sender))
 	}

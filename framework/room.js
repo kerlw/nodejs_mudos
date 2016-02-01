@@ -24,7 +24,7 @@ ROOM.__DIRECTIONS__ = {
 	"out" : "外"
 }
 
-ROOM.__DIR_OPPOSITE__ = {
+ROOM.__DIR_OPPOSITE_NAME__ = {
 	"east" : "西面",
 	"west" : "东面",
 	"north" : "南面",
