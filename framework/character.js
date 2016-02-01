@@ -32,7 +32,6 @@ var Character = extend(function() {
 	this.equipments = {};
 	
 	this.enable_player();
-	console.log(this.name + " living is " + this.living());
 }
 , MObject);
 
@@ -71,7 +70,7 @@ Character.prototype.heart_beat = function() {
 	
 	if (this.vitality < 0) {
 		//TODO quest kill
-		remove_all_enemy();
+		this.remove_all_enemy();
 		if (!this.living()) 
 			this.die();
 		else
@@ -110,8 +109,8 @@ Character.prototype.is_fighting = function(target) {
 		return (this.enemy.length > 0);
 	
 	if (typeof target === 'string') {
-		for (var en in this.enemy)
-			if (en === target)
+		for (var i = 0; i < this.enemy.length; i++)
+			if (this.enemy[i] === target)
 				return 1;
 	} else if (target instanceof MObject) {
 		return this.is_fighting(target.id);
@@ -193,7 +192,7 @@ Character.prototype.clean_up_enemy = function() {
 				|| (!en.living() && !this.is_killing(en.id)))
 			en.remove_enemy(this);
 		else
-			new_enemy.push(en);
+			new_enemy.push(en.id);
 	}
 	this.enemy = new_enemy;
 }
@@ -205,8 +204,9 @@ Character.prototype.remove_enemy = function(ob) {
 	var new_enemy = new Array();
 	while (this.enemy.length > 0) {
 		var en = this.enemy.shift();
-		if (!en || en === ob.id)
+		if (!en || en == ob.id) {
 			continue;
+		}
 		
 		new_enemy.push(en);
 	}
@@ -215,6 +215,17 @@ Character.prototype.remove_enemy = function(ob) {
 
 Character.prototype.command = function(cmd, arg) {
 	fm.CMD.exec(this, cmd, arg);
+}
+
+Character.prototype.recv_damage = function(type, damage, who) {
+	if (type != "vitality" && type != "force")
+		throw "unkonw type of damage received." + type;
+	
+	var val = this[type] - damage;
+	if (val < 0)
+		val = -1;
+	
+	this[type] = val;
 }
 
 module.exports = Character;

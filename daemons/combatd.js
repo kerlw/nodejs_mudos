@@ -32,6 +32,33 @@ var winner_msg = new Array(
     "$n向后退了几步，说道：这场比试算我输了，佩服，佩服！",
     "$n向后一纵，躬身做揖说道：阁下武艺不凡，果然高明！");
 
+combatd.prototype.eff_status_msg = function(ratio) {
+        if (ratio==100) return "看起来气血充盈，并没有受伤。";
+        if (ratio > 95) return "似乎受了点轻伤，不过光从外表看不大出来。";
+        if (ratio > 90) return "看起来可能受了点轻伤。";
+        if (ratio > 80) return "受了几处伤，不过似乎并不碍事。";
+        if (ratio > 60) return "受伤不轻，看起来状况并不太好。";
+        if (ratio > 40) return "气息粗重，动作开始散乱，看来所受的伤著实不轻。";
+        if (ratio > 30) return "已经伤痕累累，正在勉力支撑著不倒下去。";
+        if (ratio > 20) return "受了相当重的伤，只怕会有生命危险。";
+        if (ratio > 10) return "伤重之下已经难以支撑，眼看就要倒在地上。";
+        if (ratio > 5 ) return "受伤过重，已经奄奄一息，命在旦夕了。";
+        return "受伤过重，已经有如风中残烛，随时都可能断气。";
+}
+
+combatd.prototype.status_msg = function(ratio) {
+        if (ratio==100) return "看起来充满活力，一点也不累。";
+        if (ratio > 95) return "似乎有些疲惫，但是仍然十分有活力。";
+        if (ratio > 90) return "看起来可能有些累了。";
+        if (ratio > 80) return "动作似乎有点不太灵光，但仍然有条不紊。";
+        if (ratio > 60) return "气喘嘘嘘，看起来状况并不太好。";
+        if (ratio > 40) return "似乎十分疲惫，看来需要好好休息了。";
+        if (ratio > 30) return "招架已然散乱，正勉力支撑著不倒下去。";
+        if (ratio > 20) return "看起来已经力不从心了。";
+        if (ratio > 10) return "歪歪斜斜地站都站立不稳，眼看就要倒地。";
+        return "已经陷入半昏迷状态，随时都可能摔倒晕去。";
+}
+
 combatd.prototype.do_attack = function(me, other, weapon, type) {
 	if (!me || !other || FUNCTIONS.environment(me) !== FUNCTIONS.environment(other))
 		return 0;
@@ -60,7 +87,21 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 	}
 	
 	//3. if not parried either, OK, it's time to decide damage.
-	FUNCTIONS.message_combatd("$N击中了$n", me, other);
+	var unarmed = 1;
+	if (me.skills.unarmed)
+		unarmed = me.skills.unarmed.lv;
+	var damage = Math.floor(10 + me.str * unarmed / 100);
+	other.recv_damage('vitality', damage);
+	FUNCTIONS.message_combatd("$N击中了$n,造成了"+damage+"点伤害.", me, other);
+	
+	if (damage > 0) {
+		if (other.vitality*3 <= other.max_vitality
+				&& !me.is_killing(other.id) && !other.is_killing(me.id)) {
+			me.remove_enemy(other);
+			other.remove_enemy(me);
+			FUNCTIONS.message_vision(winner_msg[FUNCTIONS.random(winner_msg.length)], me, other);
+		}
+	}
 	return 1;
 }
 
