@@ -74,16 +74,10 @@
 		socket.emit('cmd', "go " + $me.attr('direction'));
 	});
 	
-	//debug code, click hp panel to send hp cmd
-	$('.obj-info.bs').on('click', function() {
-		socket.emit('cmd', 'hp');
-	});
-	
-
 	// **-------------------------------------------------------------
 	// ** Function
 	// **-------------------------------------------------------------
-
+	
 	function refresh_move_controller(name,exits) {
 		$('.mc-btn').attr('direction', '').attr('enabled', 0).empty();
         $('#r2c2').text(name);
@@ -113,7 +107,12 @@
         }
 	}
 	
+	//a timer to auto refresh hp panel
+	var refresh_hp_timer;
 	function refresh_hp_panel(hp) {
+		//remove timer at first
+		clearTimeout(refresh_hp_timer);
+		
 		var str = String.format('生命: {0} / {1} ({2}%)<br>', hp.vlt, hp.evlt, (hp.evlt * 100 / hp.mvlt)); 
 		str += String.format('体力: {0} / {1} ({2}%)<br>', hp.smt, hp.esmt, (hp.esmt * 100 / hp.msmt));
 		if (hp.mfrc > 0)
@@ -121,5 +120,8 @@
 		else
 			str += String.format('内力: 无<br>');
 		$('.obj-info.bs').html(str);
+		
+		//reset timer
+		refresh_hp_timer = setTimeout(function() {socket.emit('cmd', 'hp');}, 5000);
 	}
 }(window));

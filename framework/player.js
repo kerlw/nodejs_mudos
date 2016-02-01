@@ -10,6 +10,13 @@ var Player = extend(function(socket) {
 	this.name = "unamed";
 	this.socket = socket;
 	
+	//temporary code begin
+	this.water = 500;
+	this.max_water = 500;
+	this.food = 500;
+	this.max_food = 500;
+	//temporary code end
+	
 	socket.player = this;
     socket.on('cmd', function(arg) {
         console.log('cmd: ' + arg.toString());

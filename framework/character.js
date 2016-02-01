@@ -91,7 +91,7 @@ Character.prototype.heart_beat = function() {
 		this.attack();
 	}
 	
-	if ((this.cnd_flags & CND_FLAGS.CND_NO_HEAL_UP) == 0 && typeof this.heal_up == 'function')
+	if ((this.cnd_flags & CND_FLAGS.CND_NO_HEAL_UP) == 0)
 		this.heal_up();
 	
 	//TODO heal, update age, idle and so on.
@@ -250,7 +250,7 @@ Character.prototype.heal_up = function() {
 	if (!env || env.query_tmp('no_update'))
 		return 0;
 	
-	if (this.is_fighting() || !this.query_tmp('allow_heal_up'))
+	if (this.is_fighting() || this.query_tmp('disallow_heal_up'))
 		return 0;
 	
 	var ret = 0;
@@ -269,18 +269,18 @@ Character.prototype.heal_up = function() {
 	if (this.is_player() && this.water < 1)
 		return ret;
 	
-	this.vilality += this.con / 3 + this.force / 100;
-	if (this.vilality >= this.eff_vilality) {
-		this.vilality = this.eff_vilality;
-		if (this.eff_vilality < this.max_vilality) {
-			this.eff_vilality++;
+	this.vitality += Math.floor(this.con / 3 + this.force / 100);
+	if (this.vitality >= this.eff_vitality) {
+		this.vitality = this.eff_vitality;
+		if (this.eff_vitality < this.max_vitality) {
+			this.eff_vitality++;
 			ret++;
 		}
 	} else 
 		ret++;
 	
 	if (this.max_force > 0 && this.force < this.max_force) {
-		this.force += 1+ this.skills.force / 100;
+		this.force += 1 + Math.floor(this.skills.force / 100);
 		if (this.force > this.max_force) {
 			this.force = this.max_force;
 			ret++;
@@ -291,7 +291,9 @@ Character.prototype.heal_up = function() {
 	if (this.is_player() && this.food < 1)
 		return ret;
 	
-	this.stamina += this.con / 3 + this.skills.force / 10;
+	this.stamina += Math.floor(this.con / 3);
+	if (this.skills.force)
+		this.stamina += Math.floor(this.skills.force.lv / 10);
 	if (this.stamina >= this.eff_stamina) {
 		this.stamina = this.eff_stamina;
 		if (this.eff_stamina < this.max_stamina) {
