@@ -30,11 +30,17 @@ Player.prototype.is_player = function() {
 
 Player.prototype.recv_message = function(msgclz, msg) {
 	//TODO this is just a temporary solution
-	if (!msgclz || (msgclz !== 'fail' && msgclz !== 'room'))
+	if (!msgclz || (msgclz !== 'fail' && msgclz !== 'room' && msgclz !== 'hp'))
 		msgclz = 'resp';
 	
 	if (this.socket)
 		this.socket.emit(msgclz, msg);
 }
+
+Player.prototype.is_interactive = function() {
+	//TODO if socket is disconnected, return 0;
+	return 1;
+}
+
 
 module.exports = Player;

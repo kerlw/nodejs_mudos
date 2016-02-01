@@ -11,6 +11,10 @@
 			O_ENABLE_COMMANDS : 0x08
 	};
 	
+	global.CND_FLAGS = {
+			CND_NO_HEAL_UP : 0x01
+	}
+	
 	global.HB_ENGINE = r('heartbeat')();
 	global.HB_ENGINE.init();
 	

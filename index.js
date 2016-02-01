@@ -25,7 +25,8 @@ app.get('/', function(req, res) {
 io.on('connection', function(socket) {
     var player = new fm.Player(socket);
 	FUNCTIONS.move_object(player, _objs.rooms['softwarepark/office']);
-	fm.CMD.exec(player, 'look');
+	player.command('look');
+	player.command('hp');
 });
 
 http.listen(__config.port, function() {

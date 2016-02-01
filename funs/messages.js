@@ -84,6 +84,10 @@
 		if (me)
 			message("fail", msg, me);
 	}
+	
+	f.message = function(clz, msg, target, exclude) {
+		message(clz, msg, target, exclude);
+	} 
 
 	function message(msgclz, msg, target, exclude) {
 		if (!target)

@@ -16,6 +16,11 @@ var Character = extend(function() {
 	this.vitality = 100;
 	this.eff_vitality = 100;	
 	this.max_vitality = 100; 
+	
+	this.stamina = 100;
+	this.eff_stamina = 100;
+	this.max_stamina = 100;
+	
 	this.force = 0;
 	this.eff_force = 0;
 	this.max_force = 0;
@@ -27,8 +32,7 @@ var Character = extend(function() {
 	
 	this.skills = {};
 	
-	this.wimpy_ratio = 50;
-	this.tmps = {};
+	this.wimpy_ratio = 0;
 	this.equipments = {};
 	
 	this.enable_player();
@@ -86,6 +90,9 @@ Character.prototype.heart_beat = function() {
 		}
 		this.attack();
 	}
+	
+	if ((this.cnd_flags & CND_FLAGS.CND_NO_HEAL_UP) == 0 && typeof this.heal_up == 'function')
+		this.heal_up();
 	
 	//TODO heal, update age, idle and so on.
 }
@@ -226,6 +233,75 @@ Character.prototype.recv_damage = function(type, damage, who) {
 		val = -1;
 	
 	this[type] = val;
+	
+	if (this.is_player())
+		this.command('hp');
+}
+
+Character.prototype.is_ghost = function() {
+	return 0;
+}
+
+Character.prototype.heal_up = function() {
+	if (this.is_ghost())
+		return 0;
+	
+	var env = FUNCTIONS.environment(this);
+	if (!env || env.query_tmp('no_update'))
+		return 0;
+	
+	if (this.is_fighting() || !this.query_tmp('allow_heal_up'))
+		return 0;
+	
+	var ret = 0;
+	if (this.water > 0) {
+		this.water--;
+		ret++;
+	}
+	if (this.food > 0) {
+		this.food--;
+		ret++;
+	}
+	
+	if (this.is_busy())
+		return ret;
+	
+	if (this.is_player() && this.water < 1)
+		return ret;
+	
+	this.vilality += this.con / 3 + this.force / 100;
+	if (this.vilality >= this.eff_vilality) {
+		this.vilality = this.eff_vilality;
+		if (this.eff_vilality < this.max_vilality) {
+			this.eff_vilality++;
+			ret++;
+		}
+	} else 
+		ret++;
+	
+	if (this.max_force > 0 && this.force < this.max_force) {
+		this.force += 1+ this.skills.force / 100;
+		if (this.force > this.max_force) {
+			this.force = this.max_force;
+			ret++;
+		}
+	} else
+		ret++;
+	
+	if (this.is_player() && this.food < 1)
+		return ret;
+	
+	this.stamina += this.con / 3 + this.skills.force / 10;
+	if (this.stamina >= this.eff_stamina) {
+		this.stamina = this.eff_stamina;
+		if (this.eff_stamina < this.max_stamina) {
+			this.eff_stamina++;
+			ret++;
+		}
+	} else 
+		ret++;
+	
+	return ret;
 }
 
 module.exports = Character;

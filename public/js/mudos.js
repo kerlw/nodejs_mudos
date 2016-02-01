@@ -1,5 +1,16 @@
 (function(win) {
 	'use strict';
+	
+	// add a format method to String class
+	if (!String.format) {
+		String.format = function(format) {
+			var args = Array.prototype.slice.call(arguments, 1);
+			return format.replace(/{(\d+)}/g, function(match, number) {
+				return typeof args[number] != 'undefined' ? args[number]
+						: match;
+			});
+		};
+	}
 
 	var $msgList = $('#message');
 	var msgLimit = 1000;
@@ -44,6 +55,10 @@
 			});
 		}
 	});
+	
+	socket.on('hp', function(msg) {
+		refresh_hp_panel(msg);
+	});
 
     $('.obj').on('click', function () {
 		var $me = $(this);
@@ -57,6 +72,11 @@
 		}
 
 		socket.emit('cmd', "go " + $me.attr('direction'));
+	});
+	
+	//debug code, click hp panel to send hp cmd
+	$('.obj-info.bs').on('click', function() {
+		socket.emit('cmd', 'hp');
 	});
 	
 
@@ -91,5 +111,15 @@
         	if ($ele)
         		$ele.text(exits[dir].name).attr('direction', dir).attr('enabled', 1);
         }
+	}
+	
+	function refresh_hp_panel(hp) {
+		var str = String.format('生命: {0} / {1} ({2}%)<br>', hp.vlt, hp.evlt, (hp.evlt * 100 / hp.mvlt)); 
+		str += String.format('体力: {0} / {1} ({2}%)<br>', hp.smt, hp.esmt, (hp.esmt * 100 / hp.msmt));
+		if (hp.mfrc > 0)
+			str += String.format('内力: {0} / {1} ({2}%)<br>', hp.frc, hp.efrc, (hp.efrc * 100 / hp.mfrc));
+		else
+			str += String.format('内力: 无<br>');
+		$('.obj-info.bs').html(str);
 	}
 }(window));
