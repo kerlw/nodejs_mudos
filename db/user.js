@@ -1,18 +1,11 @@
-var mongoose = require('mongoose');
-var db = mongoose.connect(__config.db.url, function (err) {
-    if (!err) {
-        console.log("connected to mongoDB succeed.");
-    } else {
-        throw err;
-    }
-});
+var dbClient = require('./dbClient.js');
 
-var userSchema = mongoose.Schema({
+var userSchema = dbClient.Schema({
     name: String,
     password: String
 });
 
-var User = mongoose.model('tb_user', userSchema, 'tb_user');
+var User = dbClient.model('tb_user', userSchema, 'tb_user');
 
 User.prototype.findUser = function (name, pass, callback) {
     console.log('para=' + name + pass);

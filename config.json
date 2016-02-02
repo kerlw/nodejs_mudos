@@ -1,12 +1,14 @@
 {
-	"port" : 3000,
-	
-	"data_dir" : "/data",
-	
-	"hb_interval" : 2000,
-	
-	"db" : {
-	    "url" : "mongodb://mudos:mudos@10.4.250.42:27017/mudos"
-	}
-	
+    "port" : 3000,
+    
+    "data_dir" : "/data",
+    
+    "hb_interval" : 2000,
+    
+    "db" : {
+        "url" : "mongodb://mudos:mudos@10.4.250.42:27017/mudos",
+        "autoReconnect": true,
+        "poolSize": 10
+    }
+    
 }
