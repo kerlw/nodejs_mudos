@@ -49,5 +49,8 @@ Player.prototype.is_interactive = function() {
 	return 1;
 }
 
+Player.prototype.is_newbie = function() {
+	return 0;
+}
 
 module.exports = Player;

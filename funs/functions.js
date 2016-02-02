@@ -65,3 +65,21 @@ exports.random = function(max) {
 	
 	return Math.floor(Math.random() * max * 100) % max;
 }
+
+exports.destruct = function(obj) {
+	if (!obj || !(obj instanceof fm.MObject) || !obj.id)
+		return;
+	
+	if (obj.holder) {
+		this.remove_sent(obj, obj.holder);
+		obj.holder = null;
+	}
+
+	if (HB_ENGINE.remove_object(obj));
+	
+	delete _objs.players[obj.id];
+	delete _objs.rooms[obj.id];
+	delete _objs.npcs[obj.id];
+	delete _objs.items[obj.id];
+	
+} 

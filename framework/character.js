@@ -34,6 +34,7 @@ var Character = extend(function() {
 	
 	this.wimpy_ratio = 0;
 	this.equipments = {};
+	this.ghost = 0;
 	
 	this.enable_player();
 }
@@ -49,7 +50,13 @@ Character.prototype.is_player = function() {
 
 Character.prototype.enable_player = function() {
 	//TODO do more works here, set path for each char
+	delete this.disable_type;
 	this.enable_commands();
+}
+
+Character.prototype.disable_player = function(reason) {
+	this.disable_commands();
+	this.disable_type = reason;
 }
 
 
@@ -98,7 +105,7 @@ Character.prototype.heart_beat = function() {
 }
 
 Character.prototype.fight = function(target) {
-	if (!target || target === this || !(this instanceof MObject))
+	if (!target || target === this || !(target instanceof MObject))
 		return;
 	
 	if (!target.living() || !FUNCTIONS.present(target, FUNCTIONS.environment(this)))
@@ -123,6 +130,16 @@ Character.prototype.is_fighting = function(target) {
 		return this.is_fighting(target.id);
 	}
 	return 0;
+}
+
+Character.prototype.kill = function(target) {
+	if (!target || target === this || !(target instanceof MObject))
+		return;
+	
+	if (!this.is_killing(target.id))
+		this.killer.push(target.id);
+	
+	this.fight(target);
 }
 
 Character.prototype.is_killing = function(id) {
@@ -159,6 +176,41 @@ Character.prototype.continue_action = function() {
 }
 
 Character.prototype.die = function() {
+	var env = FUNCTIONS.environment(this);
+	if (env && env.alternative_die && typeof env.alternative_die === 'function')
+		return env.alternative_die(this);
+	
+	if (!this.living())
+		this.revive(1);	//make 'me' revive in quiet mode, nor 'me' could not get dead annouce msg
+	
+	if (this.is_ghost())
+		return;
+	
+	if (this.is_busy())
+		this.interrupt_me();
+	
+	_daemons.combatd.announce(this, "dead");
+	//TODO add killer to make_corpse
+	var corpse = _daemons.combatd.make_corpse(this);
+	corpse.move_to(env);
+	
+	this.remove_all_killer();
+	
+	if (this.is_player()) {
+		this.ghost = 1;
+		this.vitality = 1;
+		this.eff_vitality = 1;
+		this.stamina = 1;
+		this.eff_stamina = 1;
+		
+//		this.move_to(DEATH_ROOM);
+		
+	} else {
+		FUNCTIONS.destruct(this);
+	}
+}
+
+Character.prototype.interrupt_me = function(who) {
 	
 }
 
@@ -173,14 +225,57 @@ Character.prototype.attack = function() {
 }
 
 Character.prototype.unconcious = function() {
+	if (!this.living())
+		return;
 	
+	this.remove_all_enemy();
+	FUNCTIONS.tell_object(this, "HIR \n你只觉得头昏脑胀，眼前一黑，接着什么也不知道了……\n\n NOR");
+	this.command("hp");
+	this.disable_player("<昏迷不醒>");
+	this.set_tmp("block_msg/all", 1);
+	
+	_daemons.combatd.announce(this, "unconcious");
+	
+	this.call_out("revive", 3);//(30 + FUNCTIONS.random(60 - this.con)));
+}
+
+Character.prototype.revive = function(quiet) {
+	this.remove_call_out("revive");
+	
+	this.enable_player();
+	var env = FUNCTIONS.environment(this);
+	if (env && env instanceof Character)
+		this.move_to(FUNCTIONS.environment(env));
+	
+	this.del_tmp("block_msg/all");
+	
+	if (!quiet) {
+		_daemons.combatd.announce(this, "revive");
+		FUNCTIONS.tell_object(this, "HIY \n一股暖流发自丹田流向全身，慢慢地你又恢复了知觉……\n\n NOR");
+		this.command("hp");
+	}
+}
+
+Character.prototype.remove_all_killer = function() {
+	this.killer = {};
+	while (this.enemy.length > 0) {
+		var en = this.enemy.shift();
+		var env = FUNCTIONS.environment(this);
+		if (!en || !(en = FUNCTIONS.present(en, env)) || !(en instanceof Character))
+			continue;
+		
+		en.remove_killer(this);
+	}
 }
 
 Character.prototype.remove_all_enemy = function() {
 	while (this.enemy.length > 0) {
 		var en = this.enemy.shift();
-		if (en instanceof Character)
-			en.remove_enemy(this);
+		var env = FUNCTIONS.environment(this);
+		if (!en || !(en = FUNCTIONS.present(en, env)) || !(en instanceof Character))
+			continue;
+		
+		en.remove_enemy(this);
 	}
 }
 
@@ -202,6 +297,14 @@ Character.prototype.clean_up_enemy = function() {
 			new_enemy.push(en.id);
 	}
 	this.enemy = new_enemy;
+}
+
+Character.prototype.remove_killer = function(ob) {
+	if (this.enemy.length == 0 || !ob || !(ob instanceof Character))
+		return;
+	
+	delete this.killer[ob.id];
+	this.remove_enemy(ob);
 }
 
 Character.prototype.remove_enemy = function(ob) {
@@ -239,6 +342,10 @@ Character.prototype.recv_damage = function(type, damage, who) {
 }
 
 Character.prototype.is_ghost = function() {
+	return this.ghost;
+}
+
+Character.prototype.is_corpse = function() {
 	return 0;
 }
 

@@ -59,6 +59,27 @@ combatd.prototype.status_msg = function(ratio) {
         return "已经陷入半昏迷状态，随时都可能摔倒晕去。";
 }
 
+combatd.prototype.announce = function(ob, event) {
+	switch (event) {
+		case "dead":
+			FUNCTIONS.message_vision("\n$N「啪」的一声倒在地上，挣扎着抽动了几下就死了。\n\n", ob);
+			break;
+		case "unconcious":
+			if (ob.race != "人类")
+				FUNCTIONS.message_vision("\n$N挣扎了几下，一个不稳晕倒过去。\n\n", ob);
+			else 
+				FUNCTIONS.message_vision("\n$N神志迷糊，脚下一个不稳，倒在地上昏了过去。\n\n", ob);
+			break;
+		case "revive":
+			if (ob.blind || ob.race != "人类")
+				FUNCTIONS.message_vision("\n$N身子一颤，扭动了几下，清醒了过来。\n\n", ob);
+			else if(ob.mute)
+				FUNCTIONS.message_vision("\n$N慢慢清醒了过来，睁开眼睛站起来摇了摇头。\n\n", ob);
+			else 
+				FUNCTIONS.message_vision("\n$N身子动了动，口中呻吟了几声，清醒过来。\n\n", ob);
+	}
+}
+
 combatd.prototype.do_attack = function(me, other, weapon, type) {
 	if (!me || !other || FUNCTIONS.environment(me) !== FUNCTIONS.environment(other))
 		return 0;
@@ -90,7 +111,7 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 	var unarmed = 1;
 	if (me.skills.unarmed)
 		unarmed = me.skills.unarmed.lv;
-	var damage = Math.floor(10 + me.str * unarmed / 100);
+	var damage = Math.floor(101 + me.str * unarmed / 100);
 	other.recv_damage('vitality', damage);
 	FUNCTIONS.message_combatd("$N击中了$n,造成了"+damage+"点伤害.", me, other);
 	
@@ -128,4 +149,21 @@ combatd.prototype.fight = function(me, other) {
 		me.tmps.defending = 1;
 		FUNCTIONS.message_combatd(guard_msg[FUNCTIONS.random(guard_msg.length)], me, other);
 	}
+}
+
+combatd.prototype.make_corpse = function(whose, killer) {
+	var corpse = new _std.corpse();
+	corpse.name = whose.name + "的尸体";
+	corpse.desc = whose.desc + "然而，" +  _daemons.rankd.gender_pronoun(whose) + 
+				"已经死了，只剩下一具尸体静静地躺在这里。\n";
+	var id = "corpse#" + whose.id + "#", index = 0;
+	while (_objs.items[id + index]) {
+		index++;
+	}
+	corpse.id = id;
+	_objs.items[id] = corpse;
+	corpse.move_to(FUNCTIONS.environment(whose));
+	
+	//TODO items on this corpse
+	return corpse;
 }

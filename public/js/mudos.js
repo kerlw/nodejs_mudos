@@ -40,8 +40,8 @@
 		$('#room_desc').text(msg.desc);
 		$('#env_objs').empty();
 		if (msg.objs) {
-			for ( var name in msg.objs) {
-				$('#env_objs').append($('<li>').attr('class', 'room-obj').attr('value', msg.objs[name]).text(name));
+			for ( var id in msg.objs) {
+				$('#env_objs').append($('<li>').attr('class', 'room-obj').attr('value', id).text(msg.objs[id]));
 			}
 			// bind click handle function
 			$('.room-obj').on('click', function() {
@@ -51,7 +51,7 @@
 				// and this attr should send to server, and server should response
 				// with it.
 //				socket.emit('cmd', 'look ' + $(this).attr('value'));
-				socket.emit('cmd', 'fight ' + $(this).attr('value'));
+				socket.emit('cmd', 'kill ' + $(this).attr('value'));
 			});
 		}
 	});

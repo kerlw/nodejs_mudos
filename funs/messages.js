@@ -68,7 +68,7 @@
 
 	f.say = function(ob, str, exclude) {
 		if (ob && f.environment(ob)) {
-			message("say", str, environment(ob), ob);
+			message("say", str, f.environment(ob), ob);
 		}
 	}
 

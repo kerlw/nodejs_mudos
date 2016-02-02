@@ -77,9 +77,9 @@ hb.prototype.query_heart_beat = function(obj) {
 	}
 }
 
-hb.prototype.set_heart_beat = function(obj, to) {
-	if (to < 0 || !obj)
-		return;
+hb.prototype.find_target_hb = function(obj) {
+	if (!obj)
+		return null;
 	
 	var target_hb = null;
 	if (obj === this.current_hb_obj) {
@@ -106,6 +106,15 @@ hb.prototype.set_heart_beat = function(obj, to) {
 		}
 	}
 	
+	return target_hb;
+} 
+
+hb.prototype.set_heart_beat = function(obj, to) {
+	if (to < 0 || !obj)
+		return;
+	
+	var target_hb = this.find_target_hb(obj);
+	
 	if (to === 0) {
 		obj.flags &= ~FLAGS.O_HEART_BEAT;
 		if (target_hb) {
@@ -130,4 +139,10 @@ hb.prototype.set_heart_beat = function(obj, to) {
 		}
 	}
 	return 0;
+}
+
+hb.prototype.remove_object = function(obj) {
+	var target_hb = this.find_target_hb(obj);
+	if (target_hb)
+		target_hb.deleted = 1;
 }

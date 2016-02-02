@@ -111,7 +111,7 @@ ROOM.prototype.look_response = function(avoid) {
 		if (avoid && avoid[objId])
 			continue;
 		
-		ret['objs'][this.contains[objId].name] = this.contains[objId].id;
+		ret['objs'][this.contains[objId].id] = this.contains[objId].name;
 	}
 	return ret;
 }

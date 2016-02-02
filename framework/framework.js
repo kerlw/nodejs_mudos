@@ -22,6 +22,7 @@ exports.ROOM = require('./room.js');
 exports.Player = require('./player.js');
 exports.CMD = require('./cmd.js');
 exports.SKILL = require('./skill.js');
+exports.ITEM = require('./item.js');
 exports.WEAPON = require('./weapon.js');
 exports.extend = require('./oo.js');
 

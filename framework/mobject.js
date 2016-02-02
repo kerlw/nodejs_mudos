@@ -11,6 +11,8 @@ var MObject = function() {
 	//used to hold some temporary flags.
 	this.tmps = {};
 	
+	this.call_outs = {};
+	
 	this.init = function() {}
 }
 
@@ -55,6 +57,33 @@ MObject.prototype.set_tmp = function(key, value) {
 		return;
 	
 	this.tmps[key] = value;
+}
+
+MObject.prototype.del_tmp = function(key) {
+	if (key)
+		delete this.tmps[key];
+}
+
+MObject.prototype.call_out = function(func, delay, param) {
+	console.log("call_out is invoked : " + func + " in " + delay + " seconds");
+	if (delay <= 0)
+		delay = 1;
+
+	this.remove_call_out(func);
+	if (this[func] && typeof this[func] === 'function') {
+		this.call_outs[func] = setTimeout(call_out_fun, delay * 1000, this[func], this, param);
+	}
+}
+
+var call_out_fun = function(func, obj, arg) {
+	func.call(obj, arg);
+}
+
+MObject.prototype.remove_call_out = function(func) {
+	if (this.call_outs[func]) {
+		clearTimeout(this.call_outs[func]);
+		delete this.call_outs[func];
+	}
 }
 
 module.exports = MObject;

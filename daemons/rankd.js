@@ -52,3 +52,17 @@ rankd.prototype.query_close_self = function(who, other) {
 	return "区区不才在下我";
 }
 
+rankd.prototype.gender_pronoun = function(who) {
+	if (!who)
+		return "它";
+	
+	switch (who.gender) {
+	case "男性":
+		return "他";
+	case "女性":
+		return "她";
+	default:
+		return "它";
+	}
+}
+

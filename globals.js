@@ -1,6 +1,7 @@
 (function(r) {
 	global._cmds = {};
 	global._daemons = {};
+	global._std = {};
 	global.FUNCTIONS = {};
 	global._objs = { 'players' : {}, 'rooms': {}, 'npcs' : {}, 'areas' : {}, 'items' : {}, 'skills' : {} };
 	
@@ -25,6 +26,7 @@
 		fs = r('fs'),
 		path = r('path');
 	
+	r('std');
 	//init functions
 	r('funs');
 	//init commands

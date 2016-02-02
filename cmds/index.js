@@ -5,4 +5,5 @@
 	_cmds['fight'] = r('./std/fight.js')();
 	_cmds['say'] = r('./std/say.js')();
 	_cmds['hp'] = r('./std/hp.js')();
+	_cmds['kill'] = r('./std/kill.js')();
 })(require);
