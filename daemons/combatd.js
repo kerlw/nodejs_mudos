@@ -160,6 +160,7 @@ combatd.prototype.make_corpse = function(whose, killer) {
 	while (_objs.items[id + index]) {
 		index++;
 	}
+	id += index;
 	corpse.id = id;
 	_objs.items[id] = corpse;
 	corpse.move_to(FUNCTIONS.environment(whose));

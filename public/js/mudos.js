@@ -16,11 +16,6 @@
 	var msgLimit = 1000;
 	var socket = io();
 
-	/**
-	 * $('form').submit(function(){ var str = $('#m').val(); if (str.slice(0, 3)
-	 * === 'cmd') { socket.emit('cmd', str.slice(4)); } else socket.emit('chat
-	 * message', str); $('#m').val(''); return false; });
-	 */
 	socket.on('resp', function(msg) {
 		var oldMsg = $msgList.html();
 		if (oldMsg.length > msgLimit) {

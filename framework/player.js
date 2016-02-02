@@ -40,6 +40,9 @@ Player.prototype.recv_message = function(msgclz, msg) {
 	if (!msgclz || (msgclz !== 'fail' && msgclz !== 'room' && msgclz !== 'hp'))
 		msgclz = 'resp';
 	
+	if (this.query_tmp('block_msg/all'))
+		return;
+	
 	if (this.socket)
 		this.socket.emit(msgclz, msg);
 }

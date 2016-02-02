@@ -236,7 +236,7 @@ Character.prototype.unconcious = function() {
 	
 	_daemons.combatd.announce(this, "unconcious");
 	
-	this.call_out("revive", 3);//(30 + FUNCTIONS.random(60 - this.con)));
+	this.call_out("revive", (30 + FUNCTIONS.random(60 - this.con)));
 }
 
 Character.prototype.revive = function(quiet) {

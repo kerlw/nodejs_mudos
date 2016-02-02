@@ -1,6 +1,7 @@
 {
   "name": "NodeJS_MUDOS",
   "version": "1.0.0",
+  "private": true,
   "description": "A MUDOS implemented in node.js",
   "main": "index.js",
   "scripts": {
@@ -10,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.14.2",
+    "cookie-parser": "^1.4.1",
     "express": "^4.13.3",
     "jquery": "^2.2.0",
     "mongoose": "^4.3.7",

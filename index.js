@@ -7,6 +7,7 @@ require('globals');
 
 var express = require('express');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -22,8 +23,17 @@ app.use('/public', express.static(__dirname + '/public'));
 //io.set('heartbeats timeout', 50);
 //io.set('heartbeats interval', 20);
 
+app.use(cookieParser(__config.cookie_secret));
+
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname,'/index.htm'));
+	if (req.signedCookies) {
+		if (req.signedCookies.token) {
+			console.log('token is ' + req.signedCookies.token);
+			res.sendFile(path.join(__dirname,'/index.html'));
+			return;
+		}	
+	}
+	res.sendFile(path.join(__dirname,'/login.html'));
 });
 
 io.on('connection', function(socket) {
@@ -39,18 +49,31 @@ http.listen(__config.port, function() {
 });
 
 app.post('/ucenter', function(req, res) {
-    console.log(req.body);
-    var user = new db.User();
-    user.findUser(req.body.name, req.body.password, function(err, loginUser) {
-        console.log('err=' + err);
-        console.log('loginUser=' + loginUser);
-        if(loginUser){
-            console.log(req.body.name + ": 登陆成功 " + new Date());
-            var data = {'code':200,'msg':'login succeed!'};
-            res.end(JSON.stringify(data));
-        }else{
-            console.log(req.body.name + ": 登陆失败 " + new Date());
-            res.redirect('/');
-        }
-    });
+	var action = req.query.action;
+	switch (action) {
+	case 'login':
+		var user = new db.User();
+		user.findUser(req.body.name, req.body.passwd, function(err, loginUser) {
+			console.log('err=' + err);
+			console.log('loginUser=' + loginUser);
+			if(loginUser){
+				console.log(req.body.name + ": 登陆成功 " + new Date());
+//				var data = {'code':200,'msg':'login succeed!'};
+				res.cookie('name', req.body.name, { signed : true})
+					.cookie('token', 'my token',  { signed : true})
+					//.send(JSON.stringify(data));
+				//res
+				.redirect('/');
+			}else{
+				console.log(req.body.name + ": 登陆失败 " + new Date());
+			}
+		});
+		break;
+	case 'register':
+		break;
+	default:
+		console.log("Unknown action requested " + action);
+		break;
+	}
+	
 });
