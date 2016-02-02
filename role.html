@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+
+<div data-role="page">
+	<div data-role="header">
+		<h1>请创建您的角色</h1>
+	</div>
+
+	<div data-role="main" class="ui-content">
+		<form method="post" action="">
+			<div class="ui-field-contain">
+				<label for="fullname">请输入昵称：</label>
+				<input type="text" name="fullname" id="fullname">  
+			</div>
+			<fieldset data-role="controlgroup">
+				<legend>请选择您的性别:</legend>
+				<label for="male">男</label>
+				<input type="radio" name="gender" id="male" value="male">
+				<label for="female">女</label>
+				<input type="radio" name="gender" id="female" value="female"> 
+			</fieldset>
+			<input type="submit" class="ui-btn" value="提交">
+		</form>
+	</div>
+
+ 
+	<div data-role="footer">
+		<h3>极讯欢乐工作室</h3>
+	</div>
+</div>
+
+</body>
+</html>
