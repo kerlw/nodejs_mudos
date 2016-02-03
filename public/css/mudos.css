@@ -44,12 +44,16 @@ body{
 }
 .cmd{
     height:100px;
-	color:#3300FF;
+    color:#3300FF;
+    overflow-y:auto;
+    word-break:break-all;
 }
 .objs{
     height:208px;
-	color:#33F0FF;
+    color:#33F0FF;
     padding:0;
+    overflow-y:auto;
+    word-break:break-all;
 }
 .env-objs{
     list-style:none;
@@ -83,6 +87,7 @@ body{
 }
 .map{
     height:116px;
+    border:0;
 }
 .map table tbody tr td{
     width:30%;
@@ -96,9 +101,11 @@ body{
 .obj-info{
     height:77px;
     color:#8968CD;
+    overflow-y:auto;
+    word-break:break-all;
 }
 .sys-cmd{
-    height:38px;
+    height:37px;
     color:#8B008B;
     text-align:center;
     line-height: 38px;

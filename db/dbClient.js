@@ -17,7 +17,7 @@ mongoose.connect(__config.db.url, options, function (err) {
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongoose connection error:'));
 db.once('open', function callback () {
-    console.log('mongoose open success');
+    console.log('mongoose open success.');
 });
 
 module.exports = mongoose;
