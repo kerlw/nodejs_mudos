@@ -15,7 +15,9 @@ var jqy = require('jquery');
 var path = require('path');
 var fm = require('framework');
 var db = require('db');
+var crypto = require("crypto");
 
+app.use(cookieParser(__config.cookie_secret));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/public', express.static(__dirname + '/public'));
@@ -23,17 +25,17 @@ app.use('/public', express.static(__dirname + '/public'));
 //io.set('heartbeats timeout', 50);
 //io.set('heartbeats interval', 20);
 
-app.use(cookieParser(__config.cookie_secret));
-
 app.get('/', function(req, res) {
-	if (req.signedCookies) {
-		if (req.signedCookies.token) {
-			console.log('token is ' + req.signedCookies.token);
-			res.sendFile(path.join(__dirname,'/index.html'));
-			return;
-		}	
-	}
-	res.sendFile(path.join(__dirname,'/login.html'));
+    if (req.signedCookies) {
+        if (req.signedCookies.sessionId) {
+            console.log('sessionId is ' + req.signedCookies.sessionId);
+            console.log('passport is ' + req.signedCookies.passport);
+            res.sendFile(path.join(__dirname,'/index.html'));
+            return;
+        }   
+    }
+
+    res.sendFile(path.join(__dirname,'/login.html'));
 });
 
 io.on('connection', function(socket) {
@@ -49,31 +51,70 @@ http.listen(__config.port, function() {
 });
 
 app.post('/ucenter', function(req, res) {
-	var action = req.query.action;
-	switch (action) {
-	case 'login':
-		var user = new db.User();
-		user.findUser(req.body.name, req.body.passwd, function(err, loginUser) {
-			console.log('err=' + err);
-			console.log('loginUser=' + loginUser);
-			if(loginUser){
-				console.log(req.body.name + ": 登陆成功 " + new Date());
-//				var data = {'code':200,'msg':'login succeed!'};
-				res.cookie('name', req.body.name, { signed : true})
-					.cookie('token', 'my token',  { signed : true})
-					//.send(JSON.stringify(data));
-				//res
-				.redirect('/');
-			}else{
-				console.log(req.body.name + ": 登陆失败 " + new Date());
-			}
-		});
-		break;
-	case 'register':
-		break;
-	default:
-		console.log("Unknown action requested " + action);
-		break;
-	}
-	
+    var action = req.query.action;
+    switch (action) {
+    case 'login':
+        var user = new db.User();
+        user.findOne(req.body.passport, function(err, loginUser) {
+            if (err) {
+                console.log('err=' + err);
+                res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
+				return;
+            }
+
+            var cryptPassword = crypto.createHash("md5").update(req.body.password).digest("hex");
+            if (!loginUser || loginUser.password != cryptPassword) {
+                res.send(JSON.stringify({'code':401,'msg':'User not exist or password error! passport = ' + req.body.passport}));
+				return;
+            }
+
+            console.log(req.body.passport + " login succeed " + new Date());
+            var sessionId = req.body.passport + req.connection.remoteAddress + new Date();
+            sessionId = crypto.createHash("md5").update(sessionId).digest("hex");
+            res.cookie('sessionId', sessionId, { signed : true}).cookie('passport', req.body.passport, {signed : true}).redirect('/');
+			return;
+        });
+        break;
+    case 'register':
+        var user = new db.User();
+        var character = new db.Character();
+        user.findOne(req.body.passport, function(err, oldUser) {
+            if (err) {
+                console.log('err=' + err);
+                res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
+				return;
+            }
+
+            if (oldUser) {
+                res.send(JSON.stringify({'code':400,'msg':'User already exist! passport = ' + req.body.passport}));
+				return;
+            }
+
+            var cryptPassword = crypto.createHash("md5").update(req.body.password).digest("hex");
+            user.add(req.body.passport, cryptPassword, function(err) {
+                if (err) {
+                    console.log('err=' + err);
+                    res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
+                }
+            });
+
+            character.add(req.body.passport, req.body.nickname, req.body.str, req.body.con, req.body.int, req.body.apc, req.body.lck, req.body.cor, function(err) {
+                if (err) {
+                    console.log('err=' + err);
+                    res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
+                }
+            });
+
+            console.log(req.body.passport + " register succeed " + new Date());
+            var sessionId = req.body.passport + req.connection.remoteAddress + new Date();
+            sessionId = crypto.createHash("md5").update(sessionId).digest("hex");
+            res.cookie('sessionId', sessionId, { signed : true}).cookie('passport', req.body.passport, {signed : true}).redirect('/');
+			return;
+        });
+        break;
+    default:
+        console.log("Unknown action requested " + action);
+        break;
+    }
+    
 });

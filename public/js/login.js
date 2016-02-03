@@ -19,6 +19,7 @@
 			data : info
 		});
 	});
+
 	$('#register').on('click', function() {
 		var user = $('#passport').val();
 		var pwd = $('#password').val();
