@@ -48,6 +48,13 @@ Character.prototype.is_player = function() {
 	return 0;
 }
 
+Character.prototype.display_name = function() {
+	if (this.disable_type)
+		return this.name + this.disable_type;
+	else
+		return this.name;
+}
+
 Character.prototype.enable_player = function() {
 	//TODO do more works here, set path for each char
 	delete this.disable_type;
@@ -58,7 +65,6 @@ Character.prototype.disable_player = function(reason) {
 	this.disable_commands();
 	this.disable_type = reason;
 }
-
 
 Character.prototype.enable_commands = function() {
 	this.flags |= FLAGS.O_ENABLE_COMMANDS;

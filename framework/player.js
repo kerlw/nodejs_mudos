@@ -17,6 +17,8 @@ var Player = extend(function(socket) {
 	this.max_food = 500;
 	//temporary code end
 	
+	this.interactive = 1;
+	
 	socket.player = this;
     socket.on('cmd', function(arg) {
     	if (!arg || !arg.cmd)
@@ -31,6 +33,8 @@ var Player = extend(function(socket) {
 
 Player.prototype.onDisconnected = function() {
 	console.log('user disconnected');
+	this.interactive = 0;
+	this.disable_player('<断线中>');
 }
 
 Player.prototype.is_player = function() {
@@ -50,8 +54,7 @@ Player.prototype.recv_message = function(msgclz, msg) {
 }
 
 Player.prototype.is_interactive = function() {
-	//TODO if socket is disconnected, return 0;
-	return 1;
+	return this.interactive;
 }
 
 Player.prototype.is_newbie = function() {

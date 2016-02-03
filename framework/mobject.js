@@ -3,6 +3,7 @@ var MObject = function() {
 		return new MObject();
 	
 	this.id = "";
+	this.name = "OBJECT";
 	this.holder = null;
 	this.contains = {};
 	this.flags = 0;
@@ -84,6 +85,10 @@ MObject.prototype.remove_call_out = function(func) {
 		clearTimeout(this.call_outs[func]);
 		delete this.call_outs[func];
 	}
+}
+
+MObject.prototype.display_name = function() {
+	return this.name;
 }
 
 module.exports = MObject;
