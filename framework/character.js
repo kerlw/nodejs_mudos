@@ -257,7 +257,7 @@ Character.prototype.revive = function(quiet) {
 }
 
 Character.prototype.remove_all_killer = function() {
-	this.killer = {};
+	this.killer = new Array();
 	while (this.enemy.length > 0) {
 		var en = this.enemy.shift();
 		var env = FUNCTIONS.environment(this);
