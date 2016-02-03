@@ -1,17 +1,15 @@
 var command = function() {};
 
-command.exec = function(who, arg) {
-	if (!arg)
+command.exec = function(who, cmd, arg) {
+	if (!cmd)
 		return;
 	
-	var args = arg.split(" ", 2);
-	
-	if (args[0] in _cmds) {
-		if (args.length == 2)
-			return _cmds[args[0]].execute(who, args[1]);
-		else
-			return _cmds[args[0]].execute(who);
+	if (!_cmds[cmd]) {
+		console.log("[ERROR] Unknown command received : " + cmd);
+		return;
 	}
+	
+	return _cmds[cmd].execute(who, arg);
 }
 
 module.exports = command;

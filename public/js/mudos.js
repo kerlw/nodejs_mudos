@@ -46,7 +46,7 @@
 				// and this attr should send to server, and server should response
 				// with it.
 //				socket.emit('cmd', 'look ' + $(this).attr('value'));
-				socket.emit('cmd', 'kill ' + $(this).attr('value'));
+				socket.emit('cmd', { cmd : 'kill', arg : $(this).attr('value')});
 			});
 		}
 	});
@@ -66,7 +66,7 @@
 			return;
 		}
 
-		socket.emit('cmd', "go " + $me.attr('direction'));
+		socket.emit('cmd', { cmd : "go", arg : $me.attr('direction') });
 	});
 	
 	// **-------------------------------------------------------------
@@ -117,6 +117,6 @@
 		$('.obj-info.bs').html(str);
 		
 		//reset timer
-		refresh_hp_timer = setTimeout(function() {socket.emit('cmd', 'hp');}, 5000);
+		refresh_hp_timer = setTimeout(function() {socket.emit('cmd', { cmd : 'hp'});}, 5000);
 	}
 }(window));

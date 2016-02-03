@@ -19,8 +19,10 @@ var Player = extend(function(socket) {
 	
 	socket.player = this;
     socket.on('cmd', function(arg) {
-        console.log('cmd: ' + arg.toString());
-        CMD.exec(socket.player, arg);
+    	if (!arg || !arg.cmd)
+    		return;
+    	
+        CMD.exec(socket.player, arg.cmd, arg.arg);
     });
     socket.on('disconnect', function() {
     	socket.player.onDisconnected();

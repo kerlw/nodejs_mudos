@@ -6,7 +6,7 @@ function combatd() {
 }
 var TYPE_QUICK = 1;
 var TYPE_REGULAR = 2;
-var guard_msg = new Array(
+var defence_msg = new Array(
 	"$N注视著$n的行动，企图寻找机会出手。",
     "$N正盯著$n的一举一动，随时准备发动攻势。",
     "$N缓缓地移动脚步，想要找出$n的破绽。",
@@ -147,8 +147,15 @@ combatd.prototype.fight = function(me, other) {
 		//TODO double attack
 	} else {
 		me.tmps.defending = 1;
-		FUNCTIONS.message_combatd(guard_msg[FUNCTIONS.random(guard_msg.length)], me, other);
+		FUNCTIONS.message_combatd(defence_msg[FUNCTIONS.random(defence_msg.length)], me, other);
 	}
+}
+
+combatd.prototype.skill_power = function(who, skill, usage) {
+	if (!who || !(who instanceof fm.CHAR) || !who.living())
+		return 0;
+	
+	
 }
 
 combatd.prototype.make_corpse = function(whose, killer) {
