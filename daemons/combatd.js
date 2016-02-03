@@ -87,6 +87,13 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 	if (!me.living() || me.is_busy() && !other.is_busy())
 		return 0;
 	
+	var base_attack_skill = null;
+	if (weapon) {
+		base_attack_skill = weapon.skill_type;
+	}
+	if (!base_attack_skill)
+		base_attack_skill = 'unarmed';
+	
 	//1. other may dodge, and if dodged, other may beat back.
 	var dodge = 1;
 	if (other.skills.dodge)
@@ -131,7 +138,6 @@ combatd.prototype.fight = function(me, other) {
 		return;
 	
 	var weapon = me.equipments.weapon;
-	
 	//if other is busy or unconcious, always take chance to do attack
 	if (other.is_busy() || !other.living()) {
 		me.tmps.defending = 0;
@@ -154,7 +160,6 @@ combatd.prototype.fight = function(me, other) {
 combatd.prototype.skill_power = function(who, skill, usage) {
 	if (!who || !(who instanceof fm.CHAR) || !who.living())
 		return 0;
-	
 	
 }
 

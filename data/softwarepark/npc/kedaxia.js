@@ -5,14 +5,9 @@ var kedaxia = fm.extend(function() {
 		return new kedaxia();
 	
 	this.name = "珂大侠";
-	this.skills = {
-			dodge : {
-				lv : 100
-			},
-			parry : {
-				lv : 100
-			}
-	}
+	this.equip_skill('dodge', 100);
+	this.equip_skill('parry', 100);
+	this.equip_skill('unarmed', 100);
 	
 }, fm.NPC);
 

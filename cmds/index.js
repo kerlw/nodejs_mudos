@@ -8,4 +8,5 @@
 	_cmds['kill'] = r('./std/kill.js')();
 	
 	_cmds['perform'] = r('./skill/perform.js')();
+	_cmds['enable'] = r('./skill/enable.js')();
 })(require);

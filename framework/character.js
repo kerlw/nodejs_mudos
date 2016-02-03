@@ -1,6 +1,7 @@
 var extend = require('./oo.js'),
 	fm = require('framework'),
-	MObject = require('./mobject.js');
+	MObject = require('./mobject.js'),
+	BASE_SKILL = require('./skill.js').base_skills;
 
 var Character = extend(function() {
 	if (!(this instanceof Character))
@@ -418,5 +419,35 @@ Character.prototype.heal_up = function() {
 	
 	return ret;
 }
+
+Character.prototype.equip_skill = function(skill_name, lv) {
+	if (!BASE_SKILL[skill_name] || !_objs.skills[skill_name]) {
+		console.log("[ERROR] Unknown skill_name '" + skill_name + "' specified for Character:equip_skill.");
+		return;
+	}
+	
+	this.skills[skill_name] = {	lv: lv };
+}
+
+Character.prototype.enable_skill = function(base, special) {
+	if (!BASE_SKILL[base]) {
+		console.log("[ERROR] Unknown base skill specified.")
+		return;
+	}
+	
+	if (!_objs.skills[special]) {
+		console.log("[ERROR] Unknown special skill specified.");
+		return;
+	}
+	
+	if (!this.skills[base])
+		return FUNCTIONS.notify_fail(this, "你还不会「" + BASE_SKILL[base] + "」这项技能。");
+	
+	if (!this.skills[special])
+		return FUNCTIONS.notify_fail(this, "你还不会「" + _objs.skills[special].name + "」这项技能。");
+	
+	//TODO check skill's enable conditions
+	this.skills[base].spec = special;
+} 
 
 module.exports = Character;

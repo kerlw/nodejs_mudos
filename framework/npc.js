@@ -7,8 +7,6 @@ var NPC = extend(function() {
 	this.wimpy_ratio = 0;	//make npc do not flee as default.
 }, Char);
 
-NPC.__PATH = '/data/npc'; 
-
 NPC.loadFromJSON = function(data) {
 	for (var key in data) {
 		console.log('key is ' + key + ', value is' + data[key]);
@@ -16,7 +14,7 @@ NPC.loadFromJSON = function(data) {
 }
 
 NPC.load = function(filename) {
-	var data = require(path.join(__dirname, '..', NPC.__PATH, filename + '.json'));
+	var data = require(filename);
 	return NPC.loadFromJSON(data);
 }
 
