@@ -7,7 +7,7 @@
 		
 		var info = {
 				name : user,
-				passwd : hex_md5(pwd)
+				passwd : pwd
 		};
 		$.ajax({
 			type : 'POST',
@@ -26,7 +26,7 @@
 		
 		var info = {
 				name : user,
-				passwd : hex_md5(pwd)
+				passwd : pwd
 		};
 		$.ajax({
 			type : 'POST',

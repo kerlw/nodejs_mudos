@@ -15,6 +15,7 @@ var jqy = require('jquery');
 var path = require('path');
 var fm = require('framework');
 var db = require('db');
+var crypto = require("crypto");
 
 app.use(cookieParser(__config.cookie_secret));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,6 +29,7 @@ app.get('/', function(req, res) {
     if (req.signedCookies) {
         if (req.signedCookies.sessionId) {
             console.log('sessionId is ' + req.signedCookies.sessionId);
+            console.log('passport is ' + req.signedCookies.passport);
             res.sendFile(path.join(__dirname,'/index.html'));
             return;
         }   
@@ -60,14 +62,16 @@ app.post('/ucenter', function(req, res) {
 				return;
             }
 
-            if (!loginUser || loginUser.password != req.body.password) {
+            var cryptPassword = crypto.createHash("md5").update(req.body.password).digest("hex");
+            if (!loginUser || loginUser.password != cryptPassword) {
                 res.send(JSON.stringify({'code':401,'msg':'User not exist or password error! passport = ' + req.body.passport}));
 				return;
             }
 
             console.log(req.body.passport + " login succeed " + new Date());
-            var sessionId = req.body.passport + req.socket.remoteAddress + new Date();
-            res.cookie('sessionId', sessionId, { signed : true}).redirect('/');
+            var sessionId = req.body.passport + req.connection.remoteAddress + new Date();
+            sessionId = crypto.createHash("md5").update(sessionId).digest("hex");
+            res.cookie('sessionId', sessionId, { signed : true}).cookie('passport', req.body.passport, {signed : true}).redirect('/');
 			return;
         });
         break;
@@ -86,7 +90,8 @@ app.post('/ucenter', function(req, res) {
 				return;
             }
 
-            user.add(req.body.passport, req.body.password, function(err) {
+            var cryptPassword = crypto.createHash("md5").update(req.body.password).digest("hex");
+            user.add(req.body.passport, cryptPassword, function(err) {
                 if (err) {
                     console.log('err=' + err);
                     res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
@@ -101,8 +106,9 @@ app.post('/ucenter', function(req, res) {
             });
 
             console.log(req.body.passport + " register succeed " + new Date());
-            var sessionId = req.body.passport + req.socket.remoteAddress + new Date();
-            res.cookie('sessionId', sessionId , { signed : true}).redirect('/');
+            var sessionId = req.body.passport + req.connection.remoteAddress + new Date();
+            sessionId = crypto.createHash("md5").update(sessionId).digest("hex");
+            res.cookie('sessionId', sessionId, { signed : true}).cookie('passport', req.body.passport, {signed : true}).redirect('/');
 			return;
         });
         break;
