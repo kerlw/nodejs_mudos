@@ -38,6 +38,10 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname,'/login.html'));
 });
 
+app.get('/register', function(req, res) {
+    res.sendFile(path.join(__dirname,'/role.html'));
+});
+
 io.on('connection', function(socket) {
     var player = new fm.Player(socket);
     FUNCTIONS.move_object(player, _objs.rooms['softwarepark/office']);
@@ -69,7 +73,7 @@ app.post('/ucenter', function(req, res) {
             }
 
             console.log(req.body.passport + " login succeed " + new Date());
-            var sessionId = req.body.passport + req.connection.remoteAddress + new Date();
+            var sessionId = req.body.passport + cryptPassword;
             sessionId = crypto.createHash("md5").update(sessionId).digest("hex");
             res.cookie('sessionId', sessionId, { signed : true}).cookie('passport', req.body.passport, {signed : true}).redirect('/');
 			return;
@@ -77,7 +81,6 @@ app.post('/ucenter', function(req, res) {
         break;
     case 'register':
         var user = new db.User();
-        var character = new db.Character();
         user.findOne(req.body.passport, function(err, oldUser) {
             if (err) {
                 console.log('err=' + err);
@@ -95,23 +98,54 @@ app.post('/ucenter', function(req, res) {
                 if (err) {
                     console.log('err=' + err);
                     res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
-                }
-            });
-
-            character.add(req.body.passport, req.body.nickname, req.body.gender, req.body.str, req.body.con, req.body.int, req.body.apc, req.body.lck, req.body.cor, function(err) {
-                if (err) {
-                    console.log('err=' + err);
-                    res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
+                    return;
                 }
             });
 
             console.log(req.body.passport + " register succeed " + new Date());
-            var sessionId = req.body.passport + req.connection.remoteAddress + new Date();
+            var sessionId = req.body.passport + cryptPassword;
             sessionId = crypto.createHash("md5").update(sessionId).digest("hex");
             res.cookie('sessionId', sessionId, { signed : true}).cookie('passport', req.body.passport, {signed : true}).redirect('/');
 			return;
         });
         break;
+    case 'createCharacter':
+            var user = new db.User();
+            var character = new db.Character();
+            user.findOne(req.body.passport, function(err, loginUser) {
+                if (err) {
+                    console.log('err=' + err);
+                    res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
+                    return;
+                }
+
+                if (!loginUser) {
+                    res.send(JSON.stringify({'code':400,'msg':'User not exist! passport = ' + req.body.passport}));
+                    return;
+                }
+
+                character.findOne(req.body.passport, function(err, userCharacter) {
+                    if (userCharacter) {
+                        res.send(JSON.stringify({'code':402,'msg':'User already have character! passport = ' + req.body.passport}));
+                        return;
+                    }
+
+                    character.add(req.body.passport, req.body.nickname, req.body.gender, req.body.str, req.body.con, req.body.int, req.body.apc, req.body.lck, req.body.cor, function(err) {
+                        if (err) {
+                            console.log('err=' + err);
+                            res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
+                            return;
+                        }
+
+                        console.log(req.body.passport + " create character succeed " + new Date());
+                        res.redirect('/');
+                    });
+                    
+                });
+
+                return;
+            });
+            break;
     default:
         console.log("Unknown action requested " + action);
         break;
