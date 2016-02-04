@@ -79,8 +79,8 @@ app.post('/ucenter', function(req, res) {
             console.log(req.body.passport + " login succeed " + new Date());
             var sessionId = req.body.passport + cryptPassword;
             sessionId = crypto.createHash("md5").update(sessionId).digest("hex");
-            res.cookie('sessionId', sessionId, { signed : true}).cookie('passport', req.body.passport, {signed : true}).redirect('/');
-			return;
+            res.cookie('sessionId', sessionId, { signed : true}).cookie('passport', req.body.passport, {signed : true}).send(JSON.stringify({'code':200,'msg':'login succeed.'}));
+            return;
         });
         break;
     case 'register':
@@ -109,8 +109,8 @@ app.post('/ucenter', function(req, res) {
             console.log(req.body.passport + " register succeed " + new Date());
             var sessionId = req.body.passport + cryptPassword;
             sessionId = crypto.createHash("md5").update(sessionId).digest("hex");
-            res.cookie('sessionId', sessionId, { signed : true}).cookie('passport', req.body.passport, {signed : true}).redirect('/');
-			return;
+            res.cookie('sessionId', sessionId, { signed : true}).cookie('passport', req.body.passport, {signed : true}).send(JSON.stringify({'code':200,'msg':'register succeed.'}));
+            return;
         });
         break;
     case 'createCharacter':
@@ -142,7 +142,7 @@ app.post('/ucenter', function(req, res) {
                         }
 
                         console.log(req.body.passport + " create character succeed " + new Date());
-                        res.redirect('/');
+                        res.send(JSON.stringify({'code':200,'msg':'create character succeed.'}));
                     });
 
                 });
