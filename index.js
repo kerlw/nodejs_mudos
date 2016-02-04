@@ -38,6 +38,10 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname,'/login.html'));
 });
 
+app.get('/login', function(req, res) {
+    res.sendFile(path.join(__dirname,'/login.html'));
+});
+
 app.get('/register', function(req, res) {
     res.sendFile(path.join(__dirname,'/role.html'));
 });
@@ -140,7 +144,7 @@ app.post('/ucenter', function(req, res) {
                         console.log(req.body.passport + " create character succeed " + new Date());
                         res.redirect('/');
                     });
-                    
+
                 });
 
                 return;
