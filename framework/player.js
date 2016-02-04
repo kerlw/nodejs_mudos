@@ -2,12 +2,14 @@ var extend = require('./oo.js');
 var Char = require('./character.js');
 var CMD = require('./cmd.js');
 
-var Player = extend(function(socket) {
+var Player = extend(function(socket, model) {
 	if (!(this instanceof Player))
 		return new Player();
 	
-	this.id = new Date().getTime() + "";
-	this.name = "unamed";
+	if (!model)
+		throw "[ERROR] want to create player without char model ?";
+	this.id = model._id;
+	this.name = model.nickname;
 	this.socket = socket;
 	
 	//temporary code begin
@@ -27,7 +29,8 @@ var Player = extend(function(socket) {
         CMD.exec(socket.player, arg.cmd, arg.arg);
     });
     socket.on('disconnect', function() {
-    	socket.player.onDisconnected();
+    	if (socket.player)
+    		socket.player.onDisconnected();
     });
 }, Char);
 
@@ -61,6 +64,27 @@ Player.prototype.is_interactive = function() {
 
 Player.prototype.is_newbie = function() {
 	return 0;
+}
+
+Player.prototype.other_login = function(socket) {
+	console.log("kick others");
+	FUNCTIONS.notify_fail(this, "有人从其它地方登录了此角色。")
+	this.socket.player = null;
+	this.socket.disconnect();
+	
+	this.socket = socket;
+
+	socket.player = this;
+    socket.on('cmd', function(arg) {
+    	if (!arg || !arg.cmd)
+    		return;
+    	
+        CMD.exec(socket.player, arg.cmd, arg.arg);
+    });
+    socket.on('disconnect', function() {
+    	if (socket.player)
+    		socket.player.onDisconnected();
+    });
 }
 
 module.exports = Player;

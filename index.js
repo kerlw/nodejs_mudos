@@ -31,8 +31,14 @@ app.use('/public', express.static(__dirname + '/public'));
 app.get('/', function(req, res) {
     if (req.signedCookies) {
         if (req.signedCookies.sessionId) {
-            console.log('sessionId is ' + req.signedCookies.sessionId);
-            console.log('passport is ' + req.signedCookies.passport);
+        	var passport = req.signedCookies.passport;
+            var charDb = db.Character();
+            charDb.findOne(passport, function(err, model) {
+            	if (err) {
+            		return;
+            	}
+            	//TODO ...
+            });
             res.sendFile(path.join(__dirname,'/index.html'));
             return;
         }   
@@ -50,11 +56,32 @@ app.get('/register', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-    var player = new fm.Player(socket);
-    FUNCTIONS.move_object(player, _objs.rooms['softwarepark/office']);
-    player.command('look');
-    player.command('hp');
+	socket.on('login', function(msg) {
+		var passport = cookieParser.signedCookie(msg.passport, __config.cookie_secret);
+		var charDb = db.Character();
+		charDb.findOne(passport, function(err, charModel) {
+			if (err) {
+				return;
+			}
+			
+			var charId = charModel._id,
+				player = null;
+			
+			if ((player = _objs.players[charId])) {
+				player.other_login(socket);
+			} else {
+				player = new fm.Player(socket, charModel);
+				_objs.players[charId] = player;
+				FUNCTIONS.move_object(player, _objs.rooms['softwarepark/office']);
+			}
+			
+			player.command('look');
+			player.command('hp');
+		});
+		
+	});
 });
+
 
 http.listen(__config.port, function() {
     console.log('listening on *:' + __config.port);

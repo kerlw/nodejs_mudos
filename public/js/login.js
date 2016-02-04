@@ -15,7 +15,7 @@
 			dataType : 'json',
 			data : info,
 			success : function() {
-				alert('ok');
+				window.location.href='/';
 			},
 
 		});

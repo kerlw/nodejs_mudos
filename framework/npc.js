@@ -24,12 +24,12 @@ NPC.prototype.accept_fight = function(who) {
 	
 	var RANK_D = global._daemons.rankd;
 	if (this.is_fighting()) {
-		this.command("say " + RANK_D.query_respect(who) + "想要倚多取胜吗?");
+		this.command("say", RANK_D.query_respect(who) + "想要倚多取胜吗?");
 		return 0;
 	}
 	
 	if (this.vitality * 100 / this.max_vitality > 90) {
-		this.command("say 既然" + RANK_D.query_respect(who)
+		this.command("say", "既然" + RANK_D.query_respect(who)
 				+ "赐教，" + RANK_D.query_self(this)
 				+ "只好奉陪，我们点到为止。");
 		return 1;
