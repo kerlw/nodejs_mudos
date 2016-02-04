@@ -2,12 +2,12 @@
 	'use strict';
 	
 	$('#login').on('click', function() {
-		var user = $('#passport').val();
-		var pwd = $('#password').val();
+		var passport = $('#passport').val();
+		var password = $('#password').val();
 		
 		var info = {
-				name : user,
-				passwd : pwd
+			passport : passport,
+			password : password
 		};
 		$.ajax({
 			type : 'POST',
@@ -16,6 +16,7 @@
 			success : function() {
 				console.log('ok');
 			},
+
 			data : info
 		});
 	});
@@ -32,8 +33,12 @@
 			type : 'POST',
 			url : '/ucenter?action=register',
 			dataType : 'json',
-			success : function(msg) {
-				console.log('ok');
+			success : function(data) {
+				if (data.code != 200) {
+					$('#msg').text(data.msg).show();
+				} else {
+					console.log('ok');
+				}
 			},
 			data : info
 		});

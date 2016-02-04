@@ -98,7 +98,7 @@ app.post('/ucenter', function(req, res) {
                 }
             });
 
-            character.add(req.body.passport, req.body.nickname, req.body.str, req.body.con, req.body.int, req.body.apc, req.body.lck, req.body.cor, function(err) {
+            character.add(req.body.passport, req.body.nickname, req.body.gender, req.body.str, req.body.con, req.body.int, req.body.apc, req.body.lck, req.body.cor, function(err) {
                 if (err) {
                     console.log('err=' + err);
                     res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
