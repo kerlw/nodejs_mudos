@@ -9,6 +9,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var app = express();
+var ejs = require('ejs');
+app.engine('.html', ejs.__express);
+app.set("view engine","html");
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var jqy = require('jquery');
@@ -43,7 +46,7 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/register', function(req, res) {
-    res.sendFile(path.join(__dirname,'/role.html'));
+    res.render(path.join(__dirname,'/role.html'), {'passport':req.query.passport});
 });
 
 io.on('connection', function(socket) {
@@ -62,18 +65,23 @@ app.post('/ucenter', function(req, res) {
     var action = req.query.action;
     switch (action) {
     case 'login':
+        if (!req.body.passport || !req.body.password) {
+            res.send(JSON.stringify({'code':401,'msg':'passport or password is empty! '}));
+            return;
+        }
+
         var user = new db.User();
         user.findOne(req.body.passport, function(err, loginUser) {
             if (err) {
                 console.log('err=' + err);
                 res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
-				return;
+                return;
             }
 
             var cryptPassword = crypto.createHash("md5").update(req.body.password).digest("hex");
             if (!loginUser || loginUser.password != cryptPassword) {
                 res.send(JSON.stringify({'code':401,'msg':'User not exist or password error! passport = ' + req.body.passport}));
-				return;
+                return;
             }
 
             console.log(req.body.passport + " login succeed " + new Date());
@@ -84,17 +92,22 @@ app.post('/ucenter', function(req, res) {
         });
         break;
     case 'register':
+        if (!req.body.passport || !req.body.password) {
+            res.send(JSON.stringify({'code':401,'msg':'passport or password is empty! '}));
+            return;
+        }
+
         var user = new db.User();
         user.findOne(req.body.passport, function(err, oldUser) {
             if (err) {
                 console.log('err=' + err);
                 res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
-				return;
+                return;
             }
 
             if (oldUser) {
                 res.send(JSON.stringify({'code':400,'msg':'User already exist! passport = ' + req.body.passport}));
-				return;
+                return;
             }
 
             var cryptPassword = crypto.createHash("md5").update(req.body.password).digest("hex");
@@ -114,42 +127,47 @@ app.post('/ucenter', function(req, res) {
         });
         break;
     case 'createCharacter':
-            var user = new db.User();
-            var character = new db.Character();
-            user.findOne(req.body.passport, function(err, loginUser) {
-                if (err) {
-                    console.log('err=' + err);
-                    res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
+        if (!req.body.passport || !req.body.nickname || !req.body.gender || !req.body.str || !req.body.con || !req.body.int || !req.body.apc || !req.body.lck || !req.body.cor) {
+            res.send(JSON.stringify({'code':401,'msg':'passport or password is empty! '}));
+            return;
+        }
+
+        var user = new db.User();
+        var character = new db.Character();
+        user.findOne(req.body.passport, function(err, loginUser) {
+            if (err) {
+                console.log('err=' + err);
+                res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
+                return;
+            }
+
+            if (!loginUser) {
+                res.send(JSON.stringify({'code':400,'msg':'User not exist! passport = ' + req.body.passport}));
+                return;
+            }
+
+            character.findOne(req.body.passport, function(err, userCharacter) {
+                if (userCharacter) {
+                    res.send(JSON.stringify({'code':402,'msg':'User already have character! passport = ' + req.body.passport}));
                     return;
                 }
 
-                if (!loginUser) {
-                    res.send(JSON.stringify({'code':400,'msg':'User not exist! passport = ' + req.body.passport}));
-                    return;
-                }
-
-                character.findOne(req.body.passport, function(err, userCharacter) {
-                    if (userCharacter) {
-                        res.send(JSON.stringify({'code':402,'msg':'User already have character! passport = ' + req.body.passport}));
+                character.add(req.body.passport, req.body.nickname, req.body.gender, req.body.str, req.body.con, req.body.int, req.body.apc, req.body.lck, req.body.cor, function(err) {
+                    if (err) {
+                        console.log('err=' + err);
+                        res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
                         return;
                     }
 
-                    character.add(req.body.passport, req.body.nickname, req.body.gender, req.body.str, req.body.con, req.body.int, req.body.apc, req.body.lck, req.body.cor, function(err) {
-                        if (err) {
-                            console.log('err=' + err);
-                            res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
-                            return;
-                        }
-
-                        console.log(req.body.passport + " create character succeed " + new Date());
-                        res.send(JSON.stringify({'code':200,'msg':'create character succeed.'}));
-                    });
-
+                    console.log(req.body.passport + " create character succeed " + new Date());
+                    res.send(JSON.stringify({'code':200,'msg':'create character succeed.'}));
                 });
 
-                return;
             });
-            break;
+
+            return;
+        });
+        break;
     default:
         console.log("Unknown action requested " + action);
         break;
