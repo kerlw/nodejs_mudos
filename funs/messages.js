@@ -44,6 +44,10 @@
 	f.message_scene = function(me, msg) {
 		message("room", msg, me);
 	}
+	
+	f.message_interactive = function(me, msg) {
+		message('interactive', msg, me);
+	}
 
 	f.tell_object = function(ob, msg) {
 		if (!ob || !msg)

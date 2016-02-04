@@ -16,14 +16,18 @@ exports.find_file = function(dir, name) {
 	throw pathname + ' file not found!';
 }
 
-exports.MObject = require('./mobject.js');
-exports.NPC = require('./npc.js');
-exports.ROOM = require('./room.js');
-exports.Player = require('./player.js');
-exports.CMD = require('./cmd.js');
 exports.SKILL = require('./skill.js');
-exports.ITEM = require('./item.js');
-exports.WEAPON = require('./weapon.js');
-exports.extend = require('./oo.js');
+exports.MObject = require('./mobject.js');
 
 exports.CHAR = require('./character.js');
+exports.NPC = require('./npc.js');
+exports.Player = require('./player.js');
+
+exports.ROOM = require('./room.js');
+
+exports.CMD = require('./cmd.js');
+
+exports.ITEM = require('./item.js');
+exports.WEAPON = require('./weapon.js');
+
+exports.extend = require('./oo.js');

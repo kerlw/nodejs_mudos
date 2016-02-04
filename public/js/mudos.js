@@ -40,19 +40,50 @@
 			}
 			// bind click handle function
 			$('.room-obj').on('click', function() {
-				//TODO here just use fight to test fight functions. it should be 
-				// 'look', and we should show a panel to handle the 'look' response,
-				// because the cmd is async, the panel should has a timestamp attr
-				// and this attr should send to server, and server should response
-				// with it.
-//				socket.emit('cmd', 'look ' + $(this).attr('value'));
-				socket.emit('cmd', { cmd : 'kill', arg : $(this).attr('value')});
+				var id = $(this).attr('value');
+				socket.emit('cmd', { cmd : 'look', arg : id});
+				$('#objModal').modal();
+				//TODO popup interactive panel and bind panel with 'id'
 			});
 		}
 	});
 	
 	socket.on('hp', function(msg) {
 		refresh_hp_panel(msg);
+	});
+	
+	socket.on('interactive', function(msg) {
+		if (!msg) {
+			$('#objModal').modal('hide');
+			return;
+		}
+		//TODO check interactive id
+		
+		if (typeof msg === 'string') {
+			$('#myModalLabel').text(msg);
+			return;
+		}
+		
+		$('#myModalLabel').text(msg.name);
+		$('#myModalContent').text(msg.desc);
+		$('#interactions').empty();
+		switch (msg.type) {
+		case 'char':
+			$('#interactions').append('<button class="btnInter" type="fight" target="' + msg.id + '">切磋</button>')
+							.append('<button class="btnInter" type="kill" target="' + msg.id + '">杀!!</button>');
+			break;
+		}
+		$('.btnInter').on('click', function(){
+			$('#objModal').modal('hide');
+			var type = $(this).attr('type'),
+				target = $(this).attr('target');
+			switch (type) {
+			case 'fight':
+			case 'kill':
+				socket.emit('cmd', {cmd:type, arg : target});
+				break;
+			}
+		});
 	});
 
     $('.obj').on('click', function () {

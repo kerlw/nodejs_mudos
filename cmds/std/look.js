@@ -21,7 +21,20 @@ function cmd_look() {
 	};
 	
 	this.look_living = function(sender, target) {
+		if (!target)
+			return;
 		
+		var obj = FUNCTIONS.present(target, FUNCTIONS.environment(sender));
+		if (!obj)
+			return FUNCTIONS.message_interactive(sender, "目标已经离开了。");
+			
+		var ret = {
+				id : obj.id,
+				name : obj.name,
+				desc : obj.desc,
+				type : 'char'
+		}
+		return FUNCTIONS.message_interactive(sender, ret);
 	}
 	
 	this.look_item = function(sender, target) {

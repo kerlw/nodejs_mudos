@@ -42,12 +42,14 @@ Player.prototype.is_player = function() {
 }
 
 Player.prototype.recv_message = function(msgclz, msg) {
-	//TODO this is just a temporary solution
-	if (!msgclz || (msgclz !== 'fail' && msgclz !== 'room' && msgclz !== 'hp'))
-		msgclz = 'resp';
-	
 	if (this.query_tmp('block_msg/all'))
 		return;
+	
+	//TODO this is just a temporary solution
+	if (!msgclz || (msgclz !== 'fail' && msgclz !== 'room'
+						&& msgclz !== 'hp'
+						&& msgclz !== 'interactive'))
+		msgclz = 'resp';
 	
 	if (this.socket)
 		this.socket.emit(msgclz, msg);

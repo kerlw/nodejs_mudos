@@ -421,7 +421,7 @@ Character.prototype.heal_up = function() {
 }
 
 Character.prototype.equip_skill = function(skill_name, lv) {
-	if (!BASE_SKILL[skill_name] || !_objs.skills[skill_name]) {
+	if (!BASE_SKILL[skill_name] && !_objs.skills[skill_name]) {
 		console.log("[ERROR] Unknown skill_name '" + skill_name + "' specified for Character:equip_skill.");
 		return;
 	}
@@ -440,11 +440,19 @@ Character.prototype.enable_skill = function(base, special) {
 		return;
 	}
 	
-	if (!this.skills[base])
-		return FUNCTIONS.notify_fail(this, "你还不会「" + BASE_SKILL[base] + "」这项技能。");
+	if (!this.skills[base]) {
+		if (this.is_player())
+			FUNCTIONS.notify_fail(this, "你还不会「" + BASE_SKILL[base] + "」这项技能。");
+		//TODO add log here to log exceptions 
+		return;	
+	}
 	
-	if (!this.skills[special])
-		return FUNCTIONS.notify_fail(this, "你还不会「" + _objs.skills[special].name + "」这项技能。");
+	if (!this.skills[special]) {
+		if (this.is_player())
+			FUNCTIONS.notify_fail(this, "你还不会「" + _objs.skills[special].name + "」这项技能。");
+		//TODO add log here to log exceptions
+		return;
+	}
 	
 	//TODO check skill's enable conditions
 	this.skills[base].spec = special;
