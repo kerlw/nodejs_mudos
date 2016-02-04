@@ -3,8 +3,10 @@
 	
 	$('#login').on('click', function() {
 		
+		var passport = $('#passport').val();
+		
 		var info = {
-			passport : $('#passport').val(),
+			passport : passport,
 			password : $('#password').val()
 		};
 		$.ajax({
@@ -21,9 +23,10 @@
 
 	$('#register').on('click', function() {
 	
+		var passport = $('#passport').val();
 		
 		var info = {
-			passport : $('#passport').val(),
+			passport : passport,
 			password : $('#password').val()
 		};
 		$.ajax({
@@ -34,7 +37,7 @@
 			success : function(data) {
 				if (data.code == 200) {
 					
-					window.location.href='/register';
+					window.location.href='/register?passport='+passport;
 					
 				} else {
 					$('#msg').text(data.msg).show();

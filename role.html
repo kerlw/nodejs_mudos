@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
 <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-<script type="text/javascript" src="public/js/createCharacter.js"></script>
+
 <style type="text/css">
 
 </style>
@@ -21,7 +21,7 @@
 	<div data-role="main" class="ui-content">
 		<form method="post" action="" >
 			<div class="ui-field-contain">
-				<p>您当前登录的账号为：<%= passport %></p>
+				<p>您当前登录的账号为： <span id="passport"><%= passport %></span></p>
 				<label for="fullname">请输入昵称：</label>
 				<input type="text" name="fullname" id="fullname">  
 			</div>
@@ -46,9 +46,10 @@
 				<input class="point" type="range" name="luck" id="luck" value="10" min="10" max="30" data-highlight="true">			
 				<label for="courage">胆识:</label>
 				<input class="point" type="range" name="courage" id="courage" value="10" min="10" max="30" data-highlight="true">			
-			    <button id='submit'>提交</button>
+			    
 			</div>
 		</form>
+		<button id='submit'>提交</button>
 	</div>
 
  
@@ -96,6 +97,6 @@ $("document").ready(function(){
 	
 });
 </script>
-
+<script type="text/javascript" src="public/js/createCharacter.js"></script>
 </body>
 </html>

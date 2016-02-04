@@ -3,9 +3,9 @@
 	
 	$('#submit').on('click', function() {
 	
-		
+		var passport = $('#passport').text();
 		var info = {
-			passport : $('#passport').val(),
+			passport : passport,
 			nickname : $('#fullname').val(),
 			gender : $('input:radio[name=gender]:checked').val(),
 			str : $('#strength').val(),
@@ -15,6 +15,7 @@
 			lck : $('#luck').val(),
 			cor : $('#courage').val(),
 		};
+		console.log(info);
 		$.ajax({
 			type : 'POST',
 			url : '/ucenter?action=createCharacter',
@@ -23,9 +24,9 @@
 			success : function(data) {
 				console.log(data);
 				if (data.code != 200) {
-					alert(data.msg);
+					console(data.msg);
 				} else {
-					alert('ok');
+					window.location.href='/';
 				}
 			},
 
