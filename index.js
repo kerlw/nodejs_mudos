@@ -58,6 +58,7 @@ app.get('/register', function(req, res) {
 });
 
 io.on('connection', function(socket) {
+	console.log("socket connected from " + socket.handshake.address);
 	socket.on('login', function(msg) {
 		var passport = cookieParser.signedCookie(msg.passport, __config.cookie_secret);
 		var charDb = db.Character();

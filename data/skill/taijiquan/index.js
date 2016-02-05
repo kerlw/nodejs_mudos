@@ -4,8 +4,6 @@ var taijiquan = fm.extend(function() {
 	if (!(this instanceof taijiquan))
 		return new taijiquan();
 	
-	console.log('here ' + fm.SKILL + this);
-	
 	this.name = 'taijiquan';
 	this.base_type = 'unarmed';
 }, fm.SKILL);
@@ -14,7 +12,7 @@ var taijiquan = fm.extend(function() {
 //	
 //}
 
-taijiquan.prototype.query_actions = function(me, use_lv) {
+taijiquan.prototype.action = function(me, use_lv, other) {
 	if (!this.valid_use(me, use_lv))
 		throw this.name + "(" + use_lv + ") could not be used by " + me.id;
 	

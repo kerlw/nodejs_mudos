@@ -1,6 +1,8 @@
 (function(r) {
 	var fs = r('fs'),
-	path = r('path');
+		path = r('path');
+	
+	_objs.skills['unarmed'] = new (r('./unarmed.js'))();
 	
 	var files = fs.readdirSync(__dirname);
 	files.forEach(function(file) {

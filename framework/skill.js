@@ -36,6 +36,18 @@ skill.prototype.valid_effect = function(me, weapon, action) {
 	return 1;
 }
 
+skill.prototype.action = function(me, lv, other) {
+	return "$N使用" + this.name + "攻击了$n";
+}
+
+skill.prototype.cost = function(me, lv, other) {
+	return null;
+}
+
+skill.prototype.damage = function(me, lv, other) {
+	return null;
+}
+
 /**
  * There are two types of skill: martial, knowledge
  */

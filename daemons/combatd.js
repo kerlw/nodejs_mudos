@@ -97,7 +97,7 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 	if (!base_attack_skill)
 		base_attack_skill = BASIC_ATTACK_SKILL;
 	
-	var attack_skill = this.find_skill_to_use(me, base_attack_skill);
+	var attack_skill = this.find_skill_to_use(me, base_attack_skill, other);
 	
 	//1. other may dodge, and if dodged, other may beat back.
 	var dodge = 1;
@@ -120,7 +120,11 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 	}
 	
 	//3. if not parried either, OK, it's time to decide damage.
-	var damage = this.skill_damage(me, base_attack_skill, other);
+	var lvl = me.query_skill(attack_skill.name, 1);
+	var action = _daemons.skilld.query_action(me, attack_skill, lvl, other);
+	var cost = _daemons.skilld.query_cost(me, attack_skill, lvl, other);
+	var damage = _daemons.skilld.query_damage(me, attack_skill, lvl, other);
+	me.recv_damage(cost);
 	other.recv_damage(damage);
 	FUNCTIONS.message_combatd("$N击中了$n,造成了"+damage+"点伤害.", me, other);
 	
@@ -159,7 +163,7 @@ combatd.prototype.fight = function(me, other) {
 	}
 }
 
-combatd.prototype.find_skill_to_use = function(me, skill) {
+combatd.prototype.find_skill_to_use = function(me, skill, other) {
 	var attack_skill = BASIC_ATTACK_SKILL;
 	if (!skill)
 		skill = BASIC_ATTACK_SKILL;

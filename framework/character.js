@@ -458,4 +458,11 @@ Character.prototype.enable_skill = function(base, special) {
 	this.skills[base].spec = special;
 } 
 
+Character.prototype.query_skill = function(skill, default_value) {
+	if (!this.skills[skill])
+		return default_value;
+	
+	return this.skills[skill].lv;
+}
+
 module.exports = Character;
