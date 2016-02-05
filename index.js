@@ -35,6 +35,7 @@ app.get('/', function(req, res) {
             var charDb = db.Character();
             charDb.findOne(passport, function(err, model) {
             	if (err) {
+					console.log('[ERROR] charDb findOne got err: ' + err);
             		return;
             	}
             	
@@ -42,12 +43,12 @@ app.get('/', function(req, res) {
             		res.redirect('/character');
             	} else
             		res.sendFile(path.join(__dirname,'/views/index.html'));
-            	return;
             });
+			return;
         }   
-    } else {
-        res.redirect('/login');
     }
+    res.redirect('/login');
+
 });
 
 app.get('/login', function(req, res) {
