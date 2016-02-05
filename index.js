@@ -39,14 +39,15 @@ app.get('/', function(req, res) {
             	}
             	
             	if (!model) {
-            		res.render(path.join(__dirname,'/role.html'), {'passport':passport});
+            		res.redirect('/register');
             	} else
             		res.sendFile(path.join(__dirname,'/index.html'));
             	return;
             });
         }   
-    } else
-    	res.sendFile(path.join(__dirname,'/login.html'));
+    } else {
+        res.redirect('/login');
+    }
 });
 
 app.get('/login', function(req, res) {
@@ -54,7 +55,15 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/register', function(req, res) {
-    res.render(path.join(__dirname,'/role.html'), {'passport':req.query.passport});
+    if (req.signedCookies) {
+        if (req.signedCookies.sessionId) {
+            var passport = req.signedCookies.passport;
+            res.render(path.join(__dirname,'/role.html'), {'passport':passport});
+            return;
+        }
+    }
+
+    res.redirect('/');
 });
 
 io.on('connection', function(socket) {
@@ -157,7 +166,7 @@ app.post('/ucenter', function(req, res) {
         break;
     case 'createCharacter':
         if (!req.body.passport || !req.body.nickname || !req.body.gender || !req.body.str || !req.body.con || !req.body.int || !req.body.apc || !req.body.lck || !req.body.cor) {
-            res.send(JSON.stringify({'code':401,'msg':'passport or password is empty! '}));
+            res.send(JSON.stringify({'code':401,'msg':'required parameters is empty! '}));
             return;
         }
 

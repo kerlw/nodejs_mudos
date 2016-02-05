@@ -16,8 +16,7 @@
 			data : info,
 			success : function() {
 				window.location.href='/';
-			},
-
+			}
 		});
 	});
 
@@ -36,13 +35,11 @@
 			data : info,
 			success : function(data) {
 				if (data.code == 200) {
-					
-					window.location.href='/register?passport='+passport;
-					
+					window.location.href='/register';
 				} else {
 					$('#msg').text(data.msg).show();
 				}
-			},
+			}
 
 		});
 	});
