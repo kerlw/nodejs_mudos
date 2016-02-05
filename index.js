@@ -37,14 +37,16 @@ app.get('/', function(req, res) {
             	if (err) {
             		return;
             	}
-            	//TODO ...
+            	
+            	if (!model) {
+            		res.render(path.join(__dirname,'/role.html'), {'passport':passport});
+            	} else
+            		res.sendFile(path.join(__dirname,'/index.html'));
+            	return;
             });
-            res.sendFile(path.join(__dirname,'/index.html'));
-            return;
         }   
-    }
-
-    res.sendFile(path.join(__dirname,'/login.html'));
+    } else
+    	res.sendFile(path.join(__dirname,'/login.html'));
 });
 
 app.get('/login', function(req, res) {
@@ -83,7 +85,7 @@ io.on('connection', function(socket) {
 });
 
 
-http.listen(__config.port, function() {
+http.listen(__config.port, '0.0.0.0', function() {
     console.log('listening on *:' + __config.port);
     global.HB_ENGINE.start();
 });
