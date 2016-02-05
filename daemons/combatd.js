@@ -6,6 +6,9 @@ function combatd() {
 }
 var TYPE_QUICK = 1;
 var TYPE_REGULAR = 2;
+
+var BASIC_ATTACK_SKILL = 'unarmed';
+
 var defence_msg = new Array(
 	"$N注视著$n的行动，企图寻找机会出手。",
     "$N正盯著$n的一举一动，随时准备发动攻势。",
@@ -92,7 +95,9 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 		base_attack_skill = weapon.skill_type;
 	}
 	if (!base_attack_skill)
-		base_attack_skill = 'unarmed';
+		base_attack_skill = BASIC_ATTACK_SKILL;
+	
+	var attack_skill = this.find_skill_to_use(me, base_attack_skill);
 	
 	//1. other may dodge, and if dodged, other may beat back.
 	var dodge = 1;
@@ -115,11 +120,8 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 	}
 	
 	//3. if not parried either, OK, it's time to decide damage.
-	var unarmed = 1;
-	if (me.skills.unarmed)
-		unarmed = me.skills.unarmed.lv;
-	var damage = Math.floor(101 + me.str * unarmed / 100);
-	other.recv_damage('vitality', damage);
+	var damage = this.skill_damage(me, base_attack_skill, other);
+	other.recv_damage(damage);
 	FUNCTIONS.message_combatd("$N击中了$n,造成了"+damage+"点伤害.", me, other);
 	
 	if (damage > 0) {
@@ -155,6 +157,32 @@ combatd.prototype.fight = function(me, other) {
 		me.tmps.defending = 1;
 		FUNCTIONS.message_combatd(defence_msg[FUNCTIONS.random(defence_msg.length)], me, other);
 	}
+}
+
+combatd.prototype.find_skill_to_use = function(me, skill) {
+	var attack_skill = BASIC_ATTACK_SKILL;
+	if (!skill)
+		skill = BASIC_ATTACK_SKILL;
+	
+	if (me.skills[skill] && me.skills[skill].spec) {
+		attack_skill = me.skills[skill].spec;
+	}
+
+	if (!_objs.skills[attack_skill]) {
+		console.log("[ERROR] unknown attack_skill (" + attack_skill + ") in combatd:skill_damage "
+				+ me.id + " vs " + other.id);
+		attack_skill = BASIC_ATTACK_SKILL;
+	}
+	
+	var ret = _objs.skills[attack_skill];
+	if (ret.valid_use(me))
+		return ret;
+	
+	return _objs.skills[BASIC_ATTACK_SKILL];
+}
+
+combatd.prototype.basic_attack_skill_damage = function(me, other) {
+	return 100;
 }
 
 combatd.prototype.skill_power = function(who, skill, usage) {

@@ -34,6 +34,16 @@
 	//init daemons
 	r('daemons');
 	
+	//init skills, this must be done before init room, because nps need skills
+	r('data/skill');
+	
+	//init rooms
+	init_rooms(global.DATA_PATH);
+
+	
+	///////////////////////////////////////////////////////////
+	//  Funcitons
+	///////////////////////////////////////////////////////////
 	// load all rooms from ROOM_PATH
 	function init_rooms(basedir, prefix) {
 		prefix = prefix || '';
@@ -46,9 +56,7 @@
 				fname = path.parse(file).name;
 			
 			if (stat.isDirectory()) {
-				if (fname === 'obj')
-					return;
-				if (fname === 'npc')
+				if (fname === 'obj' || fname === 'npc' || fname === 'skill')
 					return;
 				
 				init_rooms(basedir, path.join(prefix, file));
@@ -75,8 +83,5 @@
 			}
 		});
 	}
-	
-	//init rooms
-	init_rooms(global.DATA_PATH);
 
 })(require);

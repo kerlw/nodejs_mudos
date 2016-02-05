@@ -8,6 +8,8 @@ var kedaxia = fm.extend(function() {
 	this.equip_skill('dodge', 100);
 	this.equip_skill('parry', 100);
 	this.equip_skill('unarmed', 100);
+	this.equip_skill('taijiquan', 100);
+	this.enable_skill('unarmed', 'taijiquan');
 	
 }, fm.NPC);
 

@@ -1,5 +1,5 @@
 var skill = function() {
-	
+	this.name = "";
 }
 
 skill.base_skills = {
@@ -23,6 +23,10 @@ skill.base_skills = {
 		"hammer":	"锤法",
 		"literate": "读书识字"
 };
+
+skill.prototype.valid_use = function(me) {
+	return 1;
+}
 
 skill.prototype.valid_learn = function(me, weapon) {
 	return 1;
