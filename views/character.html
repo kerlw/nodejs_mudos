@@ -17,37 +17,35 @@
 	</div>
 
 	<div data-role="main" class="ui-content">
-		<form method="post" action="" >
-			<label id="msg" class="text-danger text-center" hidden></label>
-			<div class="ui-field-contain">
-				<p>您当前登录的账号为： <span id="passport"><%= passport %></span></p>
-				<label for="fullname">请输入昵称：</label>
-				<input type="text" name="fullname" id="fullname">  
-			</div>
-			<fieldset data-role="controlgroup" data-type="horizontal">
-				<legend>请选择您的性别:</legend>
-				<label for="male">男</label>
-				<input type="radio" name="gender" id="male" value="male" >
-				<label for="female">女</label>
-				<input type="radio" name="gender" id="female" value="female" > 
-			</fieldset>
-			<div class="ui-field-contain">
-				<p id="points">您当前拥有的属性点数:</p>
-				<label for="strength">力量:</label>
-				<input class="point" type="range" name="strength" id="strength" value="10" min="10" max="30" data-highlight="true">
-				<label for="constitution">体质:</label>
-				<input class="point" type="range" name="constitution" id="constitution" value="10" min="10" max="30" data-highlight="true">
-				<label for="intelligence">智力:</label>
-				<input class="point" type="range" name="intelligence" id="intelligence" value="10" min="10" max="30" data-highlight="true">
-				<label for="apperance">容貌:</label>
-				<input class="point" type="range" name="apperance" id="apperance" value="10" min="10" max="30" data-highlight="true">		
-				<label for="luck">运气:</label>
-				<input class="point" type="range" name="luck" id="luck" value="10" min="10" max="30" data-highlight="true">			
-				<label for="courage">胆识:</label>
-				<input class="point" type="range" name="courage" id="courage" value="10" min="10" max="30" data-highlight="true">			
-			    
-			</div>
-		</form>
+		<label id="msg" class="text-danger text-center" hidden></label>
+		<div class="ui-field-contain">
+			<p>您当前登录的账号为： <span id="passport"><%= passport %></span></p>
+			<label for="fullname">请输入昵称：</label>
+			<input type="text" name="fullname" id="fullname">  
+		</div>
+		<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>请选择您的性别:</legend>
+			<label for="male">男</label>
+			<input type="radio" name="gender" id="male" value="male" >
+			<label for="female">女</label>
+			<input type="radio" name="gender" id="female" value="female" > 
+		</fieldset>
+		<div class="ui-field-contain">
+			<p id="points">您当前拥有的属性点数:</p>
+			<label for="strength">力量:</label>
+			<input class="point" type="range" name="strength" id="strength" value="10" min="10" max="30" data-highlight="true">
+			<label for="constitution">体质:</label>
+			<input class="point" type="range" name="constitution" id="constitution" value="10" min="10" max="30" data-highlight="true">
+			<label for="intelligence">智力:</label>
+			<input class="point" type="range" name="intelligence" id="intelligence" value="10" min="10" max="30" data-highlight="true">
+			<label for="apperance">容貌:</label>
+			<input class="point" type="range" name="apperance" id="apperance" value="10" min="10" max="30" data-highlight="true">		
+			<label for="luck">运气:</label>
+			<input class="point" type="range" name="luck" id="luck" value="10" min="10" max="30" data-highlight="true">			
+			<label for="courage">胆识:</label>
+			<input class="point" type="range" name="courage" id="courage" value="10" min="10" max="30" data-highlight="true">			
+		</div>
+		<div data-role="popup" id="toast" class="ui-content" ></div>
 		<button id='submit'>提交</button>
 	</div>
 

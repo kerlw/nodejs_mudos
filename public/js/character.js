@@ -58,7 +58,7 @@
 			success : function(data) {
 				console.log(data);
 				if (data.code != 200) {
-					$('#msg').text(data.msg).show();
+					$('#toast').text(data.msg).popup('open');
 				} else {
 					window.location.href='/';
 				}

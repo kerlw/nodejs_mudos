@@ -13,27 +13,17 @@
 	</div>
 
 	<div data-role="main" class="ui-content">
-		<label id="msg" class="text-danger text-center" hidden></label>
-		<form method="post" action="">
-			<div class="ui-field-contain">
-				<label for="passport">帐号：</label>
-				<input type="text" name="passport" id="passport">       
-				<label for="password">密码：</label>
-				<input type="password" name="password" id="password">
-			</div>
-			<!-- input type="submit" class="ui-btn" value="登录"-->
-
-		</form>
-			<button id='login'>登录</button>
-			<button id='register'>注册</button>
-	
-	    <!-- a href="#regedit" data-rel="popup" class="ui-btn">注册</a-->
-
+		<div class="ui-field-contain">
+			<label for="passport">帐号：</label>
+			<input type="text" name="passport" id="passport">       
+			<label for="password">密码：</label>
+			<input type="password" name="password" id="password">
+		</div>
+		<button id='login'>登录</button>
+		<button id='register'>注册</button>
 	</div>
 	
-<!-- 	<div data-role="popup" id="regedit" class="ui-content" data-overlay-theme="b">
-		<p>注册页面</p>
-	</div> -->
+	<div data-role="popup" id="toast" class="ui-content" ></div>
   
 	<div data-role="footer">
 		<h3>极讯欢乐工作室</h3>

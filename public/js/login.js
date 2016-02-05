@@ -37,7 +37,8 @@
 				if (data.code == 200) {
 					window.location.href='/character';
 				} else {
-					$('#msg').text(data.msg).show();
+					$('#toast').text(data.msg).popup('open');
+					
 				}
 			}
 
