@@ -39,7 +39,7 @@ app.get('/', function(req, res) {
             	}
             	
             	if (!model) {
-            		res.redirect('/register');
+            		res.redirect('/character');
             	} else
             		res.sendFile(path.join(__dirname,'/index.html'));
             	return;
@@ -54,11 +54,11 @@ app.get('/login', function(req, res) {
     res.sendFile(path.join(__dirname,'/login.html'));
 });
 
-app.get('/register', function(req, res) {
+app.get('/character', function(req, res) {
     if (req.signedCookies) {
         if (req.signedCookies.sessionId) {
             var passport = req.signedCookies.passport;
-            res.render(path.join(__dirname,'/role.html'), {'passport':passport});
+            res.render(path.join(__dirname,'/character.html'), {'passport':passport});
             return;
         }
     }

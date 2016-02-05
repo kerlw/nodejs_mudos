@@ -1,11 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
-<script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
 <style type="text/css">
 
 </style>
@@ -13,13 +11,14 @@
 </head>
 <body>
 
-<div data-role="page">
+<div data-role="page" data-theme="b">
 	<div data-role="header">
 		<h1>请创建您的角色</h1>
 	</div>
 
 	<div data-role="main" class="ui-content">
 		<form method="post" action="" >
+			<label id="msg" class="text-danger text-center" hidden></label>
 			<div class="ui-field-contain">
 				<p>您当前登录的账号为： <span id="passport"><%= passport %></span></p>
 				<label for="fullname">请输入昵称：</label>
@@ -57,46 +56,9 @@
 		<h3>极讯欢乐工作室</h3>
 	</div>
 </div>
-<script>
 
-
-$("document").ready(function(){
-	var points = new Object();
-	points.total = 15;
-	points.strength = 10;
-	points.constitution = 10;
-	points.intelligence = 10;
-	points.apperance = 10;
-	points.luck = 10;
-	points.courage = 10;
-	$("#points").text("您当前拥有的属性点数: "+points.total);
-
-	function setPoints($slider,$base){
-
-			if ($slider.val()> Number(points.total) + $base)
-				{
-				$base = Number(points.total) + Number($base);
-				points.total = 0;
-				$slider.val($base).slider("refresh");;
-				}
-			else
-				{
-				points.total = Number(points.total-($slider.val()-$base));
-				$base = Number($slider.val());
-				}
-			return $base;
-
-	};
-
-	$("input.point").change(function(){
-		var $me = $(this);
-		var $name = $me.attr('name');
-		points[$name] = setPoints($me, points[$name]);
-		$("#points").text("您当前拥有的属性点数: "+points.total);
-	});
-	
-});
-</script>
-<script type="text/javascript" src="public/js/createCharacter.js"></script>
+<script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="public/js/character.js"></script>
 </body>
 </html>
