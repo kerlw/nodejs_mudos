@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
+</head>
+<body>
+
+<div data-role="page" data-theme="b">
+	<div data-role="header">
+		<h1>欢迎来到Mud世界</h1>
+	</div>
+
+	<div data-role="main" class="ui-content">
+		<div class="ui-field-contain">
+			<label for="passport">帐号：</label>
+			<input type="text" name="passport" id="passport">       
+			<label for="password">密码：</label>
+			<input type="password" name="password" id="password">
+		</div>
+		<button id='login'>登录</button>
+		<button id='register'>注册</button>
+	</div>
+	
+	<div data-role="popup" id="toast" class="ui-content" ></div>
+  
+	<div data-role="footer">
+		<h3>极讯欢乐工作室</h3>
+	</div>
+</div>
+
+</body>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="public/js/login.js"></script>
+</html>

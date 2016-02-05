@@ -3,10 +3,8 @@
 	
 	$('#login').on('click', function() {
 		
-		var passport = $('#passport').val();
-		
 		var info = {
-			passport : passport,
+			passport : $('#passport').val(),
 			password : $('#password').val()
 		};
 		$.ajax({
@@ -14,19 +12,20 @@
 			url : '/ucenter?action=login',
 			dataType : 'json',
 			data : info,
-			success : function() {
-				window.location.href='/';
-			},
-
+			success : function(data) {
+				if (data.code == 200) {
+					window.location.href='/';
+				} else {
+					$('#msg').text(data.msg).show();
+				}
+			}
 		});
 	});
 
 	$('#register').on('click', function() {
-	
-		var passport = $('#passport').val();
 		
 		var info = {
-			passport : passport,
+			passport : $('#passport').val(),
 			password : $('#password').val()
 		};
 		$.ajax({
@@ -36,13 +35,12 @@
 			data : info,
 			success : function(data) {
 				if (data.code == 200) {
-					
-					window.location.href='/register?passport='+passport;
-					
+					window.location.href='/character';
 				} else {
-					$('#msg').text(data.msg).show();
+					$('#toast').text(data.msg).popup('open');
+					
 				}
-			},
+			}
 
 		});
 	});
