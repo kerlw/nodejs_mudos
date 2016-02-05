@@ -41,7 +41,7 @@ app.get('/', function(req, res) {
             	if (!model) {
             		res.redirect('/character');
             	} else
-            		res.sendFile(path.join(__dirname,'/index.html'));
+            		res.sendFile(path.join(__dirname,'/views/index.html'));
             	return;
             });
         }   
@@ -51,14 +51,14 @@ app.get('/', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-    res.sendFile(path.join(__dirname,'/login.html'));
+    res.sendFile(path.join(__dirname,'/views/login.html'));
 });
 
 app.get('/character', function(req, res) {
     if (req.signedCookies) {
         if (req.signedCookies.sessionId) {
             var passport = req.signedCookies.passport;
-            res.render(path.join(__dirname,'/character.html'), {'passport':passport});
+            res.render(path.join(__dirname,'/views/character.html'), {'passport':passport});
             return;
         }
     }
