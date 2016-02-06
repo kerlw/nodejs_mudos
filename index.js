@@ -77,7 +77,7 @@ io.on('connection', function(socket) {
 				return;
 			}
 			
-			var charId = charModel._id,
+			var charId = charModel._id.toHexString(),
 				player = null;
 			
 			if ((player = _objs.players[charId])) {
@@ -127,7 +127,9 @@ app.post('/ucenter', function(req, res) {
             console.log(req.body.passport + " login succeed " + new Date());
             var sessionId = req.body.passport + cryptPassword;
             sessionId = crypto.createHash("md5").update(sessionId).digest("hex");
-            res.cookie('sessionId', sessionId, { signed : true}).cookie('passport', req.body.passport, {signed : true}).send(JSON.stringify({'code':200,'msg':'login succeed.'}));
+            res.cookie('sessionId', sessionId, { signed : true})
+				.cookie('passport', req.body.passport, {signed : true})
+				.send(JSON.stringify({'code':200,'msg':'login succeed.'}));
             return;
         });
         break;

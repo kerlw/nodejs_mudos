@@ -8,7 +8,7 @@ var Player = extend(function(socket, model) {
 	
 	if (!model)
 		throw "[ERROR] want to create player without char model ?";
-	this.id = model._id;
+	this.id = model._id.toHexString();
 	this.name = model.nickname;
 	this.socket = socket;
 	

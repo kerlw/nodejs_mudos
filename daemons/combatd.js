@@ -96,8 +96,10 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 	}
 	if (!base_attack_skill)
 		base_attack_skill = BASIC_ATTACK_SKILL;
-	
+
+	console.log("do attack me=" + me.name + " basic_attack_skill = " + base_attack_skill);
 	var attack_skill = this.find_skill_to_use(me, base_attack_skill, other);
+	console.log("             attack_skill = " + attack_skill.name);
 	
 	//1. other may dodge, and if dodged, other may beat back.
 	var dodge = 1;
@@ -126,20 +128,21 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 	var damage = _daemons.skilld.query_damage(me, attack_skill, lvl, other);
 	me.recv_damage(cost);
 	other.recv_damage(damage);
-	FUNCTIONS.message_combatd("$N击中了$n,造成了"+damage+"点伤害.", me, other);
+	FUNCTIONS.message_combatd(action, me, other);
 	
-	if (damage > 0) {
+	//if (damage > 0) {
 		if (other.vitality*3 <= other.max_vitality
 				&& !me.is_killing(other.id) && !other.is_killing(me.id)) {
 			me.remove_enemy(other);
 			other.remove_enemy(me);
 			FUNCTIONS.message_vision(winner_msg[FUNCTIONS.random(winner_msg.length)], me, other);
 		}
-	}
+	//}
 	return 1;
 }
 
 combatd.prototype.fight = function(me, other) {
+	console.log("[COMBATD] " + me.id + " fight " + other.id);
 	if (!me.living() || !other.living())
 		return;
 	

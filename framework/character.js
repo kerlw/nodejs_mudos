@@ -78,7 +78,8 @@ Character.prototype.disable_commands = function() {
 Character.prototype.heart_beat = function() {
 	if (!FUNCTIONS.environment(this))	// if char is not in a container, skip heart_beat
 		return;
-	
+
+	console.log("[HB_ENGINE] " + this.id + " is heart beating");
 	if (this.eff_vitality < 0) {
 		//TODO quest kill
 		this.remove_all_enemy();
@@ -112,6 +113,7 @@ Character.prototype.heart_beat = function() {
 }
 
 Character.prototype.fight = function(target) {
+	console.log("[CHAR] fight invoked, this is  " + this.id + ", and target is " + target.id);
 	if (!target || target === this || !(target instanceof MObject))
 		return;
 	
@@ -334,15 +336,22 @@ Character.prototype.command = function(cmd, arg) {
 	fm.CMD.exec(this, cmd, arg);
 }
 
-Character.prototype.recv_damage = function(type, damage, who) {
-	if (type != "vitality" && type != "force")
-		throw "unkonw type of damage received." + type;
+Character.prototype.recv_damage = function(damage, who) {
+	if (!damage) {
+		return;
+	}
+
+	for (var type in damage) {
+		if (type != "vitality" && type != "force")
+			throw ("unkonw type of damage received : " + type);
+
 	
-	var val = this[type] - damage;
-	if (val < 0)
-		val = -1;
+		var val = this[type] - damage[type];
+		if (val < 0)
+			val = -1;
 	
-	this[type] = val;
+		this[type] = val;
+	}
 	
 	if (this.is_player())
 		this.command('hp');

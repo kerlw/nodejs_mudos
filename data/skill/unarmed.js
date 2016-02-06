@@ -12,7 +12,7 @@ unarmed.prototype.action = function(me, lv, other) {
 }
 
 unarmed.prototype.damage = function(me, lv, other) {
-	return new Array({'vitality' : 10 + FUNCTIONS.random(me.str)});
+	return {'vitality' : (10 + FUNCTIONS.random(me.str))};
 }
 
 module.exports = unarmed;

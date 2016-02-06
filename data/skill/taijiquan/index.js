@@ -27,7 +27,7 @@ taijiquan.prototype.action = function(me, use_lv, other) {
 }
 
 taijiquan.prototype.cost = function(me, use_lv) {
-	return new Array({'force': 10}); 
+	return {'force': 10}; 
 }
 
 
@@ -36,7 +36,7 @@ taijiquan.prototype.damage = function(me, use_lv, other) {
 		return null;
 	}
 
-	return new Array({'vitality' : 20});
+	return {'vitality' : 20};
 }
 
 module.exports = taijiquan;

@@ -19,6 +19,8 @@ hb.call_heart_beat = function() {
 			HB_ENGINE.hb_array.push(cur_hb);
 	}
 	
+	var now = new Date().valueOf();
+	console.log("[HB_ENGINE] heart_beat begin at " + now + ", " + HB_ENGINE.hb_array.length + " objects in queue");
 	while (HB_ENGINE.hb_array.length > 0) {
 		cur_hb = HB_ENGINE.hb_array.shift();
 		if (cur_hb.deleted)
@@ -43,6 +45,7 @@ hb.call_heart_beat = function() {
 		HB_ENGINE.current_hb_obj = null;
 
 	}
+	console.log("[HB_ENGINE] heart_beat done. used " + (new Date().valueOf() - now) + "ms");
 	
 	if (HB_ENGINE.hb_append_array.length > 0) {
 		//swap hb_array and hb_append_array
@@ -112,7 +115,8 @@ hb.prototype.find_target_hb = function(obj) {
 hb.prototype.set_heart_beat = function(obj, to) {
 	if (to < 0 || !obj)
 		return;
-	
+
+	console.log("[HB_ENGINE] " + obj.id + " is setting heart beat to " + to);
 	var target_hb = this.find_target_hb(obj);
 	
 	if (to === 0) {
@@ -133,6 +137,7 @@ hb.prototype.set_heart_beat = function(obj, to) {
 			this.hb_append_array.push(target_hb);
 			return 1;
 		} else {
+			target_hb.deleted = 0;
 			target_hb.time_to_hb = to;
 			target_hb.hb_ticks = to;
 			return 1;
