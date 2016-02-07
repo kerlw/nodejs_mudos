@@ -35,6 +35,10 @@
 		socket.emit('login', { passport : passport});
 	});
 
+	socket.on('disconnect', function() {
+		$msgList.append("<br>服务器连接已断开.<br>");
+	});
+
 	socket.on('resp', function(msg) {
 		var oldMsg = $msgList.html();
 		if (oldMsg.length > msgLimit) {
@@ -86,10 +90,27 @@
 		$('#myModalLabel').text(msg.name);
 		$('#myModalContent').text(msg.desc);
 		$('#interactions').empty();
+		$('.good-list').empty();
 		switch (msg.type) {
 		case 'char':
 			$('#interactions').append('<button class="btnInter" type="fight" target="' + msg.id + '">切磋</button>')
 							.append('<button class="btnInter" type="kill" target="' + msg.id + '">杀!!</button>');
+			break;
+		case 'vender':
+			for (var good in msg.goods) {
+				$('.good-list').append('<li class="good-in-list" path="' + good + '">' + msg.goods[good].name + '</li>'); 
+			}
+			$('.good-in-list').on('click', function() {
+				var $me = $(this);
+				socket.emit('cmd', 
+					{ 
+						cmd : 'buy', 
+						arg : {
+							vender : msg.id,
+							item : $me.attr('path')
+						}
+					});
+			});
 			break;
 		}
 		$('.btnInter').on('click', function(){

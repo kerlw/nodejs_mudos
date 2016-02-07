@@ -4,6 +4,9 @@ var extend = require('./oo.js'),
 	path = require ('path');
 
 var NPC = extend(function() {
+	if (!(this instanceof NPC))
+		return new NPC();
+	
 	this.wimpy_ratio = 0;	//make npc do not flee as default.
 }, Char);
 
@@ -34,6 +37,33 @@ NPC.prototype.accept_fight = function(who) {
 				+ "只好奉陪，我们点到为止。");
 		return 1;
 	}
+	return 0;
+}
+
+NPC.prototype.return_home = function() {
+	var env = FUNCTIONS.environment(this);
+	if (!env || env === this.home)
+		return 1;
+
+	if (!this.home || !this.living() || this.is_busy() || this.is_fighting())
+		return 0;
+	
+	message("vision", this.name + "急急忙忙的离开了", env, this);
+	return this.move_to(this.home);
+}
+
+NPC.prototype.chat = function() {
+	var chance = this.query(this.is_fighting() ? 
+			"chat_chance_combat" : "chat_chance");
+	if (!chance)
+		return;
+}
+
+NPC.prototype.random_move = function() {
+	//TODO define nps's move area
+}
+
+NPC.prototype.is_vender = function() {
 	return 0;
 }
 

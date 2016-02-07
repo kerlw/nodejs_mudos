@@ -32,8 +32,11 @@ function cmd_look() {
 				id : obj.id,
 				name : obj.name,
 				desc : obj.desc,
-				type : 'char'
+				type : obj.look_type
 		}
+		if (obj.is_vender())
+			ret.goods = obj.list_goods();
+
 		return FUNCTIONS.message_interactive(sender, ret);
 	}
 	

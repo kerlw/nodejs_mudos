@@ -36,6 +36,8 @@ var Character = extend(function() {
 	this.wimpy_ratio = 0;
 	this.equipments = {};
 	this.ghost = 0;
+
+	this.look_type = "char";
 	
 	this.enable_player();
 }
@@ -472,6 +474,10 @@ Character.prototype.query_skill = function(skill, default_value) {
 		return default_value;
 	
 	return this.skills[skill].lv;
+}
+
+Character.prototype.carry_object = function(obj) {
+
 }
 
 module.exports = Character;

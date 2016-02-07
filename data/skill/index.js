@@ -13,7 +13,6 @@
 		if (!stat.isDirectory())
 			return;
 		
-		console.log(pathname + " " + path.join(pathname, 'index.js'));
 		var skill = new (r(path.join(pathname, 'index.js')))();
 		if (skill) {
 			var performs = fs.readdirSync(pathname);

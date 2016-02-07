@@ -75,7 +75,7 @@
 				if (path.extname(file) === '.json') {
 					room = fm.ROOM.load(pathname);
 				} else if (path.extname(file) === '.js') {
-					room = new r(pathname);
+					room = new (r(pathname))();
 				}
 				global._objs.rooms[id] = room;
 				global._objs.areas[areaId] = global._objs.areas[areaId] || new Array();

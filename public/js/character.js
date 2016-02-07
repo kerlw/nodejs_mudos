@@ -1,26 +1,24 @@
 (function(win) {
 	'use strict';
 
-	var points = new Object();
-	points.total = 15;
-	points.strength = 10;
-	points.constitution = 10;
-	points.intelligence = 10;
-	points.apperance = 10;
-	points.luck = 10;
-	points.courage = 10;
-	$("#points").text("您当前拥有的属性点数: "+points.total);
+	var points = {
+					total : 60,
+					strength : 10,
+					constitution : 10,
+					intelligence : 10,
+					apperance : 10,
+					luck : 10,
+					courage : 10
+				};
 
-	function setPoints($slider,$base){
+	$("#points").text("您当前拥有的属性点数: " + points.total);
 
-		if ($slider.val()> Number(points.total) + $base)
-		{
+	function setPoints($slider, $base){
+		if ($slider.val() > points.total + $base) {
 			$base = Number(points.total) + Number($base);
 			points.total = 0;
 			$slider.val($base).slider("refresh");;
-		}
-		else
-		{
+		} else {
 			points.total = Number(points.total-($slider.val()-$base));
 			$base = Number($slider.val());
 		}
@@ -32,7 +30,7 @@
 		var $me = $(this);
 		var $name = $me.attr('name');
 		points[$name] = setPoints($me, points[$name]);
-		$("#points").text("您当前拥有的属性点数: "+points.total);
+		$("#points").text("您当前拥有的属性点数: " + points.total);
 	});
 
 	$('#submit').on('click', function() {

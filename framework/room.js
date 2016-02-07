@@ -47,35 +47,8 @@ ROOM.loadFromJSON = function(data) {
 	ret.name = data.name || "unnamed";
 	ret.desc = data.desc || "";
 	ret.exits = data.exits || {};
-	ret.objs = {};
-	var objs = data.objs || {};
-	for (var name in objs) {
-		var count = objs[name],
-			i = 0,
-			pathname = fm.find_file(DATA_PATH, name);
-			fs.accessSync(pathname, fs.F_OK | fs.R_OK);
-		while (i < count) {
-			if (!pathname)
-				break;
-			
-			var id = name + '#' + i,
-				tmp = require(pathname);
-			
-			if (typeof tmp !== 'function')
-				break;
-			
-			var obj = new tmp();
-			if (obj && obj instanceof fm.MObject) {
-				obj.id = id;
-				if (obj instanceof fm.NPC)
-					_objs.npcs[id] = obj;
-				else
-					_objs.items[id] = obj;
-				obj.move_to(ret);
-			}
-			i++;
-		}
-	}
+	ret.objs = data.objs || {};
+	ret.setup();
 	return ret;
 }
 
@@ -111,9 +84,39 @@ ROOM.prototype.look_response = function(avoid) {
 		if (avoid && avoid[objId])
 			continue;
 		
-		ret['objs'][this.contains[objId].id] = this.contains[objId].display_name();
+		ret.objs[this.contains[objId].id] = this.contains[objId].display_name();
 	}
 	return ret;
+}
+
+ROOM.prototype.setup = function() {
+	for (var name in this.objs) {
+		var count = this.objs[name],
+			i = 0,
+			pathname = fm.find_file(DATA_PATH, name);
+		fs.accessSync(pathname, fs.F_OK | fs.R_OK);
+		while (i < count) {
+			if (!pathname)
+				break;
+
+			var id = name + '#' + i,
+				tmp = require(pathname);
+			
+			if (typeof tmp !== 'function')
+				break;
+
+			var obj = new tmp();
+			if (obj && obj instanceof fm.MObject) {
+				obj.id = id;
+				if (obj instanceof fm.NPC)
+					_objs.npcs[id] = obj;
+				else
+					_objs.items[id] = obj;
+				obj.move_to(this);
+			}
+			i++;
+		}
+	}
 }
 
 module.exports = ROOM;

@@ -25,7 +25,7 @@
 			if (you)
 				message("vision", str4other, env, new Array(me, you));
 			else
-				message("vision", str4other, env, new Array(me));
+				message("vision", str4other, env, me);
 		}
 	}
 
@@ -102,8 +102,9 @@
 		else if (target instanceof fm.ROOM) {
 			for ( var id in target.contains) {
 				var ob = target.contains[id];
-				if (ob && exclude && exclude instanceof Array
-						&& exclude.indexOf(ob) >= 0)
+				if (ob && exclude)
+					if (ob === exclude || 
+						(exclude instanceof Array && exclude.indexOf(ob) >= 0))
 					continue;
 
 				if (ob.recv_message && typeof ob.recv_message === 'function')

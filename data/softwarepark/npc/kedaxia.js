@@ -5,6 +5,7 @@ var kedaxia = fm.extend(function() {
 		return new kedaxia();
 	
 	this.name = "珂大侠";
+	this.desc = "江湖人称珂大侠";
 	this.equip_skill('dodge', 100);
 	this.equip_skill('parry', 100);
 	this.equip_skill('unarmed', 100);
