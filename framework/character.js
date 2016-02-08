@@ -37,6 +37,8 @@ var Character = extend(function() {
 	this.equipments = {};
 	this.ghost = 0;
 
+	this.money = 0;
+
 	this.look_type = "char";
 	
 	this.enable_player();

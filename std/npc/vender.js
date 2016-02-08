@@ -15,6 +15,12 @@ vender.prototype.add_good = function(path) {
 	this.goods[path] = 0;
 }
 
+vender.prototype.has_good = function(path) {
+	if (!this.goods[path])
+		return 0;
+	return 1;
+}
+
 vender.prototype.sell_good = function(path, who) {
 	if (!who || !who.living())
 		return;
