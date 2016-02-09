@@ -21,10 +21,10 @@ vender.prototype.has_good = function(path) {
 	return 1;
 }
 
-vender.prototype.sell_good = function(path, who) {
-	if (!who || !who.living())
-		return;
-}
+//vender.prototype.sell_good = function(path, who) {
+//	if (!who || !who.living())
+//		return;
+//}
 
 vender.prototype.is_vender = function() {
 	return 1;
