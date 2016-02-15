@@ -75,6 +75,8 @@ Player.prototype.other_login = function(socket) {
 	this.socket = socket;
 
 	socket.player = this;
+	this.interactive = 1;
+	this.enable_player();
     socket.on('cmd', function(arg) {
     	if (!arg || !arg.cmd)
     		return;
