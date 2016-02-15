@@ -1,0 +1,3 @@
+[submodule "jx_mud"]
+	path = jx_mud
+	url = git@github.com:kerlw/jx_mud.git
