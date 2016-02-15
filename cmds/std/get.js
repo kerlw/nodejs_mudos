@@ -38,7 +38,7 @@ cmd_get.prototype.execute = function(sender, arg) {
 	}
 }
 
-comd_get.prototype.do_get = function(sender, obj) {
+cmd_get.prototype.do_get = function(sender, obj) {
 	if (!sender || !obj) 
 		return;
 	

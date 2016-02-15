@@ -85,7 +85,13 @@ io.on('connection', function(socket) {
 			} else {
 				player = new fm.Player(socket, charModel);
 				_objs.players[charId] = player;
-				FUNCTIONS.move_object(player, _objs.rooms['softwarepark/office']);
+				var start_room = null;
+				if (charModel.start_room)
+					start_room = _objs.rooms[charModel.start_room];
+				else
+					start_room = _objs.rooms[__config.start_room];
+				if (start_room)
+					FUNCTIONS.move_object(player, start_room);
 			}
 			
 			player.command('look');

@@ -1,7 +1,11 @@
 {
     "port" : 3000,
     
-    "data_dir" : "/data",
+    "data_dir" : "",
+
+    "start_room" : "",
+
+    "death_room" : "",
     
     "hb_interval" : 2000,
     

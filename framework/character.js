@@ -482,4 +482,8 @@ Character.prototype.carry_object = function(obj) {
 
 }
 
+Character.prototype.setup_char = function() {
+}
+
+
 module.exports = Character;
