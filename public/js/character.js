@@ -1,6 +1,5 @@
-(function(win) {
-	'use strict';
-
+$("document").ready(function(){
+	
 	var points = {
 					total : 60,
 					strength : 10,
@@ -14,10 +13,10 @@
 	$("#points").text("您当前拥有的属性点数: " + points.total);
 
 	function setPoints($slider, $base){
-		if ($slider.val() > points.total + $base) {
+		if ($slider.val() > Number(points.total) + $base) {
 			$base = Number(points.total) + Number($base);
 			points.total = 0;
-			$slider.val($base).slider("refresh");;
+			$slider.val($base).slider("refresh");
 		} else {
 			points.total = Number(points.total-($slider.val()-$base));
 			$base = Number($slider.val());
@@ -65,4 +64,4 @@
 		});
 	});
 
-}(window));
+});
