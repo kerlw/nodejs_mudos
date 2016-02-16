@@ -113,3 +113,40 @@ body{
 .sys-cmd a{
     color:#8B008B;
 }
+
+/* color */
+span.blk{color:black;}
+span.red{color:red;}
+span.grn{color:green;}
+span.yel{color:yellow;}
+span.blu{color:blue;}
+span.mag{color:magenta;}
+span.cyn{color:cyan;}
+span.wht{color:white;}
+span.bold{font-weight:bold;}
+span.blink{-webkit-animation: twinkling 1s infinite ease-in-out;}
+
+span.hir{color:red;}
+span.hig{color:lightgreen;}
+span.hiy{color:lightyellow;}
+span.hib{color:lightblue;}
+span.him{color:magenta;}
+span.hic{color:lightcyan;}
+span.hiw{color:white;}
+
+span.bblk{background-color:black;}
+span.bred{background-color:red;}
+span.bgrn{background-color:green;}
+span.byel{background-color:yellow;}
+span.bblu{background-color:blue;}
+span.bmag{background-color:magenta;}
+span.bcyn{background-color:cyan;}
+span.bwht{background-color:white;}
+
+span.hbred{background-color:red;}
+span.hbgrn{background-color:lightgreen;}
+span.hbyel{background-color:lightyellow;}
+span.hbblu{background-color:lightblue;}
+span.hbmag{background-color:magenta;}
+span.hbcyn{background-color:lightcyan;}
+span.hbwht{background-color:white;}

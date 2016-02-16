@@ -45,12 +45,12 @@
 			oldMsg = oldMsg.substring(oldMsg.length - msgLimit);
 			$msgList.html('...' + oldMsg.substring(oldMsg.indexOf('<br>')));
 		}
-		$msgList.append(msg + '<br>');
+		$msgList.append(exchange_color(msg) + '<br>');
 		$msgList.scrollTop(9999);
 
 	});
 	socket.on('fail', function(msg) {
-		$msgList.append(msg + '<br>');
+		$msgList.append(exchange_color(msg) + '<br>');
 	});
 	socket.on('room', function(msg) {
 		refresh_move_controller(msg.name, msg.exits);
@@ -190,4 +190,25 @@
 		//reset timer
 		refresh_hp_timer = setTimeout(function() {socket.emit('cmd', { cmd : 'hp'});}, 5000);
 	}
+
+	function exchange_color(msg){
+		//msg = 'xxx say:#s(HIR) test\n msg #e(HIR)\n #s(MAG)ha#e(MAG) ha';
+		var regRN = /\n/g;
+		msg = msg.replace(regRN,"<br />");
+
+		var tagReg = /#s\(([A-Z]+)\).*#e\(([A-Z]+)\)/g;
+		var tags = tagReg.exec(msg);
+		//console.log(tags);
+		var index = 1;
+		var tag;
+		while(tags != null && (tag = tags[index++])){
+			//console.log(tag);
+			msg = msg.replace('#s(' + tag + ')', '<span class="' + tag.toLowerCase() + '">');
+			msg = msg.replace('#e(' + tag + ')', '</span>');
+		}
+
+		//console.log(msg);
+		return msg;
+	}
+
 }(window));
