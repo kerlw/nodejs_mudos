@@ -38,6 +38,10 @@ var Character = extend(function() {
 	this.ghost = 0;
 
 	this.money = 0;
+	
+	this.flags = {
+		'can_speak' : 1
+	}
 
 	this.look_type = "char";
 	
@@ -485,5 +489,12 @@ Character.prototype.carry_object = function(obj) {
 Character.prototype.setup_char = function() {
 }
 
+Character.prototype.set_flag = function(flag, value) {
+	this.flags[flag] = value;
+}
+
+Character.prototype.query_flag = function(flag) {
+	return this.flags[flag];
+}
 
 module.exports = Character;

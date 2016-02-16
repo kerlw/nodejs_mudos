@@ -30,8 +30,9 @@ function cmd_kill() {
 		if (target.is_fighting(sender) && target.is_killing(sender))
 			return FUNCTIONS.notify_fail(sender, "加～油～～！加～油～～！");
 		
-		FUNCTIONS.message_vision("$N对着$n喝到：「" + _daemons.rankd.query_rude(target) +
-				"！今日不是你死就是我活！」", sender, target);
+		if (target.query_flag('can_speak'))
+			FUNCTIONS.message_vision("$N对着$n喝到：「" + _daemons.rankd.query_rude(target) +
+					"！今日不是你死就是我活！」", sender, target);
 		sender.kill(target);
 		
 		if (!target.is_player()) {
