@@ -212,19 +212,22 @@
 	}
 
 	function exchange_color(msg){
-		//msg = 'xxx say:#s(HIR) test\n msg #e(HIR)\n #s(MAG)ha#e(MAG) ha';
+		//msg = 'xxx say:$(HIR BOLD) test\n msg $NOR\n $(MAG BLINK)ha$NOR ha';
 		var regRN = /\n/g;
 		msg = msg.replace(regRN,"<br />");
 
-		var tagReg = /#s\(([A-Z]+)\).*#e\(([A-Z]+)\)/g;
-		var tags = tagReg.exec(msg);
+		var tagReg = /\$\(([A-Z\s]+)\)/g;
+		var tags = msg.match(tagReg);
 		//console.log(tags);
-		var index = 1;
-		var tag;
-		while(tags != null && (tag = tags[index++])){
+		var index = 0;
+		var tagWhole;
+		while(tags != null && (tagWhole = tags[index++])){
+			//console.log(tagWhole);
+			var tagWholeReg = /^\$\(([A-Z\s]+)\)$/g;
+			var tag = tagWholeReg.exec(tagWhole)[1];
 			//console.log(tag);
-			msg = msg.replace('#s(' + tag + ')', '<span class="' + tag.toLowerCase() + '">');
-			msg = msg.replace('#e(' + tag + ')', '</span>');
+			msg = msg.replace('\$(' + tag + ')', '<span class="' + tag.toLowerCase() + '">');
+			msg = msg.replace('\$NOR', '</span>');
 		}
 
 		//console.log(msg);

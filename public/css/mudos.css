@@ -124,7 +124,7 @@ span.mag{color:magenta;}
 span.cyn{color:cyan;}
 span.wht{color:white;}
 span.bold{font-weight:bold;}
-span.blink{-webkit-animation: twinkling 1s infinite ease-in-out;}
+span.blink{text-decoration:blink;}
 
 span.hir{color:red;}
 span.hig{color:lightgreen;}
