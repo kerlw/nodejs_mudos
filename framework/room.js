@@ -48,6 +48,10 @@ ROOM.loadFromJSON = function(data) {
 	ret.desc = data.desc || "";
 	ret.exits = data.exits || {};
 	ret.objs = data.objs || {};
+	var kvs = data.kvs || {};
+	for (var k in kvs) {
+		ret[k] = kvs[k];
+	}
 	ret.setup();
 	return ret;
 }
