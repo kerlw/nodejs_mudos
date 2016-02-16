@@ -32,6 +32,8 @@ var Player = extend(function(socket, model) {
     	if (socket.player)
     		socket.player.onDisconnected();
     });
+    
+    this.set_heart_beat(1);
 }, Char);
 
 Player.prototype.onDisconnected = function() {

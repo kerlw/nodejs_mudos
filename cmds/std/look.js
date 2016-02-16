@@ -1,6 +1,6 @@
 module.exports = cmd_look;
 
-var fm = require('../../framework');
+var fm = require('framework');
 
 function cmd_look() {
 	if (!(this instanceof cmd_look))
@@ -36,6 +36,10 @@ function cmd_look() {
 		}
 		if (obj.is_vender())
 			ret.goods = obj.list_goods();
+		
+		if (obj instanceof fm.NPC) {
+			ret.inquiries = obj.query_inquiry(sender);
+		}
 
 		return FUNCTIONS.message_interactive(sender, ret);
 	}

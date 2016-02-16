@@ -8,6 +8,7 @@ var NPC = extend(function() {
 		return new NPC();
 	
 	this.wimpy_ratio = 0;	//make npc do not flee as default.
+	this.inquiries = {};
 }, Char);
 
 NPC.loadFromJSON = function(data) {
@@ -65,6 +66,44 @@ NPC.prototype.random_move = function() {
 
 NPC.prototype.is_vender = function() {
 	return 0;
+}
+
+NPC.prototype.add_inquiry = function(id, name, callback) {
+	this.inquiries[id] = {
+			name : name,
+			cb : callback,
+	}
+}
+
+NPC.prototype.do_inquiry = function(who, about) {
+	if (!this.inquiries || !this.inquiries[about]) 
+		return FUNCTIONS.notify_fail(who, this.name + "向你摇了摇头，看起来并不清楚你要打听的事情。");
+	
+	if (this.visiable_inquiry 
+			&& typeof(this.visiable_inquiry) === 'function'
+			&& !this.visiable_inquiry.call(this, about, who))
+		return FUNCTIONS.notify_fail(who, this.name + "并不清楚你要打听的事情。");
+	
+	if (typeof(this.inquiries[about].cb) === 'function')
+		this.inquiries[about].cb.call(this, who);
+}
+
+NPC.prototype.query_inquiry = function(who) {
+	var ret = {};
+	if (this.inquiries) {
+		for (var k in this.inquiries) {
+			if (!this.inquiries[k].name)
+				continue;
+			
+			if (this.visiable_inquiry 
+					&& typeof(this.visiable_inquiry) === 'function'
+					&& !this.visiable_inquiry.call(this, k, who))
+				continue;
+				
+			ret[k] = this.inquiries[k].name
+		}
+	}
+	return ret;
 }
 
 module.exports = NPC;

@@ -89,6 +89,7 @@
 		
 		$('#myModalLabel').text(msg.name);
 		$('#myModalContent').text(msg.desc);
+		$('#inquiries').empty();
 		$('#interactions').empty();
 		$('.good-list').empty();
 		switch (msg.type) {
@@ -104,7 +105,7 @@
 				var $me = $(this);
 				socket.emit('cmd', 
 					{ 
-						cmd : 'buy', 
+						cmd : 'buy',
 						arg : {
 							vender : msg.id,
 							item : $me.attr('path')
@@ -113,6 +114,25 @@
 			});
 			break;
 		}
+		
+		if (msg.inquiries) {
+			$('#inquiries').text('询问关于');
+			for (var k in msg.inquiries) {
+				$('#inquiries').append('<button class="btnInquiry" about="' + k + '" who="' + msg.id + '">' + msg.inquiries[k] + '</button>');
+			}
+		}
+		$('.btnInquiry').on('click', function() {
+			$('#objModal').modal('hide');
+			var target = $(this).attr('who'),
+				about = $(this).attr('about');
+			socket.emit('cmd', {
+					cmd : 'inquiry', 
+					arg : {
+						target : target,
+						about : about
+						}
+					});
+		});
 		$('.btnInter').on('click', function(){
 			$('#objModal').modal('hide');
 			var type = $(this).attr('type'),
