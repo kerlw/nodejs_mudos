@@ -1,0 +1,42 @@
+示例：
+ \n你只觉得#s(HIR)头昏脑胀#e(HIR)，#s(BLK)眼前一黑#e(BLK)，接着什么也不知道了……\n\n 
+
+/*  Foreground Colors  */
+BLK /* Black   */
+RED /* Red     */
+GRN /* Green   */
+YEL /* Yellow  */
+BLU /* Blue    */
+MAG /* Magenta */
+CYN /* Cyan    */
+WHT /* White   */
+BOLD /* Turn on bold mode */
+BLINK /* Initialize blink mode */
+
+/*  Hi Intensity Foreground Colors  */
+HIR /* Red     */
+HIG /* Green   */
+HIY /* Yellow  */
+HIB /* Blue    */
+HIM /* Magenta */
+HIC /* Cyan    */
+HIW /* White   */
+
+/*  Background Colors  */
+BBLK /* Black   */
+BRED /* Red     */
+BGRN /* Green   */
+BYEL /* Yellow  */
+BBLU /* Blue    */
+BMAG /* Magenta */
+BCYN /* Cyan    */
+BWHT /* White   */
+
+/* Hi Intensity Background Colors  */
+HBRED /* Red     */
+HBGRN /* Green   */
+HBYEL /* Yellow  */
+HBBLU /* Blue    */
+HBMAG /* Magenta */
+HBCYN /* Cyan    */
+HBWHT /* White   */

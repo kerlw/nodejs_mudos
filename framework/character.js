@@ -242,7 +242,7 @@ Character.prototype.unconcious = function() {
 		return;
 	
 	this.remove_all_enemy();
-	FUNCTIONS.tell_object(this, "HIR \n你只觉得头昏脑胀，眼前一黑，接着什么也不知道了……\n\n NOR");
+	FUNCTIONS.tell_object(this, "#s(HIR) \n你只觉得头昏脑胀，眼前一黑，接着什么也不知道了……\n\n #e(HIR)");
 	this.command("hp");
 	this.disable_player("<昏迷不醒>");
 	this.set_tmp("block_msg/all", 1);
