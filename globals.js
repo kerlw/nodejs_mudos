@@ -56,7 +56,7 @@
 				fname = path.parse(file).name;
 			
 			if (stat.isDirectory()) {
-				if (fname === 'obj' || fname === 'npc' || fname === 'skill')
+				if (fname === 'obj' || fname === 'npc' || fname === 'skill' || fname === 'fun')
 					return;
 				
 				init_rooms(basedir, path.join(prefix, file));
