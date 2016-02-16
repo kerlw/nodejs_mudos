@@ -1,5 +1,5 @@
 示例：
- \n你只觉得#s(HIR)头昏脑胀#e(HIR)，#s(BLK)眼前一黑#e(BLK)，接着什么也不知道了……\n\n 
+ \n你只觉得$(HIR BOLD)头昏脑胀$NOR，$(BLK)眼前一黑$NOR，接着什么也不知道了……\n\n 
 
 /*  Foreground Colors  */
 BLK /* Black   */
