@@ -22,6 +22,7 @@ exports.MObject = require('./mobject.js');
 exports.CHAR = require('./character.js');
 exports.NPC = require('./npc.js');
 exports.Player = require('./player.js');
+exports.ANIMAL = require('./animal.js');
 
 exports.ROOM = require('./room.js');
 

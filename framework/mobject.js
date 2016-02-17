@@ -7,6 +7,7 @@ var MObject = function() {
 	this.holder = null;
 	this.contains = {};
 	this.flags = 0;
+	this.kv_flags = {};
 	this.cnd_flags = 0;
 	
 	//used to hold some temporary flags.
@@ -15,6 +16,14 @@ var MObject = function() {
 	this.call_outs = {};
 	
 	this.init = function() {}
+}
+
+MObject.prototype.set_flag = function(flag, value) {
+	this.kv_flags[flag] = value;
+}
+
+MObject.prototype.query_flag = function(flag) {
+	return this.kv_flags[flag];
 }
 
 MObject.prototype.is_character = function() {

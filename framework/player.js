@@ -20,6 +20,8 @@ var Player = extend(function(socket, model) {
 	//temporary code end
 	
 	this.interactive = 1;
+	this.quests = {};
+	this.quest_kills = {};
 	
 	socket.player = this;
     socket.on('cmd', function(arg) {

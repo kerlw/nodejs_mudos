@@ -6,6 +6,12 @@ exports.error = function(msg) {
 	process.exit();
 }
 
+exports.origin_id = function(id) {
+	id = id || "";
+	var index = id.substring(0, id.indexOf('#'));
+	return id;
+}
+
 exports.environment = function(obj) {
 	if (obj && obj instanceof fm.MObject) {
 		return obj.holder;

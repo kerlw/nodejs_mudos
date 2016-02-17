@@ -105,7 +105,7 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 	var dodge = 1;
 	if (other.skills.dodge)
 		dodge = other.skills.dodge.lv;
-	if (Math.random() <= dodge / 300) {
+	if (Math.random() <= dodge * 3 / 2000) {
 		FUNCTIONS.message_combatd("$n躲开了$N的攻击.", me, other);
 		//TODO dodged, calc beat back.
 		return 1;
@@ -115,7 +115,7 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 	var parry = 1;
 	if (other.skills.parry)
 		parry = other.skills.parry.lv;
-	if (Math.random() <= parry / 300) {
+	if (Math.random() <= parry * 3 / 2000) {
 		//parried
 		FUNCTIONS.message_combatd("$n招架住了$N的攻击.", me, other);
 		return 1;
@@ -143,7 +143,7 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 
 combatd.prototype.fight = function(me, other) {
 	console.log("[COMBATD] " + me.id + " fight " + other.id);
-	if (!me.living() || !other.living())
+	if (!me.living())
 		return;
 	
 	var weapon = me.equipments.weapon;

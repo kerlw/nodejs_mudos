@@ -7,24 +7,24 @@ var Character = extend(function() {
 	if (!(this instanceof Character))
 		return new Character();
 	
-	this.str = 10;	//strength
-	this.con = 10;	//constitution
-	this.int = 10;	//intelligence
-	this.apc = 10;	//apperance
-	this.lck = 10;	//luck
-	this.cor = 10;	//courage
-	
-	this.vitality = 100;
-	this.eff_vitality = 100;	
-	this.max_vitality = 100; 
-	
-	this.stamina = 100;
-	this.eff_stamina = 100;
-	this.max_stamina = 100;
-	
-	this.force = 0;
-	this.eff_force = 0;
-	this.max_force = 0;
+//	this.str = 10;	//strength
+//	this.con = 10;	//constitution
+//	this.int = 10;	//intelligence
+//	this.apc = 10;	//apperance
+//	this.lck = 10;	//luck
+//	this.cor = 10;	//courage
+//	
+//	this.vitality = 100;
+//	this.eff_vitality = 100;	
+//	this.max_vitality = 100; 
+//	
+//	this.stamina = 100;
+//	this.eff_stamina = 100;
+//	this.max_stamina = 100;
+//	
+//	this.force = 0;
+//	this.eff_force = 0;
+//	this.max_force = 0;
 	
 	this.busy = 0;
 	
@@ -39,10 +39,7 @@ var Character = extend(function() {
 
 	this.money = 0;
 	
-	this.flags = {
-		'can_speak' : 1
-	}
-
+	this.set_flag('can_speak', 1);
 	this.look_type = "char";
 	
 	this.enable_player();
@@ -125,7 +122,7 @@ Character.prototype.fight = function(target) {
 	if (!target || target === this || !(target instanceof MObject))
 		return;
 	
-	if (!target.living() || !FUNCTIONS.present(target, FUNCTIONS.environment(this)))
+	if (!this.living() || !FUNCTIONS.present(target, FUNCTIONS.environment(this)))
 		return;
 	
 	if (this.is_fighting(target))
@@ -153,10 +150,17 @@ Character.prototype.kill = function(target) {
 	if (!target || target === this || !(target instanceof MObject))
 		return;
 	
-	if (!this.is_killing(target.id))
+	if (!this.living() || !FUNCTIONS.present(target, FUNCTIONS.environment(this)))
+		return;
+	
+	if (!this.is_killing(target.id)) {
 		this.killer.push(target.id);
+		if (target.is_player())
+			FUNCTIONS.tell_object(target, "\n$(HIR)" + this.name + "看起来想要杀死你!\n$NOR");
+	}
 	
 	this.fight(target);
+	target.fight(this);
 }
 
 Character.prototype.is_killing = function(id) {
@@ -246,11 +250,14 @@ Character.prototype.unconcious = function() {
 		return;
 	
 	this.remove_all_enemy();
-	FUNCTIONS.tell_object(this, "$(HIR) \n你只觉得头昏脑胀，眼前一黑，接着什么也不知道了……\n\n $NOR");
+	FUNCTIONS.tell_object(this, "$(HIR)\n你只觉得头昏脑胀，眼前一黑，接着什么也不知道了……\n$NOR");
 	this.command("hp");
-	this.disable_player("<昏迷不醒>");
+	this.disable_player("$(HIR)<昏迷不醒>$NOR");
 	this.set_tmp("block_msg/all", 1);
 	
+	this.vitality = this.vitality > 0 ? this.vitality / 2 : 0;
+	this.stamina = this.stamina > 0 ? this.stamina / 2 : 0;
+	this.force = this.force > 0 ? this.force / 2 : 0;
 	_daemons.combatd.announce(this, "unconcious");
 	
 	this.call_out("revive", (30 + FUNCTIONS.random(60 - this.con)));
@@ -268,7 +275,7 @@ Character.prototype.revive = function(quiet) {
 	
 	if (!quiet) {
 		_daemons.combatd.announce(this, "revive");
-		FUNCTIONS.tell_object(this, "HIY \n一股暖流发自丹田流向全身，慢慢地你又恢复了知觉……\n\n NOR");
+		FUNCTIONS.tell_object(this, "$(HIY)\n一股暖流发自丹田流向全身，慢慢地你又恢复了知觉……\n$NOR");
 		this.command("hp");
 	}
 }
@@ -331,7 +338,7 @@ Character.prototype.remove_enemy = function(ob) {
 	var new_enemy = new Array();
 	while (this.enemy.length > 0) {
 		var en = this.enemy.shift();
-		if (!en || en == ob.id) {
+		if (!en || (en == ob.id && !this.is_killing(en))) {
 			continue;
 		}
 		
@@ -487,14 +494,28 @@ Character.prototype.carry_object = function(obj) {
 }
 
 Character.prototype.setup_char = function() {
-}
-
-Character.prototype.set_flag = function(flag, value) {
-	this.flags[flag] = value;
-}
-
-Character.prototype.query_flag = function(flag) {
-	return this.flags[flag];
+	this.str = this.str || 1;	//strength
+	this.con = this.con || 1;	//constitution
+	this.int = this.int || 1;	//intelligence
+	this.apc = this.apc || FUNCTIONS.random(30);	//apperance
+	this.lck = this.lck || FUNCTIONS.random(30);	//luck
+	this.cor = this.cor || FUNCTIONS.random(30);	//courage
+	
+	this.max_vitality = this.max_vitality || (this.con * 10); 
+	this.eff_vitality = this.eff_vitality || this.max_vitality;	
+	if (this.eff_vitality > this.max_vitality)
+		this.eff_vitality = this.max_vitality;
+	this.vitality = this.vitality || this.eff_vitality;
+	if (this.vitality > this.eff_vitality)
+		this.vitality = this.eff_vitality;
+	
+	this.stamina = 100;
+	this.eff_stamina = 100;
+	this.max_stamina = 100;
+	
+	this.max_force = this.max_force || 0;
+	this.eff_force = this.eff_force || 0;
+	this.force = this.force || 0;
 }
 
 module.exports = Character;

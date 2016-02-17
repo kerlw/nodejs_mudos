@@ -59,7 +59,7 @@
 		$('#env_objs').empty();
 		if (msg.objs) {
 			for ( var id in msg.objs) {
-				$('#env_objs').append($('<li>').attr('class', 'room-obj').attr('value', id).text(msg.objs[id]));
+				$('#env_objs').append($('<li>').attr('class', 'room-obj').attr('value', id).html(exchange_color(msg.objs[id])));
 			}
 			// bind click handle function
 			$('.room-obj').on('click', function() {
@@ -99,7 +99,7 @@
 			break;
 		case 'vender':
 			for (var good in msg.goods) {
-				$('.good-list').append('<li class="good-in-list" path="' + good + '">' + msg.goods[good].name + '</li>'); 
+				$('.good-list').append('<li class="good-in-list" path="' + good + '">' + exchange_color(msg.goods[good].name) + '</li>'); 
 			}
 			$('.good-in-list').on('click', function() {
 				var $me = $(this);
