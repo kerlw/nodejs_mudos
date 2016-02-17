@@ -91,7 +91,7 @@
 		$('#myModalContent').text(msg.desc);
 		$('#inquiries').empty();
 		$('#interactions').empty();
-		$('.good-list').empty();
+		$('.container-fluid').empty();
 		switch (msg.type) {
 		case 'char':
 			$('#interactions').append('<button class="btn btn-danger btn-sm" type="fight" target="' + msg.id + '">切磋</button>')
@@ -99,9 +99,9 @@
 			break;
 		case 'vender':
 			for (var good in msg.goods) {
-				$('.good-list').append('<li class="good-in-list" path="' + good + '">' + msg.goods[good].name + '</li>'); 
+				$('.container-fluid').append('<div class="row"><div class="col-xs-3" path="' + good + '">' + msg.goods[good].name + '</div><div class="col-xs-3">价格</div><div class="col-xs-3 buy">购买</div></div>'); 
 			}
-			$('.good-in-list').on('click', function() {
+			$('.buy').on('click', function() {
 				var $me = $(this);
 				socket.emit('cmd', 
 					{ 
