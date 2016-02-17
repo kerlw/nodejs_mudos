@@ -10,6 +10,43 @@ body{
     font-size: 6px;
 }
 
+.modal-content{
+    background-color: #333333;
+	opacity: 0.9;
+}
+
+div.row{
+	font-size:10px;
+}
+
+.input-group input{
+	display: table-cell;
+	height:20px;
+	width: 100%;
+	color: black;
+}
+
+.myspan{
+	display: table-cell;
+ 	font-size:10px;
+	text-align: center;
+	vertical-align: middle;
+	padding: 0 8px;
+	width: 1%;
+	white-space: nowrap;
+}
+
+.input-group ul{
+	background-color:black;
+	font-size:8px;
+	min-width: 80px;
+}
+
+.input-group ul>li{
+	color:red;
+	padding:2px 10px;
+}
+
 .bs{border:1px solid #EEC900;margin-top:1px;}
 .col-left{
     padding-right:1px;
