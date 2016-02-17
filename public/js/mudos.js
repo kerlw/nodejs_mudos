@@ -94,8 +94,8 @@
 		$('.good-list').empty();
 		switch (msg.type) {
 		case 'char':
-			$('#interactions').append('<button class="btnInter" type="fight" target="' + msg.id + '">切磋</button>')
-							.append('<button class="btnInter" type="kill" target="' + msg.id + '">杀!!</button>');
+			$('#interactions').append('<button class="btn btn-danger btn-sm" type="fight" target="' + msg.id + '">切磋</button>')
+							.append('<button class="btn btn-danger btn-sm" type="kill" target="' + msg.id + '">杀!!</button>');
 			break;
 		case 'vender':
 			for (var good in msg.goods) {
@@ -116,12 +116,12 @@
 		}
 		
 		if (msg.inquiries) {
-			$('#inquiries').text('询问关于');
+			$('#inquiries').append('<button class="btn btn-success btn-sm" >询问关于</button>');
 			for (var k in msg.inquiries) {
-				$('#inquiries').append('<button class="btnInquiry" about="' + k + '" who="' + msg.id + '">' + msg.inquiries[k] + '</button>');
+				$('#inquiries').append('<button class="btn btn-info btn-sm" about="' + k + '" who="' + msg.id + '">' + msg.inquiries[k] + '</button>');
 			}
 		}
-		$('.btnInquiry').on('click', function() {
+		$('.btn-info').on('click', function() {
 			$('#objModal').modal('hide');
 			var target = $(this).attr('who'),
 				about = $(this).attr('about');
@@ -133,7 +133,7 @@
 						}
 					});
 		});
-		$('.btnInter').on('click', function(){
+		$('.btn-danger').on('click', function(){
 			$('#objModal').modal('hide');
 			var type = $(this).attr('type'),
 				target = $(this).attr('target');

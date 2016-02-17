@@ -10,6 +10,13 @@ body{
     font-size: 6px;
 }
 
+.modal-content{
+    background-color: #333333;
+	opacity: 0.9
+}
+
+#inquiries{padding-right:3px}
+
 .bs{border:1px solid #EEC900;margin-top:1px;}
 .col-left{
     padding-right:1px;
