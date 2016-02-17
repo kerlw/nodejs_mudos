@@ -32,9 +32,15 @@
 				<div class="col-xs-9 col-both-clear">
 					<div id="message" class="msglist bs">
 					</div>
-					<div class="say bs">
-						<input type="text" class="msg" name="msg">
-						<span class="btn btn-say">发送</span>
+					<div class="say bs input-group">
+						 <span  data-toggle="dropdown" class="myspan">对所有人说<span class="caret"></span></span>
+							<ul class="dropdown-menu" role="menu">
+							  <li>悄悄话</li>
+							  <li>对该频道说</li>
+							  <li>对该房间说</li>
+						   </ul>
+						 <input type="text" style="height:20px;display: table-cell;width: 100%;">
+						 <span class="myspan" >发送</span>
 					</div>
 				</div>
             </div>
