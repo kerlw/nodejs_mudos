@@ -10,6 +10,28 @@ body{
     font-size: 6px;
 }
 
+.bs{border:1px solid #EEC900;margin-top:1px;}
+.col-left{
+    padding-right:1px;
+}
+.col-right{
+    padding-left:0;
+}
+.col-both{
+    padding-right:1px;
+    padding-left:1px;
+}
+.col-both-clear{
+    padding-right:0;
+	padding-left:0;
+}
+
+.head{
+    height:100px;
+    padding:8px;
+}
+
+/* modal div */
 .modal-content{
     background-color: #333333;
 	opacity: 0.9;
@@ -47,26 +69,35 @@ div.row{
 	padding:2px 10px;
 }
 
-.bs{border:1px solid #EEC900;margin-top:1px;}
-.col-left{
-    padding-right:1px;
-}
-.col-right{
-    padding-left:0;
-}
-.col-both{
-    padding-right:1px;
-    padding-left:1px;
-}
-.col-both-clear{
-    padding-right:0;
-	padding-left:0;
+/* fight toast */
+#fight-toast{
+/* 	display:none; */
+	color:yellow;
+	font-size:12px;
+	position:absolute;
+	margin-top:-25px;
+	width:95%;
+	height:25px;
+	line-height:25px;
+	overflow: hidden;
+	background-color:#333333;
+	opacity:0.8;
+	padding-left:8px;
 }
 
-.head{
-    height:100px;
-    padding:8px;
+#fight-text{
+	width:70%;
+	position:absolute;
+	overflow: hidden;
+	white-space: nowrap; 
+	text-overflow: ellipsis;
 }
+
+.choice{
+	float:right;
+	margin-right:3px;
+}
+
 /* title */
 .room-title{
     color:#00FF00;
