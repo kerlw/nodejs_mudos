@@ -25,6 +25,7 @@ exports.remove_sent = function(obj, dest) {
 	}
 	
 	delete dest.contains[obj.id];
+	dest.on_move_out(obj);
 	return 1;
 }
 
@@ -43,6 +44,21 @@ exports.move_object = function(obj, dest) {
 	
 	obj.holder = dest;
 	dest.contains[obj.id] = obj;
+	
+	dest.on_move_in(obj);
+	
+	if (obj.living())
+		dest.setup_commands(obj);
+	
+	for (var id in dest.contains) {
+		if (obj.living())
+			dest.contains[id].setup_commands(obj);
+		if (dest.contains[id].living())
+			obj.setup_commands(dest.contains[id]);
+	}
+	
+	if (dest.living())
+		obj.setup_commands(dest);
 	return 1;
 }
 

@@ -5,6 +5,15 @@ var questd = function() {
 		return new questd();
 }
 
+questd.prototype.setup_publisher = function(p) {
+	if (!p || !p.quests)
+		return;
+	
+	for (var k in p.quests) {
+		p.quests[k].id = this.get_quest_id(p, p.quests[k]);
+	}
+}
+
 questd.prototype.accept_quest = function(publisher, player, quest) {
 	var desc = quest.desc || "";
 	desc = desc.replace('$count$', quest.count + "");

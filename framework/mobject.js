@@ -108,4 +108,13 @@ MObject.prototype.display_name = function() {
 	return this.name;
 }
 
+MObject.prototype.setup_commands = function(obj) {
+}
+
+MObject.prototype.on_move_in = function(obj) {
+}
+
+MObject.prototype.on_move_out = function(obj) {
+}
+
 module.exports = MObject;

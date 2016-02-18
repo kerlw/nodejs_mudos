@@ -166,6 +166,43 @@ combatd.prototype.fight = function(me, other) {
 	}
 }
 
+combatd.prototype.auto_fight = function(me, other, type) {
+	if (!me.is_player() && !other.is_player())	// don't let two npc auto fight
+		return;
+	
+	if (me.query_tmp("looking_for_trouble"))
+		return;
+	me.set_tmp("looking_for_trouble", 1);
+	
+	//TODO use an asyn/delay call to give 'other' a chance to slip trough the fierce guys.
+	this.hunting(me, other, type);
+}
+
+combatd.prototype.hunting = function(me, other, type) {
+	if (!me || !other)
+		return;
+	
+	me.del_tmp("looking_for_trouble");
+	if (me.is_killing(other.id) && me.is_fighting(other.id) || !me.living())
+		return;
+	
+	var env = FUNCTIONS.environment(me);
+	if (env.query("sleep_room") || env.query("no_fight"))
+		return;
+	
+	if (env != FUNCTIONS.environment(other)) {
+		//TODO start_hatred
+		return;
+	}
+	
+	switch (type) {
+	case "hatred":
+		me.kill(other);
+		break;
+	}
+	
+}
+
 combatd.prototype.find_skill_to_use = function(me, skill, other) {
 	var attack_skill = BASIC_ATTACK_SKILL;
 	if (!skill)

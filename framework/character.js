@@ -518,4 +518,26 @@ Character.prototype.setup_char = function() {
 	this.force = this.force || 0;
 }
 
+Character.prototype.setup_commands = function(obj) {
+	if (this.is_fighting() || !this.living() || !obj || !obj.living())
+		return;
+	
+	if (FUNCTIONS.environment(this) != FUNCTIONS.environment(obj))
+		return;
+	
+	if (obj.query_tmp('netdead'))
+		return;
+	
+	if (obj.is_player()) {
+		if (!this.is_player)
+			this.set_heart_beat(1);
+		
+		if (this.is_killing(obj.id)) {
+			_daemons.combatd.auto_fight(this, obj, "hatred");
+			return;
+		}
+		//TODO other conditions to trigger auto_fight
+	}
+}
+
 module.exports = Character;
