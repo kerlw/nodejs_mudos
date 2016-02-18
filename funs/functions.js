@@ -1,4 +1,4 @@
-var fm = require("../framework");
+var fm = require("framework");
 
 exports.error = function(msg) {
 	if (msg)
@@ -30,7 +30,7 @@ exports.remove_sent = function(obj, dest) {
 
 exports.move_object = function(obj, dest) {
 	if (!obj || !dest)
-		return;
+		return 0;
 	
 	for (var ob = dest; ob; ob = ob.holder) {
 		if (ob == obj)
@@ -89,3 +89,16 @@ exports.destruct = function(obj) {
 	delete _objs.items[obj.id];
 	
 } 
+
+exports.chinese_number = function(number) {
+	//TODO
+	return number;
+}
+
+exports.all_inventory = function(obj) {
+	ret = {};
+	if (!ob || !(ob instanceof fm.MObject))
+		return ret;
+	
+	return ob.contains;
+}

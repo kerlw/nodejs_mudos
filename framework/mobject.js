@@ -18,6 +18,14 @@ var MObject = function() {
 	this.init = function() {}
 }
 
+MObject.prototype.query = function(key) {
+	return this[key];
+}
+
+MObject.prototype.short_desc = function() {
+	return this.name;
+}
+
 MObject.prototype.set_flag = function(flag, value) {
 	this.kv_flags[flag] = value;
 }
