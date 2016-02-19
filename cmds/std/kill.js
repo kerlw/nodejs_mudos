@@ -40,8 +40,13 @@ function cmd_kill() {
 			target.kill(sender);
 		} else {
 			target.fight(sender);
-			FUNCTIONS.message("kill_confirm", "看起来" + sender.name + "想要杀死你，你是否要与之性命相搏?", target);
+			FUNCTIONS.message("confirm", 
+					{
+						msg : "$(RED)看起来" + sender.name + "想要杀死你，你是否要与之性命相搏？$NOR", 
+						cmd : "kill",
+						cmd_arg : sender.id
+					},
+					target);
 		}
 	}
-	
 }

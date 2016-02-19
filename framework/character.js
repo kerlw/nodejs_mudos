@@ -7,25 +7,6 @@ var Character = extend(function() {
 	if (!(this instanceof Character))
 		return new Character();
 	
-//	this.str = 10;	//strength
-//	this.con = 10;	//constitution
-//	this.int = 10;	//intelligence
-//	this.apc = 10;	//apperance
-//	this.lck = 10;	//luck
-//	this.cor = 10;	//courage
-//	
-//	this.vitality = 100;
-//	this.eff_vitality = 100;	
-//	this.max_vitality = 100; 
-//	
-//	this.stamina = 100;
-//	this.eff_stamina = 100;
-//	this.max_stamina = 100;
-//	
-//	this.force = 0;
-//	this.eff_force = 0;
-//	this.max_force = 0;
-	
 	this.busy = 0;
 	
 	this.enemy = new Array();

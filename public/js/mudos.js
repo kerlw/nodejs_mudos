@@ -75,6 +75,10 @@
 		refresh_hp_panel(msg);
 	});
 	
+	socket.on('confirm', function(msg) {
+		confirm_toast_popup(msg.msg, msg.cmd, msg.cmd_arg);
+	});
+	
 	socket.on('interactive', function(msg) {
 		if (!msg) {
 			$('#objModal').modal('hide');
@@ -234,8 +238,19 @@
 		return msg;
 	}
 	
-	function fight_toast_popup(somebody){
-		$('#fight_toast_popup').append('<div id="fight-toast"><span id="fight-text">'+somebody+'邀请你一起切磋！！</span><button type="button" class="btn btn-success btn-xs choice">接受</button><button type="button" class="btn btn-danger btn-xs choice">拒绝</button></div>');
+	function confirm_toast_popup(msg, cmd, arg){
+		var id = new Date().valueOf();
+		$('#toast_popup').append('<div id="' + id + '"><span id="fight-text">' + exchange_color(msg) 
+				+ '</span><button type="button" class="btn btn-success btn-xs choice" id="btn_accept' + id + '">接受</button>'
+				+ '<button type="button" class="btn btn-danger btn-xs choice" id="btn_refuse' + id + '">拒绝</button></div>');
+		$('#btn_accept' + id).on('click', function() {
+			$('#' + id).remove();
+			socket.emit('cmd', { cmd : cmd, arg : arg});
+		});
+		$('#btn_refuse' + id).on('click', function() {
+			$('#' + id).remove();
+		});
+		
 	}
 
 }(window));

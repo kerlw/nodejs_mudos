@@ -42,6 +42,8 @@ var Player = extend(function(socket, model) {
 	this.quests = {};
 	this.quest_kills = {};
 	
+	this.msg_classes = new Array('fail', 'hp', 'room', 'interactive', 'confirm');
+	
 	socket.player = this;
     socket.on('cmd', function(arg) {
     	if (!arg || !arg.cmd)
@@ -72,9 +74,10 @@ Player.prototype.recv_message = function(msgclz, msg) {
 		return;
 	
 	//TODO this is just a temporary solution
-	if (!msgclz || (msgclz !== 'fail' && msgclz !== 'room'
+	if (!msgclz || /*(msgclz !== 'fail' && msgclz !== 'room'
 						&& msgclz !== 'hp'
-						&& msgclz !== 'interactive'))
+						&& msgclz !== 'interactive')*/
+			this.msg_classes.indexOf(msgclz) < 0)
 		msgclz = 'resp';
 	
 	if (this.socket)

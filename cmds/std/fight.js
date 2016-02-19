@@ -30,8 +30,21 @@ function cmd_fight() {
 		if (!target.living())
 			return FUNCTIONS.notify_fail(sender, target.name + "已经无法战斗了");
 		
-		if (target.is_player() && target['fight_pending'] != sender) {
-			//TODO tell_object
+		if (target.is_player() && target['fight_pending'] !== sender.id) {
+			if (sender.fight_pending && sender.fight_pending !== target.id 
+					&& _objs.players[sender.fight_pending]) {
+				FUNCTIONS.tell_object(_objs.players[sender.fight_pending], 
+						"$(YEL)" + sender.name + "取消了和你比试的念头。$NOR");
+				sender.fight_pending = target.id;
+			}
+			FUNCTIONS.message("confirm", 
+					{
+						msg : "$(YEL)" + sender.name + "想要和你切磋，是否同意？$NOR",
+						cmd : "fight",
+						cmd_arg : sender.id
+					}
+				, target);
+			FUNCTIONS.tell_object(sender, "$(YEL) 对方是玩家控制的角色，要等对方确认方能进行切磋。 $NOR");
 			return 1;
 		}
 		
@@ -40,8 +53,8 @@ function cmd_fight() {
 			return 0;
 		}
 		
+		delete target.fight_pending;
 		sender.fight(target);
 		target.fight(sender);
 	}
-	
 }

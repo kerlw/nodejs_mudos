@@ -34,10 +34,11 @@ function cmd_look() {
 				desc : obj.desc,
 				type : obj.look_type
 		}
-		if (obj.is_vender())
-			ret.goods = obj.list_goods();
 		
 		if (obj instanceof fm.NPC) {
+			if (obj.is_vender())
+				ret.goods = obj.list_goods();
+
 			ret.inquiries = obj.query_inquiry(sender);
 		}
 
