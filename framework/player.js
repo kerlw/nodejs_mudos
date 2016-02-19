@@ -14,6 +14,12 @@ var Player = extend(function(socket, model) {
 	this.id = model.id;
 	this.name = model.nickname;
 	this.mudage = model.mudage;
+	this.str = model.str;
+	this.con = model.con;
+	this.int = model.int;
+	this.apc = model.apc;
+	this.lck = model.lck;
+	this.cor = model.cor;
 	
 	this.vitality = model.hp.vitality;
 	this.eff_vitality = model.hp.eff_vita;
@@ -22,6 +28,10 @@ var Player = extend(function(socket, model) {
 	this.stamina = model.hp.stamina;
 	this.eff_stamina = model.hp.eff_stm;
 	this.max_stamina = model.hp.max_stm;
+	
+	this.force = model.hp.force;
+	this.eff_force = model.hp.force;
+	this.max_force = model.hp.max_force;
 	
 	this.water = model.hp.water;
 	this.max_water = model.hp.max_water;
