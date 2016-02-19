@@ -233,5 +233,9 @@
 		//console.log(msg);
 		return msg;
 	}
+	
+	function fight_toast_popup(somebody){
+		$('#fight_toast_popup').append('<div id="fight-toast"><span id="fight-text">'+somebody+'邀请你一起切磋！！</span><button type="button" class="btn btn-success btn-xs choice">接受</button><button type="button" class="btn btn-danger btn-xs choice">拒绝</button></div>');
+	}
 
 }(window));
