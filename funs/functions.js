@@ -1,4 +1,4 @@
-var fm = require("../framework");
+var fm = require("framework");
 
 exports.error = function(msg) {
 	if (msg)
@@ -25,12 +25,13 @@ exports.remove_sent = function(obj, dest) {
 	}
 	
 	delete dest.contains[obj.id];
+	dest.on_move_out(obj);
 	return 1;
 }
 
 exports.move_object = function(obj, dest) {
 	if (!obj || !dest)
-		return;
+		return 0;
 	
 	for (var ob = dest; ob; ob = ob.holder) {
 		if (ob == obj)
@@ -43,6 +44,21 @@ exports.move_object = function(obj, dest) {
 	
 	obj.holder = dest;
 	dest.contains[obj.id] = obj;
+	
+	dest.on_move_in(obj);
+	
+	if (obj.living())
+		dest.setup_commands(obj);
+	
+	for (var id in dest.contains) {
+		if (obj.living())
+			dest.contains[id].setup_commands(obj);
+		if (dest.contains[id].living())
+			obj.setup_commands(dest.contains[id]);
+	}
+	
+	if (dest.living())
+		obj.setup_commands(dest);
 	return 1;
 }
 
@@ -89,3 +105,16 @@ exports.destruct = function(obj) {
 	delete _objs.items[obj.id];
 	
 } 
+
+exports.chinese_number = function(number) {
+	//TODO
+	return number;
+}
+
+exports.all_inventory = function(obj) {
+	ret = {};
+	if (!ob || !(ob instanceof fm.MObject))
+		return ret;
+	
+	return ob.contains;
+}

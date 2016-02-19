@@ -22,7 +22,7 @@
 	global.DATA_PATH = global.__BASE_PATH + global.__config.data_dir;
 	
 	
-	var fm = r('./framework'),
+	var fm = r('framework'),
 		fs = r('fs'),
 		path = r('path');
 	
@@ -56,7 +56,9 @@
 				fname = path.parse(file).name;
 			
 			if (stat.isDirectory()) {
-				if (fname === 'obj' || fname === 'npc' || fname === 'skill' || fname === 'fun')
+				if (fname === 'item' || fname === 'npc' 
+						|| fname === 'skill' || fname === 'fun'
+						)
 					return;
 				
 				init_rooms(basedir, path.join(prefix, file));

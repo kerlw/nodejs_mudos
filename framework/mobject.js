@@ -18,6 +18,14 @@ var MObject = function() {
 	this.init = function() {}
 }
 
+MObject.prototype.query = function(key) {
+	return this[key];
+}
+
+MObject.prototype.short_desc = function() {
+	return this.name;
+}
+
 MObject.prototype.set_flag = function(flag, value) {
 	this.kv_flags[flag] = value;
 }
@@ -98,6 +106,15 @@ MObject.prototype.remove_call_out = function(func) {
 
 MObject.prototype.display_name = function() {
 	return this.name;
+}
+
+MObject.prototype.setup_commands = function(obj) {
+}
+
+MObject.prototype.on_move_in = function(obj) {
+}
+
+MObject.prototype.on_move_out = function(obj) {
 }
 
 module.exports = MObject;

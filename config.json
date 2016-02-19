@@ -1,16 +1,18 @@
 {
     "port" : 3000,
     
-    "data_dir" : "",
+    "data_dir" : "/jx_mud",
 
-    "start_room" : "",
+    "start_room" : "xinshoucun/cunzhongyang",
+    "start_room2" : "softwarepark/office",
+
 
     "death_room" : "",
     
     "hb_interval" : 2000,
     
     "db" : {
-        "url" : "mongodb://mudos:mudos@localhost:27017/mudos",
+        "url" : "mongodb://mudos:mudos@10.4.250.42:27017/mudos",
         "autoReconnect": true,
         "poolSize": 10
     },
