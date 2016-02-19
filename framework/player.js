@@ -8,16 +8,25 @@ var Player = extend(function(socket, model) {
 	
 	if (!model)
 		throw "[ERROR] want to create player without char model ?";
-	this.id = model._id.toHexString();
-	this.name = model.nickname;
-	this.socket = socket;
 	
-	//temporary code begin
-	this.water = 500;
-	this.max_water = 500;
-	this.food = 500;
-	this.max_food = 500;
-	//temporary code end
+	this.socket = socket;
+
+	this.id = model.id;
+	this.name = model.nickname;
+	this.mudage = model.mudage;
+	
+	this.vitality = model.hp.vitality;
+	this.eff_vitality = model.hp.eff_vita;
+	this.max_vitality = model.hp.max_vita;
+	
+	this.stamina = model.hp.stamina;
+	this.eff_stamina = model.hp.eff_stm;
+	this.max_stamina = model.hp.max_stm;
+	
+	this.water = model.hp.water;
+	this.max_water = model.hp.max_water;
+	this.food = model.hp.food;
+	this.max_food = model.hp.max_food;
 	
 	this.interactive = 1;
 	this.quests = {};
@@ -72,7 +81,7 @@ Player.prototype.is_newbie = function() {
 
 Player.prototype.other_login = function(socket) {
 	console.log("kick others");
-	FUNCTIONS.notify_fail(this, "有人从其它地方登录了此角色。")
+	FUNCTIONS.notify_fail(this, "有人从其它地方登录了此角色。");
 	this.socket.player = null;
 	this.socket.disconnect();
 	

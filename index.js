@@ -32,17 +32,11 @@ app.get('/', function(req, res) {
     if (req.signedCookies) {
         if (req.signedCookies.sessionId) {
         	var passport = req.signedCookies.passport;
-            var charDb = db.Character();
-            charDb.findOne(passport, function(err, model) {
-            	if (err) {
-					console.log('[ERROR] charDb findOne got err: ' + err);
-            		return;
-            	}
-            	
-            	if (!model) {
-            		res.redirect('/character');
-            	} else
-            		res.sendFile(path.join(__dirname,'/views/index.html'));
+        	_daemons.playerd.query_character(passport, function(err, data) {
+        		if (!data) {
+        			res.redirect('/character');
+        		} else
+        			res.sendFile(path.join(__dirname,'/views/index.html'));
             });
 			return;
         }   
@@ -71,13 +65,12 @@ io.on('connection', function(socket) {
 	console.log("socket connected from " + socket.handshake.address);
 	socket.on('login', function(msg) {
 		var passport = cookieParser.signedCookie(msg.passport, __config.cookie_secret);
-		var charDb = db.Character();
-		charDb.findOne(passport, function(err, charModel) {
-			if (err) {
+		_daemons.playerd.query_character(passport, function(err, charModel) { 
+			if (err || !charModel) {
 				return;
 			}
 			
-			var charId = charModel._id.toHexString(),
+			var charId = charModel.id,
 				player = null;
 			
 			if ((player = _objs.players[charId])) {
@@ -194,23 +187,21 @@ app.post('/ucenter', function(req, res) {
                 return;
             }
 
-            character.findOne(req.body.passport, function(err, userCharacter) {
+            character.findOneChar(req.body.passport, function(err, userCharacter) {
                 if (userCharacter) {
                     res.send(JSON.stringify({'code':402,'msg':'User already have character! passport = ' + req.body.passport}));
+                    //TODO log this action.
                     return;
                 }
-
-                character.add(req.body.passport, req.body.nickname, req.body.gender, req.body.str, req.body.con, req.body.int, req.body.apc, req.body.lck, req.body.cor, function(err) {
-                    if (err) {
-                        console.log('err=' + err);
-                        res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
+                
+                _daemons.playerd.create_character(req.body, function(err) {
+                	if (err) {
+                		res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
                         return;
-                    }
-
-                    console.log(req.body.passport + " create character succeed " + new Date());
-                    res.send(JSON.stringify({'code':200,'msg':'create character succeed.'}));
+                	}
+                	
+                	res.send(JSON.stringify({'code':200,'msg':'create character succeed.'}));
                 });
-
             });
 
             return;

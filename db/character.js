@@ -1,6 +1,6 @@
 var dbClient = require('./dbClient.js');
 
-var characterSchema = dbClient.Schema({
+var charSchema = new dbClient.Schema({
     passport:String,
     nickname: String,
     gender: String,
@@ -9,37 +9,99 @@ var characterSchema = dbClient.Schema({
     int: Number,//intelligence
     apc: Number,//appearance
     lck: Number,//luck
-    cor: Number//courage
+    cor: Number,//courage
+    createdTm : { type : Date, 'default' : Date.now }
 });
 
-var Character = dbClient.model('tb_character', characterSchema, 'tb_character');
+var statusSchema = new dbClient.Schema({
+	charId : String,
+	mudage : Number,
+	
+	hp : {
+		vitality : Number,
+		eff_vita : Number,
+		max_vita : Number,
+		stamina : Number,
+		eff_stm : Number,
+		max_stm : Number,
+		force : Number,
+		eff_force : Number,
+		max_force : Number,
+		food : Number,
+		max_food : Number,
+		water : Number,
+		max_water : Number
+	}
+});
 
-Character.prototype.add = function (passport, nickname, gender, str, con, int, apc, lck, cor, callback) {
-    console.log('addCharacter ' + passport + nickname + gender + str + con + int + apc + lck + cor);
-    var character = new Character({
-        passport:passport,
-        nickname: nickname,
-        gender: gender,
-        str: str,
-        con: con,
-        int: int,
-        apc: apc,
-        lck: lck,
-        cor: cor
+
+var Character = function() {
+	if (!(this instanceof Character))
+		return new Character();
+	
+	this.charDb = dbClient.model('tb_character', charSchema, 'tb_character');
+	this.stDb = dbClient.model('tb_char_status', statusSchema, 'tb_char_status');
+}
+
+Character.prototype.addChar = function (data, callback) {
+    var character = new this.charDb({
+        passport : data.passport,
+        nickname: data.nickname,
+        gender: data.gender,
+        str: data.str,
+        con: data.con,
+        int: data.int,
+        apc: data.apc,
+        lck: data.lck,
+        cor: data.cor
     });
 
-    character.save(callback);
+    character.save(function(err) {
+    	callback(err, character.id);
+    });
 }
 
-Character.prototype.update = function (passport, nickname, gender, str, con, int, apc, lck, cor, callback) {
-    console.log('updateCharacter ' + passport + nickname + gender + str + con + int + apc + lck + cor);
-    var query = {'passport':passport};
-    Character.update(query, {'nickname':nickname, 'gender':gender, 'str':str, 'con':con, 'int':int, 'apc':apc, 'lck':lck, 'cor':cor}).exec(callback);
+Character.prototype.updateChar = function (data, callback) {
+	if (!data.id)
+		return;
+	
+    var query = {'_id' : new dbClient.Schema.Types.ObjectId(data.id)},
+    	content = {};
+    for (var k in data) {
+    	if (charSchema[k])
+    		content[k] = data[k];
+    }
+    Character.update(query, content).exec(callback);
 }
 
-Character.prototype.findOne = function (passport, callback) {
-    console.log('findCharacter ' + passport);
-    return Character.findOne({'passport':passport}).exec(callback);
+Character.prototype.addStatus = function (data, callback) {
+	var status = new this.stDb({
+		charId : data.id,
+		mudage : 0,
+		hp : data.hp
+	});
+	status.save(callback);
+}
+
+Character.prototype.updateStatus = function (data, callback) {
+	if (!data.id)
+		return;
+	
+	var query = {'charId' : data.id},
+		content = {};
+	for (var k in data) {
+		if (statusSchema[k])
+			content[k] = data[k]
+	}
+	this.stDb.update(query, content).exec(callback);
+}
+
+Character.prototype.findOneChar = function (passport, callback) {
+    return this.charDb.findOne({'passport':passport}).exec(callback);
+}
+
+Character.prototype.findOneStatus = function (charId, callback) {
+	return this.stDb.findOne({'charId' : charId}).exec(callback);
 }
 
 module.exports = Character;
