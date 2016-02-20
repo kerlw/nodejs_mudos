@@ -42,9 +42,11 @@ function cmd_kill() {
 			target.fight(sender);
 			FUNCTIONS.message("confirm", 
 					{
+						confirm_id : "kill_" + sender.id,
 						msg : "$(RED)看起来" + sender.name + "想要杀死你，你是否要与之性命相搏？$NOR", 
-						cmd : "kill",
-						cmd_arg : sender.id
+						accept : { cmd : "kill", cmd_arg : sender.id }
+						// make refuse do nothing.
+//						,refuse : { cmd : "refuse", cmd_arg : { type : "kill", target : sender.id }}
 					},
 					target);
 		}

@@ -76,7 +76,7 @@
 	});
 	
 	socket.on('confirm', function(msg) {
-		confirm_toast_popup(msg.msg, msg.cmd, msg.cmd_arg);
+		confirm_toast_popup(msg.confirm_id, msg.msg, msg.accept, msg.refuse);
 	});
 	
 	socket.on('interactive', function(msg) {
@@ -238,17 +238,22 @@
 		return msg;
 	}
 	
-	function confirm_toast_popup(msg, cmd, arg){
-		var id = new Date().valueOf();
-		$('#toast_popup').append('<div id="' + id + '"><span id="fight-text">' + exchange_color(msg) 
-				+ '</span><button type="button" class="btn btn-success btn-xs choice" id="btn_accept' + id + '">接受</button>'
-				+ '<button type="button" class="btn btn-danger btn-xs choice" id="btn_refuse' + id + '">拒绝</button></div>');
-		$('#btn_accept' + id).on('click', function() {
-			$('#' + id).remove();
-			socket.emit('cmd', { cmd : cmd, arg : arg});
+	function confirm_toast_popup(confirm_id, msg, accept, refuse){
+		var $old = $('#' + confirm_id);
+		if ($old)
+			$old.remove();
+		
+		$('#toast_popup').append('<div id="' + confirm_id + '"><span id="fight-text">' + exchange_color(msg) 
+				+ '</span><button type="button" class="btn btn-success btn-xs choice" id="btn_accept' + confirm_id + '">接受</button>'
+				+ '<button type="button" class="btn btn-danger btn-xs choice" id="btn_refuse' + confirm_id + '">拒绝</button></div>');
+		$('#btn_accept' + confirm_id).on('click', function() {
+			$('#' + confirm_id).remove();
+			socket.emit('cmd', { cmd : accept.cmd, arg : accept.cmd_arg});
 		});
-		$('#btn_refuse' + id).on('click', function() {
-			$('#' + id).remove();
+		$('#btn_refuse' + confirm_id).on('click', function() {
+			$('#' + confirm_id).remove();
+			if (refuse)
+				socket.emit('cmd', { cmd : refuse.cmd, arg : refuse.cmd_arg});
 		});
 		
 	}

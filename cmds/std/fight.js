@@ -35,13 +35,14 @@ function cmd_fight() {
 					&& _objs.players[sender.fight_pending]) {
 				FUNCTIONS.tell_object(_objs.players[sender.fight_pending], 
 						"$(YEL)" + sender.name + "取消了和你比试的念头。$NOR");
-				sender.fight_pending = target.id;
 			}
+			sender['fight_pending'] = target.id;
 			FUNCTIONS.message("confirm", 
 					{
+						confirm_id : "fight_" + sender.id,
 						msg : "$(YEL)" + sender.name + "想要和你切磋，是否同意？$NOR",
-						cmd : "fight",
-						cmd_arg : sender.id
+						accept : { cmd : "fight", cmd_arg : sender.id },
+						refuse : { cmd : "refuse", cmd_arg : { type : "fight", target : sender.id}}
 					}
 				, target);
 			FUNCTIONS.tell_object(sender, "$(YEL) 对方是玩家控制的角色，要等对方确认方能进行切磋。 $NOR");
