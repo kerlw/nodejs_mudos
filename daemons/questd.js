@@ -56,8 +56,10 @@ questd.prototype.is_quest_finshed = function(publisher, player, quest) {
 questd.prototype.quest_kill = function(who, target) {
 	var id = FUNCTIONS.origin_id(target.id);
 	if (who.quest_kills[id])
-		if (who.quest_kills[id].progress < who.quest_kills[id].total)
+		if (who.quest_kills[id].progress < who.quest_kills[id].total) {
 			who.quest_kills[id].progress++;
+			console.log("[QuestD] " + who.id + "'s quest_kill '" + id + "' progress " + who.quest_kills[id].progress + "/" + who.quest_kills[id].total);
+		}
 }
 
 module.exports = questd;
