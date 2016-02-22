@@ -10,6 +10,17 @@ body{
     font-size: 6px;
 }
 
+::-webkit-scrollbar-button {
+    display: none;
+}
+::-webkit-scrollbar {
+    width: 5px;
+	height: 5px;
+}
+::-webkit-scrollbar-thumb{
+        background:gray;
+}
+
 .bs{border:1px solid #EEC900;margin-top:1px;}
 .col-left{
     padding-right:1px;
@@ -70,15 +81,15 @@ div.row{
 }
 
 /* fight toast */
-#fight_toast_popup{
+#toast_popup{
 	position:absolute;
-	width:99%;
+	width:100%;
 	bottom:0;
-	margin-left:-5px;
+	margin-left:1px;
+	margin-bottom:1px;
 }
 
-#fight-toast{
-/* 	display:none; */
+.fight-toast{
 	color:yellow;
 	font-size:12px;
 	width:100%;
@@ -133,13 +144,15 @@ div.row{
     -webkit-padding-start: 0;
     padding:6px;
 }
-.msglist{
+.msglistbox{
 	position:relative;
+	height:285px;
+}
+.msglist{
     color:#9ACD32;
-    height:285px;
+	height:285px;
     overflow-y:scroll;
     word-break:break-all;
-    padding:6px;
 }
 .say{
     height:23px;
