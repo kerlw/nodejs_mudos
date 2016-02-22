@@ -6,6 +6,10 @@ var extend = require('./oo.js'),
 
 var ROOM = extend(function(){}, MObject);
 
+
+ROOM.MAX_OBJECT_COUNT = 100;
+ROOM.MAX_RESET_ROUND = 10;
+
 ROOM.__DIRECTIONS__ = {
 	"east" : "东",
 	"west" : "西",
@@ -48,6 +52,12 @@ ROOM.loadFromJSON = function(data) {
 	ret.desc = data.desc || "";
 	ret.exits = data.exits || {};
 	ret.objs = data.objs || {};
+	ret.start_suffix = 0;
+	if (data.reset) {
+		ret.reset_round = 0;
+		ret.set_resetable(data.reset);
+	}
+	
 	var kvs = data.kvs || {};
 	for (var k in kvs) {
 		ret[k] = kvs[k];
@@ -95,34 +105,69 @@ ROOM.prototype.look_response = function(avoid) {
 
 ROOM.prototype.setup = function() {
 	for (var name in this.objs) {
-		var count = this.objs[name],
-			i = 0,
-			pathname = fm.find_file(DATA_PATH, name);
-		fs.accessSync(pathname, fs.F_OK | fs.R_OK);
-		while (i < count) {
-			if (!pathname)
-				break;
-
-			var id = name + '#' + i,
-				tmp = require(pathname);
-			
-			if (typeof tmp !== 'function')
-				break;
-
-			var obj = new tmp();
-			if (obj && obj instanceof fm.MObject) {
-				obj.id = id;
-				if (obj instanceof fm.NPC)
-					_objs.npcs[id] = obj;
-				else
-					_objs.items[id] = obj;
-				if (obj.query_tmp('lazy_init'))
-					obj.lazy_init();
-				obj.move_to(this);
-			}
-			i++;
-		}
+		this.append_obj(name, this.objs[name]);
 	}
+}
+
+ROOM.prototype.append_obj = function(path, count) {
+	if (!path || count <= 0)
+		return;
+	
+	if (count > ROOM.MAX_OBJECT_COUNT)
+		count = ROOM.MAX_OBJECT_COUNT;
+	
+	var i = 0,
+		suffix = this.start_suffix;
+		pathname = fm.find_file(DATA_PATH, path);
+	fs.accessSync(pathname, fs.F_OK | fs.R_OK);
+		
+	var ctor = require(pathname);
+	if (typeof ctor !== 'function')
+		return;
+	
+	while (i < count) {
+		var id = path + '#' + suffix;
+		suffix++;
+		console.log("   ===== id is " + id);
+		if (this.contains[id]) {
+			continue;
+		}
+		
+		var obj = new ctor();
+		if (obj && obj instanceof fm.MObject) {
+			obj.id = id;
+			if (obj instanceof fm.NPC)
+				_objs.npcs[id] = obj;
+			else
+				_objs.items[id] = obj;
+			
+			if (obj.query_tmp('lazy_init'))
+				obj.lazy_init();
+			
+			obj.move_to(this);
+		}
+		i++;
+	}
+}
+
+ROOM.prototype.reset = function(param) {
+	this.reset_round = (this.reset_round + 1) % ROOM.MAX_RESET_ROUND;
+	this.start_suffix = this.reset_round * ROOM.MAX_OBJECT_COUNT;
+	
+	for (var k in this.objs) {
+		var total = this.objs[k],
+			count = 0;
+		
+		for (var id in this.contains) {
+			if (FUNCTIONS.origin_id(id) == k)
+				count++;
+		}
+		this.append_obj(k, total - count);
+	}
+	
+	
+	if (param.repeat)
+		this.call_out('reset', param.timeout, param);
 }
 
 module.exports = ROOM;

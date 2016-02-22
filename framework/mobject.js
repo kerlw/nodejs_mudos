@@ -130,4 +130,12 @@ MObject.prototype.on_move_out = function(obj) {
 MObject.prototype.lazy_init = function() {
 }
 
+MObject.prototype.set_resetable = function(param) {
+	this.call_out('reset', param.timeout, param);
+}
+
+MObject.prototype.reset = function(timeout, repeat) {
+	throw this.id + " set to resetable without reset implemented";
+}
+
 module.exports = MObject;
