@@ -1,6 +1,6 @@
 (function(win) {
 	'use strict';
-	
+
 	// add a format method to String class
 	if (!String.format) {
 		String.format = function(format) {
@@ -15,21 +15,21 @@
 	var $msgList = $('#message');
 	var msgLimit = 1000;
 	var socket = io();
-	
+
 	function getCookie(c_name) {
 		if (document.cookie.length > 0) {
 			var c_start = document.cookie.indexOf(c_name + "=");
-			if (c_start != -1) { 
+			if (c_start != -1) {
 				c_start = c_start + c_name.length+1;
 				var c_end = document.cookie.indexOf(";",c_start)
-				if (c_end == -1) 
+				if (c_end == -1)
 					c_end = document.cookie.length;
 				return unescape(document.cookie.substring(c_start,c_end));
-			} 
+			}
 		}
 		return ""
 	}
-	
+
 	socket.on('connect', function() {
 		var passport = getCookie('passport');
 		socket.emit('login', { passport : passport});
@@ -70,27 +70,27 @@
 			});
 		}
 	});
-	
+
 	socket.on('hp', function(msg) {
 		refresh_hp_panel(msg);
 	});
-	
+
 	socket.on('confirm', function(msg) {
 		confirm_toast_popup(msg.confirm_id, msg.msg, msg.accept, msg.refuse);
 	});
-	
+
 	socket.on('interactive', function(msg) {
 		if (!msg) {
 			$('#objModal').modal('hide');
 			return;
 		}
 		//TODO check interactive id
-		
+
 		if (typeof msg === 'string') {
 			$('#myModalLabel').text(msg);
 			return;
 		}
-		
+
 		$('#myModalLabel').text(msg.name);
 		$('#myModalContent').text(msg.desc);
 		$('#inquiries').empty();
@@ -103,12 +103,12 @@
 			break;
 		case 'vender':
 			for (var good in msg.goods) {
-				$('.container-fluid').append('<div class="row"><div class="col-xs-3" path="' + good + '">' + exchange_color(msg.goods[good].name) + '</div><div class="col-xs-3">价格</div><div class="col-xs-3 buy">购买</div></div>'); 
+				$('.container-fluid').append('<div class="row"><div class="col-xs-3" path="' + good + '">' + exchange_color(msg.goods[good].name) + '</div><div class="col-xs-3">价格</div><div class="col-xs-3 buy">购买</div></div>');
 			}
 			$('.buy').on('click', function() {
 				var $me = $(this);
-				socket.emit('cmd', 
-					{ 
+				socket.emit('cmd',
+					{
 						cmd : 'buy',
 						arg : {
 							vender : msg.id,
@@ -118,9 +118,9 @@
 			});
 			break;
 		}
-		
+
 		if (msg.inquiries) {
-			$('#inquiries').append('<button class="btn btn-success btn-sm" >询问关于</button>');
+			$('#inquiries').append('<span id="about">询问关于</span>');
 			for (var k in msg.inquiries) {
 				$('#inquiries').append('<button class="btn btn-info btn-sm" about="' + k + '" who="' + msg.id + '">' + msg.inquiries[k] + '</button>');
 			}
@@ -130,7 +130,7 @@
 			var target = $(this).attr('who'),
 				about = $(this).attr('about');
 			socket.emit('cmd', {
-					cmd : 'inquiry', 
+					cmd : 'inquiry',
 					arg : {
 						target : target,
 						about : about
@@ -163,15 +163,15 @@
 
 		socket.emit('cmd', { cmd : "go", arg : $me.attr('direction') });
 	});
-	
+
 	// **-------------------------------------------------------------
 	// ** Function
 	// **-------------------------------------------------------------
-	
+
 	function refresh_move_controller(name,exits) {
 		$('.mc-btn').attr('direction', '').attr('enabled', 0).empty();
         $('#r2c2').text(name);
-        
+
         exits = exits || {};
         var $ele;
         for (var dir in exits) {
@@ -179,10 +179,10 @@
         	switch (dir) {
         	case 'east': $ele = $('#r2c3');break;
         	case 'west': $ele = $('#r2c1');break;
-        	case 'north': 
+        	case 'north':
         	case 'up':
         		$ele = $('#r1c2');break;
-        	case 'south': 
+        	case 'south':
         	case 'down':
         		$ele = $('#r3c2');break;
 
@@ -196,21 +196,21 @@
         		$ele.text(exits[dir].name).attr('direction', dir).attr('enabled', 1);
         }
 	}
-	
+
 	//a timer to auto refresh hp panel
 	var refresh_hp_timer;
 	function refresh_hp_panel(hp) {
 		//remove timer at first
 		clearTimeout(refresh_hp_timer);
-		
-		var str = String.format('生命: {0} / {1} ({2}%)<br>', hp.vlt, hp.evlt, (hp.evlt * 100 / hp.mvlt)); 
+
+		var str = String.format('生命: {0} / {1} ({2}%)<br>', hp.vlt, hp.evlt, (hp.evlt * 100 / hp.mvlt));
 		str += String.format('体力: {0} / {1} ({2}%)<br>', hp.smt, hp.esmt, (hp.esmt * 100 / hp.msmt));
 		if (hp.mfrc > 0)
 			str += String.format('内力: {0} / {1} ({2}%)<br>', hp.frc, hp.efrc, (hp.efrc * 100 / hp.mfrc));
 		else
 			str += String.format('内力: 无<br>');
 		$('.obj-info.bs').html(str);
-		
+
 		//reset timer
 		refresh_hp_timer = setTimeout(function() {socket.emit('cmd', { cmd : 'hp'});}, 5000);
 	}
@@ -237,13 +237,13 @@
 		//console.log(msg);
 		return msg;
 	}
-	
+
 	function confirm_toast_popup(confirm_id, msg, accept, refuse){
 		var $old = $('#' + confirm_id);
 		if ($old)
 			$old.remove();
-		
-		$('#toast_popup').append('<div id="' + confirm_id + '" class="fight-toast"><span id="fight-text">' + exchange_color(msg) 
+
+		$('#toast_popup').append('<div id="' + confirm_id + '" class="fight-toast"><span id="fight-text">' + exchange_color(msg)
 				+ '</span><button type="button" class="btn btn-success btn-xs choice" id="btn_accept' + confirm_id + '">接受</button>'
 				+ '<button type="button" class="btn btn-danger btn-xs choice" id="btn_refuse' + confirm_id + '">拒绝</button></div>');
 		$('#btn_accept' + confirm_id).on('click', function() {
@@ -255,7 +255,7 @@
 			if (refuse)
 				socket.emit('cmd', { cmd : refuse.cmd, arg : refuse.cmd_arg});
 		});
-		
+
 	}
 
 }(window));
