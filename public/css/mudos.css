@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
-html,body {height:100%;margin:0; padding:0;} 
+html,body {height:100%;margin:0; padding:0;}
 
 body{
     background: url(../image/bg.jpg) 0 0;
@@ -90,20 +90,20 @@ div.row{
 
 .fight-toast{
 	color:yellow;
-	font-size:12px;
+	font-size:14px;
 	width:100%;
 	height:25px;
 	line-height:25px;
 	overflow: hidden;
 	background-color:#333333;
-	opacity:0.9;
+	opacity:0.7;
 
 }
 
 #fight-text{
 	width:70%;
 	overflow: hidden;
-	white-space: nowrap; 
+	white-space: nowrap;
 	text-overflow: ellipsis;
 	padding-left:5px;
 }
@@ -111,6 +111,12 @@ div.row{
 .choice{
 	float:right;
 	margin-right:3px;
+}
+
+#about{
+    margin-right: 8px;
+    font-size: 16px;
+    vertical-align: middle;
 }
 
 /* title */
@@ -123,7 +129,7 @@ div.row{
 	text-indent: 2em;
 }
 .main{
-    
+
 }
 .cmd{
     height:100px;

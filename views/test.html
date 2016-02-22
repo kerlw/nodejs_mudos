@@ -1,15 +1,17 @@
-<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
-<link rel="shortcut icon" type="image/x-icon" href="public/image/appscat.png" />
-<title>Mudos</title>
 <link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="public/css/mudos.css?v20160108" rel="stylesheet" type="text/css">
+<link href="../public/css/mudos.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+
+</style>
 </head>
 <body>
+
     <div class="container">
         <div class="row">
 		    <div class="col-xs-12 col-both-clear">
@@ -29,9 +31,48 @@
 							</ul>
 						</div>
 				</div>
-				<div class="col-xs-9 col-both-clear">
+				<div class="col-xs-9 col-both-clear" >
+
 					<div class="msglistbox bs">
 						<div id="message" class="msglist">
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
+							测试测试<br>
 						</div>
 						<div id="toast_popup">
 						</div>
@@ -39,13 +80,13 @@
 
 					<div class="say bs input-group">
 						 <span  data-toggle="dropdown" class="myspan">对所有人说<span class="caret"></span></span>
-							<ul class="dropdown-menu" role="menu">
-							  <li>悄悄话</li>
-							  <li>对该频道说</li>
-							  <li>对该房间说</li>
-						   </ul>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>悄悄话</li>
+                                <li>对该频道说</li>
+                                <li>对该房间说</li>
+                            </ul>
 						 <input type="text" >
-						 <span class="myspan" >发送</span>
+						 <span class="myspan">发送</span>
 					</div>
 				</div>
             </div>
@@ -88,40 +129,60 @@
 		</div>
     </div>
 
-	<!-- 模态框（Modal） -->
+
 	<div class="modal fade" id="objModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel"></h4>
+					<h6 class="modal-title" id="myModalLabel"> 老村长</h6>
 				</div>
 				<div class="modal-body">
 					<div class="container-fluid">
 						<div class="row">
 						  <div class="col-xs-3">物品</div>
 						  <div class="col-xs-3">价格</div>
-						  <div class="col-xs-3">购买</div>
+						  <div class="col-xs-3 buy">购买</div>
 						</div>
 					</div>
 					<div id='myModalContent'>
 					</div>
 				</div>
 				<div class="modal-footer">
-    				<span id='inquiries' class="pull-left"></span><br><br>
-    				<span id='interactions'></span>
+				<span id='inquiries' class="pull-left">
+					<button class="btn btn-success btn-sm" >询问关于</button>
+					<button class="btn btn-info btn-sm">新手任务</button>
+				</span>
+				<span id='interactions'>
+					<button class="btn btn-danger btn-sm" type="fight" >切磋</button>
+					<button class="btn btn-danger btn-sm" type="kill" >杀!!</button>
+				</span>
 				</div>
 			</div>
 		</div>
-    <div>
+
 </body>
-<script>
-    var config = {
-        authenticateApi: 'cathayauth'
-    }
-</script>
+
 <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="public/js/mudos.js?v20160108"></script>
+<script type="text/javascript">
+
+
+function fight_toast_popup(somebody){
+		$('#toast_popup').append('<div class="fight-toast"><span id="fight-text">'+somebody+'邀请你一起切磋！！</span><button type="button" class="btn btn-success btn-xs choice">接受</button><button type="button" class="btn btn-danger btn-xs choice">拒绝</button></div>');
+}
+
+
+fight_toast_popup("张三");
+fight_toast_popup("李四");
+
+var popheight = $('#toast_popup').css("height").replace('px','');
+var boxheight = $('#message').css("height").replace('px','');
+var msgheight = (boxheight - popheight)+'px';
+$('#message').css("height",msgheight)
+console.log(popheight,boxheight,msgheight);
+
+</script>
 </html>
