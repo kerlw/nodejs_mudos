@@ -79,6 +79,11 @@
 				} else if (path.extname(file) === '.js') {
 					room = new (r(pathname))();
 				}
+				if (!room)
+					return;
+				
+				if (room.query_tmp('lazy_init'))
+					room.lazy_init();
 				global._objs.rooms[id] = room;
 				global._objs.areas[areaId] = global._objs.areas[areaId] || new Array();
 				global._objs.areas[areaId].push(id);

@@ -67,18 +67,16 @@ Character.prototype.heart_beat = function() {
 
 	console.log("[HB_ENGINE] " + this.id + " is heart beating");
 	if (this.eff_vitality < 0) {
-		//TODO quest kill
 		this.remove_all_enemy();
 		this.die();
 		return;
 	}
 	
 	if (this.vitality < 0) {
-		//TODO quest kill
 		this.remove_all_enemy();
-		if (!this.living()) 
+		if (!this.living()) {
 			this.die();
-		else
+		} else
 			this.unconcious();
 		return;
 	}
@@ -191,6 +189,7 @@ Character.prototype.die = function() {
 	if (this.is_busy())
 		this.interrupt_me();
 	
+	_daemons.questd.quest_kill(this);
 	_daemons.combatd.announce(this, "dead");
 	//TODO add killer to make_corpse
 	var corpse = _daemons.combatd.make_corpse(this);
@@ -341,6 +340,10 @@ Character.prototype.recv_damage = function(damage, who) {
 		if (type != "vitality" && type != "force")
 			throw ("unkonw type of damage received : " + type);
 
+		if (type === 'vitality' && who) {
+			//TODO damage may be caused by de-buffer or pet, should associated to their master
+			this.set_tmp('last_damage_from', who);
+		}
 	
 		var val = this[type] - damage[type];
 		if (val < 0)

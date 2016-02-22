@@ -116,6 +116,8 @@ ROOM.prototype.setup = function() {
 					_objs.npcs[id] = obj;
 				else
 					_objs.items[id] = obj;
+				if (obj.query_tmp('lazy_init'))
+					obj.lazy_init();
 				obj.move_to(this);
 			}
 			i++;

@@ -8,7 +8,7 @@ exports.error = function(msg) {
 
 exports.origin_id = function(id) {
 	id = id || "";
-	var index = id.substring(0, id.indexOf('#'));
+	var id = id.substring(0, id.indexOf('#'));
 	return id;
 }
 

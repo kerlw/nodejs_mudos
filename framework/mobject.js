@@ -112,9 +112,22 @@ MObject.prototype.setup_commands = function(obj) {
 }
 
 MObject.prototype.on_move_in = function(obj) {
+	for (var k in this.contains) {
+		var ob = this.contains[k];
+		if (ob && ob instanceof MObject && ob.is_character() && ob.is_player())
+			ob.command('look');
+	}
 }
 
 MObject.prototype.on_move_out = function(obj) {
+	for (var k in this.contains) {
+		var ob = this.contains[k];
+		if (ob && ob instanceof MObject && ob.is_character() && ob.is_player())
+			ob.command('look');
+	}
+}
+
+MObject.prototype.lazy_init = function() {
 }
 
 module.exports = MObject;

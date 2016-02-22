@@ -127,7 +127,7 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 	var cost = _daemons.skilld.query_cost(me, attack_skill, lvl, other);
 	var damage = _daemons.skilld.query_damage(me, attack_skill, lvl, other);
 	me.recv_damage(cost);
-	other.recv_damage(damage);
+	other.recv_damage(damage, me);
 	FUNCTIONS.message_combatd(action, me, other);
 	
 	//if (damage > 0) {

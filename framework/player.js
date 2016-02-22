@@ -74,10 +74,7 @@ Player.prototype.recv_message = function(msgclz, msg) {
 		return;
 	
 	//TODO this is just a temporary solution
-	if (!msgclz || /*(msgclz !== 'fail' && msgclz !== 'room'
-						&& msgclz !== 'hp'
-						&& msgclz !== 'interactive')*/
-			this.msg_classes.indexOf(msgclz) < 0)
+	if (!msgclz || this.msg_classes.indexOf(msgclz) < 0)
 		msgclz = 'resp';
 	
 	if (this.socket)

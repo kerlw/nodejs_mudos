@@ -8,7 +8,7 @@
 			return null;
 		
 		var Class = function() {
-			"use strick"
+			"use strict"
 			
 			base.apply(this, arguments);
 			constructor.apply(this, arguments);
@@ -18,8 +18,8 @@
 		F.prototype = base.prototype;
 		Class.prototype = new F();
 		Class.prototype.constructor = Class;
-		Class.base = base;
-		
+		Class.prototype.base = base;
+
 		return Class;
 	}
 
