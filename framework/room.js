@@ -128,7 +128,6 @@ ROOM.prototype.append_obj = function(path, count) {
 	while (i < count) {
 		var id = path + '#' + suffix;
 		suffix++;
-		console.log("   ===== id is " + id);
 		if (this.contains[id]) {
 			continue;
 		}

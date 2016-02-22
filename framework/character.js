@@ -524,4 +524,9 @@ Character.prototype.setup_commands = function(obj) {
 	}
 }
 
+Character.prototype.desc_status = function() {
+	var ret = {};
+	return ret;
+}
+
 module.exports = Character;

@@ -42,7 +42,7 @@ var Player = extend(function(socket, model) {
 	this.quests = {};
 	this.quest_kills = {};
 	
-	this.msg_classes = new Array('fail', 'hp', 'room', 'interactive', 'confirm');
+	this.msg_classes = new Array('fail', 'hp', 'room', 'interactive', 'confirm', 'status');
 	
 	socket.player = this;
     socket.on('cmd', function(arg) {
