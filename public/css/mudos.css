@@ -85,8 +85,7 @@ div.row{
 	position:absolute;
 	width:100%;
 	bottom:0;
-	margin-left:1px;
-	margin-bottom:1px;
+
 }
 
 .fight-toast{
@@ -150,7 +149,8 @@ div.row{
 }
 .msglist{
     color:#9ACD32;
-	height:285px;
+	height:100%;
+	width:100%;
     overflow-y:scroll;
     word-break:break-all;
 }
