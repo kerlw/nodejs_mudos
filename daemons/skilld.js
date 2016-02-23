@@ -9,7 +9,6 @@ function skilld() {
 }
 
 skilld.prototype.init_all_skills = function(dir) {
-
 	var files = fs.readdirSync(dir);
 	files.forEach(function(file) {
 		var pathname = path.join(dir, file), 
@@ -45,6 +44,10 @@ skilld.prototype.init_all_skills = function(dir) {
 			}
 		}
 	});
+}
+
+skilld.prototype.skill_taught = function(teacher, me, skill) {
+	
 }
 
 skilld.prototype.query_action = function(me, skill, lv, other) {

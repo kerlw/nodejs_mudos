@@ -36,9 +36,15 @@ function cmd_look() {
 		}
 		
 		if (obj instanceof fm.NPC) {
-			if (obj.is_vender())
+			switch (obj.look_type) {
+			case 'vender': 
 				ret.goods = obj.list_goods();
-
+				break;
+			case 'master':
+				ret.lessons = obj.list_lessons();
+				break;
+			}
+			
 			ret.inquiries = obj.query_inquiry(sender);
 		}
 

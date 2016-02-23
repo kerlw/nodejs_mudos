@@ -18,7 +18,10 @@ var master = fm.extend(function() {
  * @param cost	json object or function
  */
 master.prototype.add_teach_skill = function(skill, condition, cost) {
-
+	this.skills_teach[skill] = {
+			condition : condition,
+			cost : cost
+	}
 }
 
 master.prototype.valid_learn = function(who, skill) {
@@ -28,12 +31,23 @@ master.prototype.valid_learn = function(who, skill) {
 		return 0;
 	}
 	
-	//TODO
-	return 1;
+	if (typeof this.skills_teach[skill].condition === 'function') {
+		return this.skills_teach[skill].condition(who);
+	} else {
+		return this.check_condition(who, this.skills_teach[skill].condition);
+	}
 }
 
 master.prototype.teach_skill = function(who, skill) {
+	if (!valid_learn(who, skill))
+		return;
+	
+	_daemons.skilld.skill_taught(this, who, skill);
+}
 
+master.prototype.list_lessons = function() {
+	var ret = {};
+	return ret;
 }
 
 module.exports = master;
