@@ -35,7 +35,7 @@
 	r('daemons');
 	
 	//init skills, this must be done before init room, because nps need skills
-	r('data/skill');
+	_daemons.skilld.init_all_skills(path.join(global.DATA_PATH, 'skill'))
 	
 	//init rooms
 	init_rooms(global.DATA_PATH);

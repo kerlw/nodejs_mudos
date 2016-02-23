@@ -1,5 +1,5 @@
 var extend = require('./oo.js'),
-	fm = require('framework'),
+	CMD = require('./cmd.js'),
 	MObject = require('./mobject.js'),
 	BASE_SKILL = require('./skill.js').base_skills;
 
@@ -328,7 +328,7 @@ Character.prototype.remove_enemy = function(ob) {
 }
 
 Character.prototype.command = function(cmd, arg) {
-	fm.CMD.exec(this, cmd, arg);
+	CMD.exec(this, cmd, arg);
 }
 
 Character.prototype.recv_damage = function(damage, who) {
