@@ -42,7 +42,7 @@ body{
     padding:8px;
 }
 
-/* modal div */
+/* objmodal div */
 .modal-content{
     background-color: #333333;
 	opacity: 0.9;
@@ -78,6 +78,27 @@ div.row{
 .input-group ul>li{
 	color:red;
 	padding:2px 10px;
+}
+
+/* skillmodal div */
+#skill{
+    font-size: 18px;
+    color: rgb(247, 11, 217);
+}
+
+#skill-value{
+    font-size: 14px;
+    color: yellow;
+    margin-left: 20px;
+}
+
+#study{
+    float: right;
+    margin-top: 10px;
+}
+
+#skill-progress{
+    width: 85%;
 }
 
 /* fight toast */
