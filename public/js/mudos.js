@@ -82,6 +82,7 @@
 	socket.on('interactive', function(msg) {
 		if (!msg) {
 			$('#loading').html("数据加载异常！");
+			setInterval("$('#loading').css('display','none')",2000);
 			return;
 		}
 		//TODO check interactive id

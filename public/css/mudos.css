@@ -32,7 +32,7 @@ body{
     padding-left: 25%;
     color:yellow;
     font-size:18px;
-    background: #000 url(../images/loading.gif) no-repeat 10px 50%;
+    background: #000 url(../image/loading.gif) no-repeat 25% 50%;
     opacity: 0.8;
     z-index:99;
     -moz-border-radius:5px;
