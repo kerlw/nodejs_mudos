@@ -65,7 +65,7 @@
 			$('.room-obj').on('click', function() {
 				var id = $(this).attr('value');
 				socket.emit('cmd', { cmd : 'look', arg : id});
-				$('#objModal').modal();
+				$('#loading').css('display','block');
 				//TODO popup interactive panel and bind panel with 'id'
 			});
 		}
@@ -81,7 +81,7 @@
 
 	socket.on('interactive', function(msg) {
 		if (!msg) {
-			$('#objModal').modal('hide');
+			$('#loading').html("数据加载异常！");
 			return;
 		}
 		//TODO check interactive id
@@ -151,6 +151,8 @@
 				break;
 			}
 		});
+		$('#loading').css('display','none');
+		$('#objModal').modal('show');
 	});
 
     $('.obj').on('click', function () {

@@ -21,6 +21,25 @@ body{
         background:gray;
 }
 
+.loading{
+    display: none;
+    width:70%;
+    height:200px;
+    position: absolute;
+    top:10%;
+    left:15%;
+    line-height: 200px;
+    padding-left: 25%;
+    color:yellow;
+    font-size:18px;
+    background: #000 url(../images/loading.gif) no-repeat 10px 50%;
+    opacity: 0.8;
+    z-index:99;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+}
+
 .bs{border:1px solid #EEC900;margin-top:1px;}
 .col-left{
     padding-right:1px;
@@ -253,7 +272,7 @@ span.blink{text-decoration:blink;}
 
 span.hir{color:red;}
 span.hig{color:lightgreen;}
-span.hiy{color:lightyellow;}
+span.hiy{color:#f7bc09;}
 span.hib{color:lightblue;}
 span.him{color:magenta;}
 span.hic{color:lightcyan;}
