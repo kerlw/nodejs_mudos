@@ -125,6 +125,9 @@
 				$('#inquiries').append('<button class="btn btn-info btn-sm" about="' + k + '" who="' + msg.id + '">' + msg.inquiries[k] + '</button>');
 			}
 		}
+		else {
+			$('#inquiries').css('display','none');
+		}
 		$('.btn-info').on('click', function() {
 			$('#objModal').modal('hide');
 			var target = $(this).attr('who'),
