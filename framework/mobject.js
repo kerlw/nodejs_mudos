@@ -18,8 +18,16 @@ var MObject = function() {
 	this.init = function() {}
 }
 
+MObject.prototype.set = function(key, value) {
+	this[key] = value;
+}
+
 MObject.prototype.query = function(key) {
 	return this[key];
+}
+
+MObject.prototype.del = function(key) {
+	delete this[key];
 }
 
 MObject.prototype.short_desc = function() {
@@ -32,6 +40,10 @@ MObject.prototype.set_flag = function(flag, value) {
 
 MObject.prototype.query_flag = function(flag) {
 	return this.kv_flags[flag];
+}
+
+MObject.prototype.del_flag = function(flag) {
+	delete this.kv_flags[flag];
 }
 
 MObject.prototype.is_character = function() {
