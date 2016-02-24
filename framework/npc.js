@@ -69,10 +69,10 @@ NPC.prototype.is_vender = function() {
 	return 0;
 }
 
-NPC.prototype.add_inquiry = function(id, name, callback) {
+NPC.prototype.add_inquiry = function(id, name, response) {
 	this.inquiries[id] = {
 			name : name,
-			cb : callback,
+			resp : response,
 	}
 }
 
@@ -85,8 +85,14 @@ NPC.prototype.do_inquiry = function(who, about) {
 			&& !this.visiable_inquiry.call(this, about, who))
 		return FUNCTIONS.notify_fail(who, this.name + "并不清楚你要打听的事情。");
 	
-	if (typeof(this.inquiries[about].cb) === 'function')
-		this.inquiries[about].cb.call(this, who);
+	// show inquiry action
+	FUNCTIONS.message_vision("$N向$n打听关于 $(HIG)" + this.inquiries[about].name + "$NOR 的消息。\n", who, this);
+	
+	// handle inquiry & response
+	if (typeof(this.inquiries[about].resp) === 'string') {
+		FUNCTIONS.message_vision(this.inquiries[about].resp, this, who);
+	} else if (typeof(this.inquiries[about].resp) === 'function')
+		this.inquiries[about].resp.call(this, who);
 }
 
 NPC.prototype.query_inquiry = function(who) {
