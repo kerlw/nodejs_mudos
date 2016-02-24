@@ -34,6 +34,8 @@
 	//init daemons
 	r('daemons');
 	
+	r(path.join(global.DATA_PATH, 'fun/init.js'));
+	
 	//init skills, this must be done before init room, because nps need skills
 	_daemons.skilld.init_all_skills(path.join(global.DATA_PATH, 'skill'))
 	

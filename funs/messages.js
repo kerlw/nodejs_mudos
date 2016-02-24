@@ -10,8 +10,8 @@
 		if (!msg || !me || typeof msg !== 'string')
 			return;
 
-		str4me = msg.replace('$N', '你');
-		str4other = msg.replace('$N', me.name);
+		str4me = msg.replace(/\$N(?!OR)/g, '你');
+		str4other = msg.replace(/\$N(?!OR)/g, me.name);
 		if (you) {
 			str4you = str4other.replace('$n', '你');
 			str4other = str4other.replace('$n', you.name);

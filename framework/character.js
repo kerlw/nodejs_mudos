@@ -176,9 +176,14 @@ Character.prototype.continue_action = function() {
 }
 
 Character.prototype.die = function() {
+	if (_daemons.chard.handle_die(this))
+		return;
+
 	var env = FUNCTIONS.environment(this);
-	if (env && env.alternative_die && typeof env.alternative_die === 'function')
-		return env.alternative_die(this);
+	if (env && env.alternative_die && typeof env.alternative_die === 'function') {
+		if (env.alternative_die(this))
+			return;
+	}
 	
 	if (!this.living())
 		this.revive(1);	//make 'me' revive in quiet mode, nor 'me' could not get dead annouce msg
@@ -226,6 +231,15 @@ Character.prototype.attack = function() {
 }
 
 Character.prototype.unconcious = function() {
+	if (_daemons.chard.handle_unconcious(this))
+		return;
+	
+	var env = FUNCTIONS.environment(this);
+	if (env && env.alternative_unconcious && typeof env.alternative_unconcious === 'function') {
+		if (env.alternative_unconcious(this))
+			return;
+	}
+	
 	if (!this.living())
 		return;
 	
