@@ -88,30 +88,35 @@
 		</div>
     </div>
 
-    <div id="loading" class="loading"><span>数据加载中...</span></div>
 	<!-- 模态框（Modal） -->
 	<div class="modal fade" id="objModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel"></h4>
-				</div>
-				<div class="modal-body">
-					<div class="container-fluid">
-						<div class="row">
-						  <div class="col-xs-3">物品</div>
-						  <div class="col-xs-3">价格</div>
-						  <div class="col-xs-3">购买</div>
+			    <div id="loading-panel" class="modal-body loading">
+			    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			    	<img src="public/image/loading.gif"/><span>  数据加载中...</span>
+			    </div>
+			    <div id="interaction-panel">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel"></h4>
+					</div>
+					<div class="modal-body">
+						<div class="container-fluid">
+							<div class="row">
+							  <div class="col-xs-3">物品</div>
+							  <div class="col-xs-3">价格</div>
+							  <div class="col-xs-3">购买</div>
+							</div>
+						</div>
+						<div id='myModalContent'>
 						</div>
 					</div>
-					<div id='myModalContent'>
+	                <div class="mymodal-foot">
+	    				<div id='inquiries'></div>
+	    				<div id='interactions'></div>
 					</div>
-				</div>
-                <div class="mymodal-foot">
-    				<div id='inquiries'></div>
-    				<div id='interactions'></div>
-				</div>
+			    </div>
 			</div>
 		</div>
     <div>
@@ -174,5 +179,7 @@
 <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="public/js/functions.js?v20160225"></script>
+<script type="text/javascript" src="public/js/interaction_panel.js?v20160225"></script>
 <script type="text/javascript" src="public/js/mudos.js?v20160108"></script>
 </html>

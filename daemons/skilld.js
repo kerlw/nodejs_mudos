@@ -35,10 +35,6 @@ skilld.prototype.init_all_skills = function(dir) {
 					
 					skill[fn] = require(pname)();
 				});
-				if (fname != skill.name) {
-					console.log("[WARNING] detected a skill's name(" + skill.name
-							+ ") is differet to folder's name(" + fname + ")");
-				}
 				console.log("[SKILL] adding skill " + skill.name);
 				_objs.skills[fname] = skill;
 			}
