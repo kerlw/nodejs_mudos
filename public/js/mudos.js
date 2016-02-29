@@ -154,9 +154,7 @@
 		if ($old)
 			$old.remove();
 
-		$('#toast_popup').append('<div id="' + confirm_id + '" class="fight-toast"><span id="fight-text">' + exchange_color(msg)
-				+ '</span><button type="button" class="btn btn-success btn-xs choice" id="btn_accept' + confirm_id + '">接受</button>'
-				+ '<button type="button" class="btn btn-danger btn-xs choice" id="btn_refuse' + confirm_id + '">拒绝</button></div>');
+		$('#toast_popup').append('<div id="' + confirm_id + '" class="fight-toast"><marquee behavior="scroll" scrollamount="5" scrolldelay="0" loop="-1" id="fight-text">' + exchange_color(msg) + '</marquee><button type="button" class="btn btn-success btn-xs choice" id="btn_accept' + confirm_id + '">接受</button>' + '<button type="button" class="btn btn-danger btn-xs choice" id="btn_refuse' + confirm_id + '">拒绝</button></div>');
 		$('#btn_accept' + confirm_id).on('click', function() {
 			$('#' + confirm_id).remove();
 			socket.emit('cmd', { cmd : accept.cmd, arg : accept.cmd_arg});
