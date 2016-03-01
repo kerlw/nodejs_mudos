@@ -1,6 +1,6 @@
 var InteractionPanel = function($view, socket) {
 	'use strict';
-	
+
 	this.view = $view;
 	this.loadingPanel = $('#loading-panel');
 	this.interactionPanel = $('#interaction-panel');
@@ -8,11 +8,11 @@ var InteractionPanel = function($view, socket) {
 	this.contentView = $('#myModalContent');
 	this.inquiryView = $('#inquiries');
 	this.interactionView = $('#interactions');
-	
+
 	this.socket = socket;
-	
+
 	this.isShowing = 0;
-	
+
 }
 
 InteractionPanel.prototype.onResponseData = function(msg) {
@@ -27,16 +27,16 @@ InteractionPanel.prototype.onResponseData = function(msg) {
 		$('#myModalLabel').text(msg);
 		return;
 	}
-	
+
 	this.setTitle(msg.name);
 	this.setContentMessage(msg.desc);
-	
+
 	this.inquiryView.empty();
 	this.interactionView.empty();
 	$('.container-fluid').empty();
-	
+
 	this.addInquiries(msg.inquiries, msg.id);
-	
+
 	switch (msg.type) {
 	case 'char':
 		this.addInteraction(msg.id);
@@ -48,7 +48,7 @@ InteractionPanel.prototype.onResponseData = function(msg) {
 		this.addLessons(msg.lessons, msg.id);
 		break;
 	}
-	
+
 	this.loadingPanel.hide();
 	this.interactionPanel.show();
 }
@@ -56,7 +56,7 @@ InteractionPanel.prototype.onResponseData = function(msg) {
 InteractionPanel.prototype.setTitle = function(title) {
 	if (!title)
 		title = "";
-	
+
 	this.titleView.html(exchange_color(title));
 }
 
@@ -76,7 +76,7 @@ InteractionPanel.prototype.addInquiries = function(inquiries, id) {
 	else {
 		$('#inquiries').css('display','none');
 	}
-	
+
 	var socket = this.socket;
 	$('.btn-info').on('click', function() {
 		$('#objModal').modal('hide');
@@ -94,7 +94,7 @@ InteractionPanel.prototype.addInquiries = function(inquiries, id) {
 
 InteractionPanel.prototype.addGoods = function(goods, id) {
 	for (var good in goods) {
-		$('.container-fluid').append('<div class="row"><div class="col-xs-3" path="' + good + '">' + exchange_color(goods[good].name) + '</div><div class="col-xs-3">价格</div><div class="col-xs-3 buy">购买</div></div>');
+		$('.container-fluid').append('<div class="row"><div class="col-xs-3" path="' + good + '">' + exchange_color(goods[good].name) + '</div><div class="col-xs-3">' + goods[good].value +'</div><div class="buy">购买</div></div>');
 	}
 	var socket = this.socket;
 	$('.buy').on('click', function() {
@@ -113,7 +113,7 @@ InteractionPanel.prototype.addGoods = function(goods, id) {
 
 InteractionPanel.prototype.addLessons = function(lessons, id) {
 	for (var l in lessons) {
-		
+
 	}
 }
 
