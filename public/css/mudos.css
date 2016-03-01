@@ -59,7 +59,9 @@ body{
 }
 
 div.row{
+    text-align: left;
 	font-size:10px;
+    color: yellow;
 }
 
 .input-group input{
@@ -110,6 +112,16 @@ div#interactions>button{
     margin: 2px;
 }
 
+.buy{
+    float: left;
+    position: relative;
+    text-align: center;
+    width: 40px;
+    background-color: yellow;
+    border-radius:5px;
+    color: red;
+}
+
 /* skillmodal div */
 #skill{
     font-size: 18px;
@@ -152,10 +164,7 @@ div#interactions>button{
 }
 
 #fight-text{
-    display: inline-block;
-    overflow: hidden;
 	width:70%;
-	padding-left:5px;
 }
 
 .choice{
