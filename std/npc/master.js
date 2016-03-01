@@ -14,10 +14,11 @@ var master = fm.extend(function() {
 /**
  * Add a skill to this master's lessons collection.
  * @param skill skill's mudos id
+ * @param max max lv this master could teach to player
  * @param condition json object or function
  * @param cost	json object or function
  */
-master.prototype.add_lesson = function(skill, condition, cost) {
+master.prototype.add_lesson = function(skill, max, condition, cost) {
 	var name = null;
 	if (fm.SKILLS.base_skill[skill])
 		name = fm.SKILLS.base_skill[skill];
@@ -29,6 +30,7 @@ master.prototype.add_lesson = function(skill, condition, cost) {
 	
 	this.lessons[skill] = {
 			name : name,  
+			max : max,
 			condition : condition,
 			cost : cost
 	}
@@ -61,10 +63,23 @@ master.prototype.list_lessons = function() {
 	var ret = {};
 	for (var skill in this.lessons) {
 		ret[skill] = {
-				skill : { name : this.lessons[skill].name}
+				skill : { 
+					name : this.lessons[skill].name,
+					max : this.lessons[skill].max
+				}
 		}
 	}
 	return ret;
+}
+
+master.prototype.check_condition = function(who, condition) {
+	if (!who)
+		return 0;
+	
+	if (!condition)
+		return 1;
+	
+	//TODO check condition
 }
 
 module.exports = master;

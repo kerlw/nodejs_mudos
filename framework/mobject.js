@@ -18,6 +18,25 @@ var MObject = function() {
 	this.init = function() {}
 }
 
+MObject.prototype.add_action = function(key, name, callback) {
+	this.actions = this.actions || {};
+	this.actions[key] = {
+			name : name,
+			cb : callback
+	}
+}
+
+MObject.prototype.do_action = function(key, who) {
+	if (!this.actions || this.actions[key]) {
+		FUNCTIONS.notify_fail(who, "你想干什么?");
+		return;
+	}
+	
+	if (typeof(this.actiions[key].cb) === 'function') {
+		this.actions[key].cb(who);
+	}
+}
+
 MObject.prototype.set = function(key, value) {
 	this[key] = value;
 }
