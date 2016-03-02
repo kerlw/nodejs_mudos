@@ -58,8 +58,7 @@ body{
 	opacity: 0.9;
 }
 
-div.row{
-    text-align: left;
+#good-list{
 	font-size:10px;
     color: yellow;
 }

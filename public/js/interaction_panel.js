@@ -94,7 +94,7 @@ InteractionPanel.prototype.addInquiries = function(inquiries, id) {
 
 InteractionPanel.prototype.addGoods = function(goods, id) {
 	for (var good in goods) {
-		$('.container-fluid').append('<div class="row"><div class="col-xs-3" path="' + good + '">' + exchange_color(goods[good].name) + '</div><div class="col-xs-3">' + goods[good].value +'</div><div class="buy">购买</div></div>');
+		$('.container-fluid').append('<div class="row" id="good-list"><div class="col-xs-3" path="' + good + '">' + exchange_color(goods[good].name) + '</div><div class="col-xs-3">' + goods[good].value +'</div><div class="buy">购买</div></div>');
 	}
 	var socket = this.socket;
 	$('.buy').on('click', function() {
