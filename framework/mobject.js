@@ -65,6 +65,16 @@ MObject.prototype.del_flag = function(flag) {
 	delete this.kv_flags[flag];
 }
 
+MObject.prototype.add_flag = function(flag, inc) {
+	if (!this.kv_flags[flag]) {
+		this.kv_flags[flag] = inc;
+		return inc;
+	}
+	
+	this.kv_flags[flag] += inc;
+	return this.kv_flags[flag];
+}
+
 MObject.prototype.is_character = function() {
 	return false;
 }

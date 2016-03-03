@@ -22,7 +22,7 @@ chard.prototype.handle_die = function(who) {
 		return;
 	
 	for (var k in this.handle.die) {
-		if (who.query_flag(k))
+		if (who.query_flag(k) || who.query(k))
 			return this.handle.die[k](who);
 	}
 	
@@ -34,7 +34,7 @@ chard.prototype.handle_unconcious = function(who) {
 		return 0;
 	
 	for (var k in this.handle.die) {
-		if (who.query_flag(k))
+		if (who.query_flag(k) || who.query(k))
 			return this.handle.die[k](who);
 	}
 	
