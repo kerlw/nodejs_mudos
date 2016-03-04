@@ -10,6 +10,9 @@ var MObject = function() {
 	this.kv_flags = {};
 	this.cnd_flags = 0;
 	
+	//used to create contained item's id
+	this.start_suffix = 0;
+	
 	//used to hold some temporary flags.
 	this.tmps = {};
 	
@@ -24,6 +27,24 @@ MObject.prototype.add_action = function(key, name, callback) {
 			name : name,
 			cb : callback
 	}
+}
+
+MObject.prototype.valid_action = function(who, action) {
+	if (!who || !action || !this.actions || !this.actions[action])
+		return 0;
+	return 1;
+}
+
+MObject.prototype.list_actions = function(who) {
+	if (!this.actions)
+		return null;
+	
+	ret = {};
+	for (var action in this.actions) {
+		if (this.valid_action(who, action))
+			ret[action] = this.actions[action].name;
+	}
+	return ret;
 }
 
 MObject.prototype.do_action = function(key, who) {

@@ -71,7 +71,7 @@ ROOM.load = function(filename) {
 	return ROOM.loadFromJSON(data);
 }
 
-ROOM.prototype.look_response = function(avoid) {
+ROOM.prototype.look_response = function(who, avoid) {
 	var ret = {
 			'name' : this.name,
 			'desc' : this.desc,
@@ -100,6 +100,10 @@ ROOM.prototype.look_response = function(avoid) {
 		
 		ret.objs[this.contains[objId].id] = this.contains[objId].display_name();
 	}
+	
+	var actions = this.list_actions(who);
+	if (actions)
+		ret.actions = actions;
 	return ret;
 }
 

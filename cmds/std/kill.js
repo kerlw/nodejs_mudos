@@ -27,8 +27,8 @@ function cmd_kill() {
 		if (target.is_player() && target.is_newbie()) 
 			return FUNCTIONS.notify_fail(sender, "请爱护新手玩家，让世界更和谐。");
 		
-		if (target.is_fighting(sender) && target.is_killing(sender))
-			return FUNCTIONS.notify_fail(sender, "加～油～～！加～油～～！");
+		if (target.is_fighting(sender) && target.is_killing(sender.id))
+			return FUNCTIONS.notify_fail(sender, "$(YEL)加～油～～！加～油～～！$NOR");
 		
 		if (target.query_flag('can_speak'))
 			FUNCTIONS.message_vision("$N对着$n喝到：「" + _daemons.rankd.query_rude(target) +
@@ -40,15 +40,17 @@ function cmd_kill() {
 			target.kill(sender);
 		} else {
 			target.fight(sender);
-			FUNCTIONS.message("confirm", 
+			if (!target.is_killing(sender.id)) {
+				FUNCTIONS.message("confirm", 
 					{
 						confirm_id : "kill_" + sender.id,
-						msg : "$(RED)看起来" + sender.name + "想要杀死你，你是否要与之性命相搏？$NOR", 
+						msg : "$(HIR)看起来" + sender.name + "想要杀死你，你是否要与之性命相搏？$NOR", 
 						accept : { cmd : "kill", cmd_arg : sender.id }
 						// make refuse do nothing.
 //						,refuse : { cmd : "refuse", cmd_arg : { type : "kill", target : sender.id }}
 					},
 					target);
+			}
 		}
 	}
 }

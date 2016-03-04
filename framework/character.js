@@ -142,7 +142,11 @@ Character.prototype.kill = function(target) {
 	target.fight(this);
 }
 
-Character.prototype.is_killing = function(id) {
+Character.prototype.is_killing = function(target) {
+	var id = target;
+	if (typeof(target) !== 'string' && target)
+		id = target.id;
+	
 	if (!id)
 		return (this.killer.length > 0);
 	
@@ -275,8 +279,10 @@ Character.prototype.revive = function(quiet) {
 }
 
 Character.prototype.remove_all_killer = function() {
+	console.log(this.id + " remove all killer " + this.killer.length + " / " + this.enemy.length); 
 	this.killer = new Array();
 	while (this.enemy.length > 0) {
+		console.log("loop");
 		var en = this.enemy.shift();
 		var env = FUNCTIONS.environment(this);
 		if (!en || !(en = FUNCTIONS.present(en, env)) || !(en instanceof Character))
@@ -318,10 +324,25 @@ Character.prototype.clean_up_enemy = function() {
 }
 
 Character.prototype.remove_killer = function(ob) {
+	console.log(this.id + " remove killer " + ob.id + "  " + this.killer.indexOf(ob.id));
 	if (this.enemy.length == 0 || !ob || !(ob instanceof Character))
 		return;
 	
-	delete this.killer[ob.id];
+	if (this.killer.indexOf(ob.id) < 0)
+		return;
+	
+	var new_killer = new Array();
+	while (this.killer.length > 0) {
+		var killer = this.killer.shift();
+		if (killer === ob.id) {
+			console.log("   remove killer " + this.id + " : " + ob.id)
+			continue;
+		}
+		
+		new_killer.push(killer);
+	}
+	
+	this.killer = new_killer;
 	this.remove_enemy(ob);
 }
 

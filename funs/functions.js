@@ -111,7 +111,7 @@ exports.chinese_number = function(number) {
 	return number;
 }
 
-exports.all_inventory = function(obj) {
+exports.all_inventory = function(ob) {
 	ret = {};
 	if (!ob || !(ob instanceof fm.MObject))
 		return ret;

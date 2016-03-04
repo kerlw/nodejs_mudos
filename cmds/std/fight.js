@@ -25,7 +25,7 @@ function cmd_fight() {
 			return FUNCTIONS.notify_fail(sender, "丧心病狂了吗，连非生物都攻击？");
 		
 		if (target.is_fighting(sender))
-			return FUNCTIONS.notify_fail(sender, "加～油～～！加～油～～！");
+			return FUNCTIONS.notify_fail(sender, "$(YEL)加～油～～！加～油～～！$NOR");
 		
 		if (!target.living())
 			return FUNCTIONS.notify_fail(sender, target.name + "已经无法战斗了");
