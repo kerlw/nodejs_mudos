@@ -62,7 +62,18 @@ MObject.prototype.set = function(key, value) {
 	this[key] = value;
 }
 
-MObject.prototype.query = function(key) {
+MObject.prototype.query = function(key, defaultValue) {
+	if (this[key] !== undefined  && this[key] !== null)
+		return this[key];
+	
+	return defaultValue;
+}
+
+MObject.prototype.add = function(key, inc) {
+	if (this[key])
+		this.set(key, this[key] + inc);
+	else
+		this.set(key, inc);
 	return this[key];
 }
 
@@ -78,8 +89,11 @@ MObject.prototype.set_flag = function(flag, value) {
 	this.kv_flags[flag] = value;
 }
 
-MObject.prototype.query_flag = function(flag) {
-	return this.kv_flags[flag];
+MObject.prototype.query_flag = function(flag, defaultValue) {
+	if (this.kv_flags[flag] !== undefined && this.kv_flags[flag] !== null)
+		return this.kv_flags[flag];
+	
+	return defaultValue;
 }
 
 MObject.prototype.del_flag = function(flag) {
@@ -87,12 +101,11 @@ MObject.prototype.del_flag = function(flag) {
 }
 
 MObject.prototype.add_flag = function(flag, inc) {
-	if (!this.kv_flags[flag]) {
-		this.kv_flags[flag] = inc;
-		return inc;
-	}
+	if (this.kv_flags[flag]) {
+		this.set_flag(flag, this.kv_flags[flag] + inc);
+	} else
+		this.set_flag(flag, inc);
 	
-	this.kv_flags[flag] += inc;
 	return this.kv_flags[flag];
 }
 
