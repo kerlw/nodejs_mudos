@@ -30,13 +30,17 @@ var Player = extend(function(socket, model) {
 	this.max_stamina = model.hp.max_stm;
 	
 	this.force = model.hp.force;
-	this.eff_force = model.hp.force;
+	this.eff_force = model.hp.eff_force;
 	this.max_force = model.hp.max_force;
 	
 	this.water = model.hp.water;
 	this.max_water = model.hp.max_water;
 	this.food = model.hp.food;
 	this.max_food = model.hp.max_food;
+	
+	this.start_room = model.startroom;
+	if (model.kvs)
+		this.kv_flags = model.kvs;
 	
 	this.interactive = 1;
 	this.quests = {};
@@ -111,5 +115,10 @@ Player.prototype.other_login = function(socket) {
     		socket.player.onDisconnected();
     });
 }
+
+Player.prototype.save_status = function() {
+	_daemons.playerd.save_status(this);
+}
+
 
 module.exports = Player;

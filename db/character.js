@@ -31,7 +31,9 @@ var statusSchema = new dbClient.Schema({
 		max_food : Number,
 		water : Number,
 		max_water : Number
-	}
+	},
+	startroom : String,
+	kvs : String
 });
 
 
@@ -53,7 +55,7 @@ Character.prototype.addChar = function (data, callback) {
         int: data.int,
         apc: data.apc,
         lck: data.lck,
-        cor: data.cor
+        cor: data.cor,
     });
 
     character.save(function(err) {
@@ -78,7 +80,9 @@ Character.prototype.addStatus = function (data, callback) {
 	var status = new this.stDb({
 		charId : data.id,
 		mudage : 0,
-		hp : data.hp
+		hp : data.hp,
+		start_room : data.start_room,
+		kvs : data.kv_flags
 	});
 	status.save(callback);
 }

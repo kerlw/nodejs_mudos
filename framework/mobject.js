@@ -97,7 +97,8 @@ MObject.prototype.query_flag = function(flag, defaultValue) {
 }
 
 MObject.prototype.del_flag = function(flag) {
-	delete this.kv_flags[flag];
+	if (this.kv_flags[flag])
+		delete this.kv_flags[flag];
 }
 
 MObject.prototype.add_flag = function(flag, inc) {

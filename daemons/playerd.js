@@ -77,12 +77,39 @@
         		}
         		
         		ret.hp = status.hp;
+        		ret.start_room = status.start_room;
+        		ret.kv_flags = status.kvs;
         		if (callback) 
         			callback(err, ret);
         	});
         });
 	}
 	
+	playerd.prototype.save_status = function(player) {
+		var charDb = new (r('db').Character)();
+		var status = {
+				id : player.id,
+				hp : {
+					vitality : player.vitality,
+					eff_vita : player.eff_vitality,
+					max_vita : player.max_vitality,
+					stamina : player.stamina,
+					eff_stm : player.eff_stamina,
+					max_stm : player.max_stamina,
+					force : player.force,
+					eff_force : player.eff_force,
+					max_force : player.max_force,
+					water : player.water,
+					max_water : player.max_water,
+					food : player.food,
+					max_food : player.max_food
+				},
+				startroom : player.start_room,
+				kvs : player.kv_flags
+		};
+		cahrDb.updateStatus();
+	}
+
 	module.exports = playerd;
 	
 })(require);
