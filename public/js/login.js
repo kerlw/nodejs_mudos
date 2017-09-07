@@ -14,7 +14,10 @@
 			data : info,
 			success : function(data) {
 				if (data.code == 200) {
-					window.location.href='/';
+					if (redirect)
+						win.location.href = redirect;
+					else
+						win.location.href ='/';
 				} else {
 					$('#msg').text(data.msg).show();
 				}
@@ -35,7 +38,7 @@
 			data : info,
 			success : function(data) {
 				if (data.code == 200) {
-					window.location.href='/character';
+					win.location.href='/character';
 				} else {
 					$('#toast').text(data.msg).popup('open');
 					

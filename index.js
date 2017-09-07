@@ -42,11 +42,25 @@ app.get('/', function(req, res) {
         }   
     }
     res.redirect('/login');
+    // res.render(path.join(__dirname,'/views/login.html'));
 
 });
 
 app.get('/login', function(req, res) {
-    res.sendFile(path.join(__dirname,'/views/login.html'));
+    console.log("login request with redirect " + req.query.redirect);
+    res.render(path.join(__dirname,'/views/login.html'), {'redirect':req.query.redirect});
+});
+
+app.get('/admin', function(req, res) {
+    if (req.signedCookies) {
+        if (req.signedCookies.sessionId) {
+            var passport = req.signedCookies.passport;
+            res.render(path.join(__dirname,'/views/admin.html'), {'passport' : passport});
+            return;
+        }
+    }
+    console.log("redirect to login");
+    res.redirect('/login?redirect=admin');
 });
 
 app.get('/character', function(req, res) {
