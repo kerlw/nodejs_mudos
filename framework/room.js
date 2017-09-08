@@ -113,8 +113,8 @@ ROOM.prototype.setup = function() {
 	}
 }
 
-ROOM.prototype.append_obj = function(path, count) {
-	if (!path || count <= 0)
+ROOM.prototype.append_obj = function(objpath, count) {
+	if (!objpath || count <= 0)
 		return;
 	
 	if (count > ROOM.MAX_OBJECT_COUNT)
@@ -122,7 +122,9 @@ ROOM.prototype.append_obj = function(path, count) {
 	
 	var i = 0,
 		suffix = this.start_suffix;
-		pathname = fm.find_file(DATA_PATH, path);
+		pathname = fm.find_file(DATA_PATH, objpath) || fm.find_file(path.join(DATA_PATH, 'map'), objpath);
+	if (!pathname)
+		throw 'File ' + objpath + ' not found!';
 	fs.accessSync(pathname, fs.F_OK | fs.R_OK);
 		
 	var ctor = require(pathname);

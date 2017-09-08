@@ -40,7 +40,7 @@
 	_daemons.skilld.init_all_skills(path.join(global.DATA_PATH, 'skill'))
 	
 	//init rooms
-	init_rooms(global.DATA_PATH);
+	init_rooms(path.join(global.DATA_PATH, 'map'));
 
 	
 	///////////////////////////////////////////////////////////

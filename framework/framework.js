@@ -8,12 +8,13 @@ exports.find_file = function(dir, name) {
 			return pathname;
 	}
 	
-	if (fs.statSync(pathname + '.js').isFile())
+	if (fs.existsSync(pathname + ".js") && fs.statSync(pathname + '.js').isFile())
 		return pathname + '.js';
-	if (fs.statSync(pathname + '.json'))
+	if (fs.existsSync(pathname + ".json") && fs.statSync(pathname + '.json'))
 		return pathname + '.json';
 	
-	throw pathname + ' file not found!';
+	//throw 'File "' + name + '" not found in directory ' + dir;
+	return null;
 }
 
 exports.SKILL = require('./skill.js');
