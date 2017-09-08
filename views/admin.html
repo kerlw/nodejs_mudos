@@ -1,14 +1,87 @@
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<meta http-equiv="pragma" content="no-cache" />
-<meta http-equiv="cache-control" content="no-cache" />
-<link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="../public/css/mudos.css" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <link href="../public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../public/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-Hello world!
+
+<div class="container-fluid">
+    <div class="page-header">
+        Admin后台
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="accordion" id="accordion-main-content">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-parent="#accordion-main-content" data-toggle="collapse"
+                           href="#accordion-element-status">运行状况</a>
+                    </div>
+                    <div id="status_desc" class=""></div>
+                    <div class="accordion-body" id="accordion-element-status">
+                        <div class="accordion-inner">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th data-field="item">项目</th>
+                                    <th data-field="content">内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-parent="#accordion-main-content" data-toggle="collapse"
+                           href="#accordion-element-functions">管理功能</a>
+                    </div>
+                    <div class="accordion-body in collapse" id="accordion-element-functions">
+                        <div class="accordion-inner">
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a id="modal-807206" href="#modal-container-dialog01" role="button" class="btn" data-toggle="modal">触发遮罩窗体</a>
+
+            <div id="modal-container-dialog01" class="modal fade" role="modal" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="myModalLabel">
+                                标题栏
+                            </h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                显示信息
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                            <button class="btn btn-primary">保存设置</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../public/js/jquery-3.2.1.min.js"></script>
+<script src="../public/js/bootstrap.min.js"></script>
+<script src="../public/js/admin.js"></script>
 </body>
 </html>

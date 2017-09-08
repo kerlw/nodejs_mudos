@@ -5,6 +5,8 @@ function hb() {
 		return new hb();
 	
 	this.num_hb_calls = 0;
+	this.last_hb_at = 0;
+	this.last_hb_elapse = 0;
 	this.hb_array = new Array();
 	this.hb_append_array = new Array();
 	this.current_hb = null;
@@ -20,6 +22,7 @@ hb.call_heart_beat = function() {
 	}
 	
 	var now = new Date().valueOf();
+	HB_ENGINE.last_hb_at = now;
 	console.log("[HB_ENGINE] heart_beat begin at " + now + ", " + HB_ENGINE.hb_array.length + " objects in queue");
 	while (HB_ENGINE.hb_array.length > 0) {
 		cur_hb = HB_ENGINE.hb_array.shift();
@@ -45,7 +48,10 @@ hb.call_heart_beat = function() {
 		HB_ENGINE.current_hb_obj = null;
 
 	}
-	console.log("[HB_ENGINE] heart_beat done. used " + (new Date().valueOf() - now) + "ms");
+
+	HB_ENGINE.last_hb_elapse = (new Date().valueOf() - now);
+	console.log("[HB_ENGINE] heart_beat done. used " + HB_ENGINE.last_hb_elapse + "ms");
+
 	
 	if (HB_ENGINE.hb_append_array.length > 0) {
 		//swap hb_array and hb_append_array
@@ -150,4 +156,12 @@ hb.prototype.remove_object = function(obj) {
 	var target_hb = this.find_target_hb(obj);
 	if (target_hb)
 		target_hb.deleted = 1;
+}
+
+hb.prototype.desc = function() {
+	return {
+		'nums' : this.hb_array.length + this.hb_append_array.length,
+		'last_hb_at' : this.last_hb_at,
+		'last_hb_elapse' : this.last_hb_elapse
+	};
 }

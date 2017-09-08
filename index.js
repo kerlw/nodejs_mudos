@@ -6,6 +6,7 @@ global.__config = require('./config.json');
 require('globals');
 
 var express = require('express');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var app = express();
@@ -27,6 +28,10 @@ app.use('/public', express.static(__dirname + '/public'));
 //io.set('heartbeats', false);
 //io.set('heartbeats timeout', 50);
 //io.set('heartbeats interval', 20);
+
+app.use(session({
+    'secret' : 'FTu5<{?DJ{*;0NDc@])FoB0fGB>LW;8q$^-856(B<B)[93TGe]M}.3vG-6c&S%SYVpdxjDl+Tu60r)5.b)qm/2]7n73j|:-.0|T`wof73Pxd<_+q{4ROBR%"/W_t>tVE'
+}));
 
 app.get('/', function(req, res) {
     if (req.signedCookies) {
@@ -225,5 +230,8 @@ app.post('/ucenter', function(req, res) {
         console.log("Unknown action requested " + action);
         break;
     }
-    
+});
+
+app.post('/api', function(req, res) {
+    res.send(_daemons.apid.onAction(req.query.action, req.session, req.body));
 });
