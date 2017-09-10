@@ -24,6 +24,55 @@
             <input type="text" class="form-control input-md" placeholder="游戏中显示的该房间名称">
             <span class="label label-default">描述</span>
             <textarea class="form-control input-md" rows="3" placeholder="游戏中显示的该房间的描述"></textarea>
+            
+            <div class="accordion" id="accordion_prop">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_prop" href="#propOne">
+                            特殊属性
+                        </a>
+                    </div>
+                    <div id="propOne" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_prop" href="#propTwo">
+                            自定义函数
+                        </a>
+                    </div>
+                    <div id="propTwo" class="accordion-body collapse">
+                        <div class="accordion-inner">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container"><br/>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            <input type="checkbox"/> A checkbox
+                        </label>
+                    </div>
+                </div>
+                <div id="collapseOne" aria-expanded="false" class="collapse">
+                    <div class="well">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe ut molestias eius, nam neque esse eos modi corrupti harum fugit, hic recusandae praesentium, minima ipsa eligendi architecto at! Culpa, explicabo.</div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            <input type="checkbox" checked/> Another checkbox
+                        </label>
+                    </div>
+                </div>
+                <div id="collapseTwo" aria-expanded="true" class="collapse in">
+                    <div class="well">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe ut molestias eius, nam neque esse eos modi corrupti harum fugit, hic recusandae praesentium, minima ipsa eligendi architecto at! Culpa, explicabo.</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -88,7 +88,11 @@ room_builder.prototype.build_code = function(src) {
     ////////////////////////////////////////////////////////////////
 
     if (src.funcs) {
-
+        for (var key in src.funcs) {
+            sb.appendLine('').appendLine('{0}.prototype.{1} = function() {', src.filename, key);
+            sb.appendLine(src.funcs[key]);
+            sb.appendLine('}');
+        }
     }
 
     //export define
