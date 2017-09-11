@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta id="viewport" name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <meta http-equiv="pragma" content="no-cache"/>
     <meta http-equiv="cache-control" content="no-cache"/>
     <link href="../public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -17,29 +18,88 @@
         <div class="page-header">
             <h1>房间编辑器</h1>
             <span class="label label-default">文件名</span>
-            <input type="text" class="form-control input-md" placeholder="保存到磁盘的文件名（不包括扩展名）">
+            <input id="input_filename" type="text" class="form-control input-md" placeholder="保存到磁盘的文件名（不包括扩展名）">
             <span class="label label-default">所属区域</span>
-            <select class="form-control"><option>新手村(/map/xinshoucun/)</option><option>襄阳(/map/xiangyang/）</option></select>
+            <div class="input-group">
+                <input id="input_area_show" type="text" class="form-control" placeholder="选择该房间所属的区域" readonly="readonly">
+                <input id="input_area" type="hidden" class="form-control" value="">
+                <span class="input-group-btn">
+                    <button class="btn btn-warning" type="button">选择</button>
+                </span>
+            </div>
             <span class="label label-default">地名</span>
             <input type="text" class="form-control input-md" placeholder="游戏中显示的该房间名称">
             <span class="label label-default">描述</span>
             <textarea class="form-control input-md" rows="3" placeholder="游戏中显示的该房间的描述"></textarea>
-            
+            <span class="label label-default">出口</span>
+            <div class="table table-responsive">
+                <table class="table table-responsive table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <td>方向</td>
+                        <td>连接目标</td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody id="room_exits_table">
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th colspan="5">
+                            <button id="btnAddExit" type="button" class="btn btn-primary pull-right"
+                                    data-toggle="tooltip" data-original-title="Add more controls">
+                                <i class="glyphicon glyphicon-plus-sign"></i>
+                                &nbsp; 添加&nbsp;</button>
+                        </th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <span class="label label-default">房间内对象</span>
+            <div class="table table-responsive">
+                <table class="table table-responsive table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <td>对象</td>
+                        <td>数量</td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody id="room_objs_table">
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th colspan="5">
+                            <button id="btnAddObj" type="button" class="btn btn-primary pull-right"
+                                    data-toggle="tooltip" data-original-title="Add more controls">
+                                <i class="glyphicon glyphicon-plus-sign"></i>
+                                &nbsp; 添加&nbsp;</button>
+                        </th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+
             <div class="accordion" id="accordion_prop">
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_prop" href="#propOne">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_prop" href="#propOne"
+                           aria-expanded="true">
                             特殊属性
                         </a>
                     </div>
-                    <div id="propOne" class="accordion-body collapse in">
+                    <div id="propOne" class="accordion-body collapse in" aria-expanded="true">
                         <div class="accordion-inner">
+                            <div class="checkbox">
+                                <label><input type="checkbox">禁止战斗</label>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_prop" href="#propTwo">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_prop"
+                           href="#propTwo">
                             自定义函数
                         </a>
                     </div>
@@ -51,39 +111,80 @@
                 </div>
             </div>
 
-            <div class="container"><br/>
+            <div class="container">
                 <div class="form-group">
                     <div class="checkbox">
-                        <label data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        <label data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                               aria-controls="collapseOne">
                             <input type="checkbox"/> A checkbox
                         </label>
                     </div>
                 </div>
                 <div id="collapseOne" aria-expanded="false" class="collapse">
-                    <div class="well">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe ut molestias eius, nam neque esse eos modi corrupti harum fugit, hic recusandae praesentium, minima ipsa eligendi architecto at! Culpa, explicabo.</div>
+                    <div class="well">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe ut molestias eius,
+                        nam neque esse eos modi corrupti harum fugit, hic recusandae praesentium, minima ipsa eligendi
+                        architecto at! Culpa, explicabo.
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
-                        <label data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <label data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                               aria-controls="collapseTwo">
                             <input type="checkbox" checked/> Another checkbox
                         </label>
                     </div>
                 </div>
                 <div id="collapseTwo" aria-expanded="true" class="collapse in">
-                    <div class="well">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe ut molestias eius, nam neque esse eos modi corrupti harum fugit, hic recusandae praesentium, minima ipsa eligendi architecto at! Culpa, explicabo.</div>
+                    <div class="well">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe ut molestias eius,
+                        nam neque esse eos modi corrupti harum fugit, hic recusandae praesentium, minima ipsa eligendi
+                        architecto at! Culpa, explicabo.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group pull-right">
+            <button class="btn btn-warning" id="btn_cancel">取消</button>
+            <button class="btn btn-primary" id="btn_save">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;保存&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+        </div>
+
+    </div>
+
+    <div id="modal_dialog" class="modal fade" role="modal" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">
+                        标题栏
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        显示信息
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    <button class="btn btn-primary">保存设置</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+
 <div id="footer">
     <div class="container">
-        <p class="text-muted credit">极讯欢乐工作室</p>
+        <p class="text-muted credit text-center">极讯欢乐工作室</p>
     </div>
 </div>
 
+
 <script src="../public/js/jquery-3.2.1.min.js"></script>
 <script src="../public/js/bootstrap.min.js"></script>
+<script src="../public/js/editor.js"></script>
 </body>
 </html>

@@ -30,7 +30,9 @@ app.use('/public', express.static(__dirname + '/public'));
 //io.set('heartbeats interval', 20);
 
 app.use(session({
-    'secret' : 'FTu5<{?DJ{*;0NDc@])FoB0fGB>LW;8q$^-856(B<B)[93TGe]M}.3vG-6c&S%SYVpdxjDl+Tu60r)5.b)qm/2]7n73j|:-.0|T`wof73Pxd<_+q{4ROBR%"/W_t>tVE'
+    'secret' : 'FTu5<{?DJ{*;0NDc@])FoB0fGB>LW;8q$^-856(B<B)[93TGe]M}.3vG-6c&S%SYVpdxjDl+Tu60r)5.b)qm/2]7n73j|:-.0|T`wof73Pxd<_+q{4ROBR%"/W_t>tVE',
+    'resave': true,
+    'saveUninitialized': true
 }));
 
 app.get('/', function(req, res) {
@@ -78,6 +80,18 @@ app.get('/character', function(req, res) {
     }
 
     res.redirect('/');
+});
+
+app.get('/editor', function(req, res) {
+    res.render(path.join(__dirname,'/views/editor.html'));
+});
+app.post('/editor', function(req, res) {
+    if (req.query.action) {
+        var rb = require('admin');
+        rb.build(req.body);
+    }
+
+    res.send(JSON.stringify("{}"));
 });
 
 io.on('connection', function(socket) {

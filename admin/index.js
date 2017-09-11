@@ -5,5 +5,7 @@
         path = r('path');
 
 
+    var roombuilder = r('room_builder.js');
+    return roombuilder;
 
 })(require);
