@@ -24,7 +24,7 @@
                 <input id="input_area_show" type="text" class="form-control" placeholder="选择该房间所属的区域" readonly="readonly">
                 <input id="input_area" type="hidden" class="form-control" value="">
                 <span class="input-group-btn">
-                    <button class="btn btn-warning" type="button">选择</button>
+                    <button class="btn btn-warning" type="button" data-target="#modal_dialog_choose_area" data-toggle="modal">选择</button>
                 </span>
             </div>
             <span class="label label-default">地名</span>
@@ -151,14 +151,14 @@
 
     </div>
 
-    <div id="modal_dialog" class="modal fade" role="modal" aria-labelledby="myModalLabel"
+    <div id="modal_dialog_choose_area" class="modal fade" role="modal" aria-labelledby="choose_area_modal_label"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="myModalLabel">
-                        标题栏
+                    <h3 id="choose_area_modal_label">
+                        选择房间所在区域
                     </h3>
                 </div>
                 <div class="modal-body">
@@ -168,7 +168,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-                    <button class="btn btn-primary">保存设置</button>
+                    <button id="btn_save_choosed_area" class="btn btn-primary">保存</button>
                 </div>
             </div>
         </div>

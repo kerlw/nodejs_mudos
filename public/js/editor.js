@@ -4,7 +4,23 @@
 (function () {
     'use strict'
 
+    var area = {};
+
     $(function () {
+        //选择房间所在区域的对话框
+        $("#modal_dialog_choose_area").on("show.bs.modal", function() {
+            if (Object.keys(area).length <= 0) {
+                //show waiting progress
+            } else {
+
+            }
+        });
+
+        $("#btn_save_choosed_area").on("click", function() {
+
+        });
+        //---------------------------
+
         $("#btnAddExit").bind("click", function () {
             var div = $("<tr />");
             div.html(getExitTableRow());
@@ -33,6 +49,10 @@
             };
         });
     });
+
+    function bindAreaDataToTreeView(area) {
+
+    }
 
     function getExitTableRow() {
         return '<td><select name="" class="form-control"><option> 选择方向</option><option>north</option><option>south</option></select></td>'
