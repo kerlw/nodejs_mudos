@@ -11,8 +11,21 @@
         $("#modal_dialog_choose_area").on("show.bs.modal", function() {
             if (Object.keys(area).length <= 0) {
                 //show waiting progress
+                $.ajax({
+                    type : 'POST',
+                    url : '/api?action=query',
+                    dataType : 'json',
+                    data : '{ "type" : "area_list" }',
+                    success : function(data) {
+                        if (data.code == 200) {
+                            area = data.data.area_list;
+                            bindAreaDataToTreeView(area);
+                        } else {
+                        }
+                    }
+                });
             } else {
-
+                bindAreaDataToTreeView(area);
             }
         });
 

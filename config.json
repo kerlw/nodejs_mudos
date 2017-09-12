@@ -2,6 +2,7 @@
     "port" : 3000,
     
     "data_dir" : "/jx_mud",
+    "map_dir" : "map",
 
     "start_room" : "xinshoucun/cunzhongyang",
     "start_room2" : "softwarepark/office",

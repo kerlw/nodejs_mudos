@@ -11,21 +11,24 @@
 			O_LISTENER : 0x04,
 			O_ENABLE_COMMANDS : 0x08
 	};
-	
+
 	global.CND_FLAGS = {
 			CND_NO_HEAL_UP : 0x01
 	}
-	
-	global.HB_ENGINE = r('heartbeat')();
+
+    var fm = r('framework'),
+        fs = r('fs'),
+        path = r('path');
+
+    global.HB_ENGINE = r('heartbeat')();
+
 	global.HB_ENGINE.init();
-	
-	global.DATA_PATH = global.__BASE_PATH + global.__config.data_dir;
-	
-	
-	var fm = r('framework'),
-		fs = r('fs'),
-		path = r('path');
-	
+    global.DATA_PATH = path.join(global.__BASE_PATH, global.__config.data_dir).toString();
+    global.MAP_PATH = ptah.join(global.DATA_PATH, __config.map_dir).toString();
+
+    console.log('DATA_PATH initialized to {0}', global.DATA_PATH);
+    console.log('MAP_PATH initialized to {0}', global.MAP_PATH);
+
 	r('std');
 	//init functions
 	r('funs');

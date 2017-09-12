@@ -25,6 +25,7 @@ app.use(cookieParser(__config.cookie_secret));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/public', express.static(__dirname + '/public'));
+app.use(express.logger('dev'));
 //io.set('heartbeats', false);
 //io.set('heartbeats timeout', 50);
 //io.set('heartbeats interval', 20);
@@ -85,6 +86,7 @@ app.get('/character', function(req, res) {
 app.get('/editor', function(req, res) {
     res.render(path.join(__dirname,'/views/editor.html'));
 });
+
 app.post('/editor', function(req, res) {
     if (req.query.action) {
         var rb = require('admin');
