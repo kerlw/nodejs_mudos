@@ -21,14 +21,14 @@ function onActionQuery(session, param) {
     switch (param.type) {
         case 'area_list':
             var areas = queryAreaList(global.MAP_PATH);
-            break;
+            return JSON.stringify({ 'code' : 200, 'areas' : areas });
     }
 }
 
 function queryAreaList(basePath) {
     var dir = path.normalize(basePath);
 
-    var result = {};
+    var result = [];
 
     var files = fs.readdirSync(dir);
     files.forEach(function(file) {
