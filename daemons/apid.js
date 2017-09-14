@@ -39,8 +39,11 @@ function queryAreaList(basePath) {
         if (!stat.isDirectory() || fname === 'item' || fname === 'npc' || fname === 'skill' || fname === 'fun')
             return;
 
-        // var area = {'name' : fname, 'path' : }
+        var area = {'name' : fname, 'path' : pathname, 'children' : queryAreaList(pathname)};
+        result.append(area);
     });
+
+    return result;
 }
 
 apid.prototype.onAction = function(action, session, param) {

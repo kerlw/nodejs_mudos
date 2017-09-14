@@ -18,13 +18,15 @@
                     data : '{ "type" : "area_list" }',
                     success : function(data) {
                         if (data.code == 200) {
-                            area = data.data.area_list;
-                            bindAreaDataToTreeView(area);
+                            var areas = data.data.areas;
+                            $("div#area_list ul").empty()
+                            bindAreaDataToTreeView(areas);
                         } else {
                         }
                     }
                 });
             } else {
+                $("div#area_list ul").empty()
                 bindAreaDataToTreeView(area);
             }
         });
@@ -63,8 +65,18 @@
         });
     });
 
-    function bindAreaDataToTreeView(area) {
+    function bindAreaDataToTreeView(areas, lv) {
+        if (!areas || !(area instanceof Array) || area.length <= 0)
+            return;
 
+        var indent = '';
+        var lvl = lv || 0;
+        while (lvl-- > 0)
+            indent += '&nbsp;&nbsp;';
+        for (var area in areas) {
+            $("div#area_list ul").append(String.format('<li class="list-group-item" value="{0}">{1}{2}</li>', area.pathname, indent, area.name));
+            bindAreaDataToTreeView(area.children, (lv || 0) + 1);
+        }
     }
 
     function getExitTableRow() {
