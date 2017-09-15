@@ -8,6 +8,18 @@
     var choose_type;
 
     $(function () {
+        //可展开treeview node的点击处理
+        $('.hasSub').click(function () {
+            $(this).parent().toggleClass('subactivated');
+            $(this).parent().children('ul:first').toggle();
+
+            if($(this).find('i').hasClass('glyphicon-folder-open')){
+                $(this).find('i').removeClass('glyphicon-folder-open').addClass('glyphicon-folder-close');
+            }else{
+                $(this).find('i').removeClass('glyphicon-folder-close').addClass('glyphicon-folder-open');
+            }
+        });
+
         //选择房间所在区域的对话框
         $("#modal_dialog_choose_target").on("show.bs.modal", function() {
             $("div#dialog_body_target_list ul").empty();
