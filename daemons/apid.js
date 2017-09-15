@@ -15,6 +15,7 @@ function onActionQueryStatus(session, param) {
 }
 
 function onActionQuery(session, param) {
+    console.log(param);
     if (!param || !param.type)
         return JSON.stringify({ 'code' : 101});
 
@@ -39,8 +40,8 @@ function queryAreaList(basePath) {
         if (!stat.isDirectory() || fname === 'item' || fname === 'npc' || fname === 'skill' || fname === 'fun')
             return;
 
-        var area = {'name' : fname, 'path' : pathname, 'children' : queryAreaList(pathname)};
-        result.append(area);
+        var area = {'name' : fname, 'pathname' : path.relative(global.DATA_PATH, pathname), 'children' : queryAreaList(pathname)};
+        result.push(area);
     });
 
     return result;

@@ -11,7 +11,7 @@
             type : 'POST',
             url : '/api?action=status',
             dataType : 'json',
-            data : '{}',
+            data : {},
             success : function(data) {
                 if (data.code == 200) {
                     $('div#status_desc').html('<pre>' + JSON.stringify(data.body) + '</pre>');

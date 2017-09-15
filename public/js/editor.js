@@ -15,10 +15,10 @@
                     type : 'POST',
                     url : '/api?action=query',
                     dataType : 'json',
-                    data : '{ "type" : "area_list" }',
+                    data : { "type" : "area_list" },
                     success : function(data) {
                         if (data.code == 200) {
-                            var areas = data.data.areas;
+                            var areas = data.areas;
                             $("div#area_list ul").empty()
                             bindAreaDataToTreeView(areas);
                         } else {
@@ -66,16 +66,36 @@
     });
 
     function bindAreaDataToTreeView(areas, lv) {
-        if (!areas || !(area instanceof Array) || area.length <= 0)
+        if (!areas || !(areas instanceof Array) || areas.length <= 0)
             return;
+
+        var selection = $("#input_area").val() || "";
 
         var indent = '';
         var lvl = lv || 0;
         while (lvl-- > 0)
             indent += '&nbsp;&nbsp;';
-        for (var area in areas) {
-            $("div#area_list ul").append(String.format('<li class="list-group-item" value="{0}">{1}{2}</li>', area.pathname, indent, area.name));
+        areas.forEach(function(area) {
+            var active = '"';
+            if (selection.length > 0 && selection === area.pathname)
+                active = ' active"';
+            //关闭对话框有两种实现方式，在li上加data-dismiss或者在后面调用 dialog.modal("hide")
+            // $("div#area_list ul").append('<li class="list-group-item' + active + ' data-dismiss="modal" value="' + area.pathname + '">' + indent + area.name + '</li>');
+            $("div#area_list ul").append('<li class="list-group-item' + active + ' value="' + area.pathname + '">' + indent + area.name + '</li>');
             bindAreaDataToTreeView(area.children, (lv || 0) + 1);
+        });
+
+        //对于0层的数据，绑定完成后加入点击事件
+        if (!lv) {
+            $("div#area_list ul li").on("click", function () {
+                $(this).closest("ul").find("li").removeClass("active");
+                $(this).addClass("active");
+
+                $("#input_area_show").val($(this).text());
+                $("#input_area").val($(this).attr("value"));
+
+                $("#modal_dialog_choose_area").modal("hide");
+            });
         }
     }
 
@@ -87,7 +107,7 @@
 
     function getObjTableRow() {
         return '<td><input name="obj_path" type="text" value = "" /></td>'
-            + '<td><input name="obj_num" type="text" value = "" /></td>'
+            + '<td><input name="obj_num" type="text" value = "1" /></td>'
             + '<td><button type="button" class="btn btn-danger tbl_btn_remove"><i class="glyphicon glyphicon-remove-sign"></i></button></td>'
     }
 

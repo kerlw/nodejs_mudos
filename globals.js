@@ -23,8 +23,8 @@
     global.HB_ENGINE = r('heartbeat')();
 
 	global.HB_ENGINE.init();
-    global.DATA_PATH = path.join(global.__BASE_PATH, global.__config.data_dir).toString();
-    global.MAP_PATH = ptah.join(global.DATA_PATH, __config.map_dir).toString();
+    global.DATA_PATH = path.normalize(path.join(global.__BASE_PATH, global.__config.data_dir));
+    global.MAP_PATH = path.normalize(path.join(global.DATA_PATH, __config.map_dir));
 
     console.log('DATA_PATH initialized to {0}', global.DATA_PATH);
     console.log('MAP_PATH initialized to {0}', global.MAP_PATH);

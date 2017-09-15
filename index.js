@@ -25,7 +25,7 @@ app.use(cookieParser(__config.cookie_secret));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/public', express.static(__dirname + '/public'));
-app.use(express.logger('dev'));
+// app.use(express.logger('dev'));
 //io.set('heartbeats', false);
 //io.set('heartbeats timeout', 50);
 //io.set('heartbeats interval', 20);
@@ -249,5 +249,6 @@ app.post('/ucenter', function(req, res) {
 });
 
 app.post('/api', function(req, res) {
+    console.log(req.body);
     res.send(_daemons.apid.onAction(req.query.action, req.session, req.body));
 });
