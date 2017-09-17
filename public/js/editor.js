@@ -36,9 +36,6 @@
             }
         });
 
-        $("#btn_save_choosed_area").on("click", function() {
-
-        });
         //---------------------------
 
         $("#btnAddExit").bind("click", function () {
@@ -134,7 +131,23 @@
     }
 
     function fillChooseDialogWithObjData() {
-
+        if (!obj_cache_array || !(obj_cache_array instanceof Array) || obj_cache_array.length <= 0) {
+            $.ajax({
+                type : 'POST',
+                url : '/api?action=query',
+                dataType : 'json',
+                data : { "type" : "obj_list" },
+                success : function(data) {
+                    if (data.code == 200) {
+                        obj_cache_array = data.objs;
+                        bindObjDataToTreeView(room_cache_array);
+                    } else {
+                    }
+                }
+            });
+        } else {
+            bindObjDataToTreeView(room_cache_array);
+        }
     }
 
     function bindAreaDataToTreeView(areas, lv) {
@@ -173,6 +186,10 @@
     }
 
     function bindRoomDataToTreeView(rooms) {
+
+    }
+
+    function bindObjDataToTreeView(objs) {
 
     }
 
