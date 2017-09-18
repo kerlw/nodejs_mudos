@@ -9,13 +9,13 @@
 
     $(function () {
         //可展开treeview node的点击处理
-        $('.hasSub').click(function () {
+        $(this).on('click', '.hasSub', function () {
             $(this).parent().toggleClass('subactivated');
             $(this).parent().children('ul:first').toggle();
 
-            if($(this).find('i').hasClass('glyphicon-folder-open')){
+            if ($(this).find('i').hasClass('glyphicon-folder-open')) {
                 $(this).find('i').removeClass('glyphicon-folder-open').addClass('glyphicon-folder-close');
-            }else{
+            } else {
                 $(this).find('i').removeClass('glyphicon-folder-close').addClass('glyphicon-folder-open');
             }
         });
@@ -186,7 +186,32 @@
     }
 
     function bindRoomDataToTreeView(rooms) {
+        if (!rooms || !(rooms instanceof Array) || rooms.length <= 0)
+            return;
 
+        rooms.forEach(function(room) {
+            $("div#dialog_body_target_list ul#root_ul").append(buildRoomListNode(room));
+        });
+    }
+
+    function buildRoomListNode(room) {
+        console.log('buildRoomListNode: ' + JSON.stringify(room));
+        var result = "";
+
+        if (room.type === 'folder') {
+            result = '<li class="list-group-item"><span class="hasSub"><i class="glyphicon glyphicon-folder-open"></i>' + room.name + '</span><ul class="list-group expanded">';
+            if (room.children && room.children.length > 0) {
+                for (var i = 0; i < room.children.length; i++) {
+                    result += buildRoomListNode(room.children[i]);
+                }
+            }
+            result += '</ul></li>';
+        } else if (room.type === 'file') {
+            // result = '<li class="list-group-item li-choosable-item" value="' + room.pathname + '"><i class="glyphicon glyphicon-file"></i>' + room.name + '</li>'
+            result = '<li class="list-group-item li-choosable-item" value="' + room.pathname + '">' + room.name + '</li>'
+        }
+        console.log(result);
+        return result;
     }
 
     function bindObjDataToTreeView(objs) {

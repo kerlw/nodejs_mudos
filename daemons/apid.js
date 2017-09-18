@@ -23,6 +23,15 @@ function onActionQuery(session, param) {
         case 'area_list':
             var areas = queryAreaList(global.MAP_PATH);
             return JSON.stringify({ 'code' : 200, 'areas' : areas });
+        case 'room_list':
+            var rooms = queryRoomList(global.MAP_PATH);
+            return JSON.stringify({ 'code' : 200, 'rooms' : rooms });
+        case 'obj_list':
+            var objs = queryObjList(global.DATA_PATH);
+            return JSON.stringify({ 'code' : 200, 'objs' : objs });
+
+        default:
+            return JSON.stringify({ 'code' : 101, 'msg' : param.type });
     }
 }
 
@@ -45,6 +54,39 @@ function queryAreaList(basePath) {
     });
 
     return result;
+}
+
+function queryRoomList(basePath) {
+    var dir = path.normalize(basePath);
+
+    var result = [];
+
+    var files = fs.readdirSync(dir);
+    files.forEach(function(file) {
+        var pathname = path.join(dir, file),
+            stat = fs.lstatSync(pathname),
+            fname = path.parse(file).name;
+
+        if (stat.isDirectory()) {
+            if (fname === 'item' || fname === 'npc' || fname === 'skill' || fname === 'fun') {
+                return;
+            } else {
+                var area = {'name' : fname, 'pathname' : path.relative(global.DATA_PATH, pathname), 'type' : 'folder', 'children' : queryRoomList(pathname)};
+                result.push(area);
+            }
+        } else {
+            var room = {'name' : fname, 'pathname' : path.join(path.relative(global.DATA_PATH, dir), fname), 'type' : 'file' };
+            result.push(room);
+        }
+    });
+
+    return result;
+
+    return result;
+}
+
+function queryObjList(basePath) {
+
 }
 
 apid.prototype.onAction = function(action, session, param) {
