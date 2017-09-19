@@ -27,7 +27,7 @@ function onActionQuery(session, param) {
             var rooms = queryRoomList(global.MAP_PATH);
             return JSON.stringify({ 'code' : 200, 'rooms' : rooms });
         case 'obj_list':
-            var objs = queryObjList(global.DATA_PATH);
+            var objs = queryObjList(global.DATA_PATH, false);
             return JSON.stringify({ 'code' : 200, 'objs' : objs });
 
         default:
@@ -81,12 +81,42 @@ function queryRoomList(basePath) {
     });
 
     return result;
-
-    return result;
 }
 
-function queryObjList(basePath) {
+function queryObjList(basePath, isInObjFolder) {
+    var dir = path.normalize(basePath);
 
+    var result = [];
+
+    var files = fs.readdirSync(dir);
+    files.forEach(function(file) {
+        var pathname = path.join(dir, file),
+            stat = fs.lstatSync(pathname),
+            fname = path.parse(file).name,
+            extname = path.extname(file);
+        console.log("extname " + extname + " " + file + ": " + pathname);
+
+        if (stat.isDirectory()) {
+            var isIn = (isInObjFolder || fname === 'item' || fname === 'npc');
+            var children = queryObjList(pathname, isIn);
+            if (children.length > 0) {
+                var folder;
+                //合并只有一个folder子节点的节点
+                if (children.length === 1 && children[0].type === 'folder') {
+                    folder = {'name' : fname + "/" + children[0].name, 'pathname' : children[0].pathname, 'type' : 'folder', 'children' : children[0].children };
+                } else
+                    folder = {'name' : fname, 'pathname' : path.relative(global.DATA_PATH, pathname), 'type' : 'folder', 'children' : children};
+                result.push(folder);
+            } else {
+                return;
+            }
+        } else if (isInObjFolder && (extname === '.js' || extname === '.json')) {
+            var obj = {'name' : fname, 'pathname' : path.join(path.relative(global.DATA_PATH, dir), fname), 'type' : 'file' };
+            result.push(obj);
+        }
+    });
+
+    return result;
 }
 
 apid.prototype.onAction = function(action, session, param) {

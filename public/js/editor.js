@@ -140,13 +140,13 @@
                 success : function(data) {
                     if (data.code == 200) {
                         obj_cache_array = data.objs;
-                        bindObjDataToTreeView(room_cache_array);
+                        bindObjDataToTreeView(obj_cache_array);
                     } else {
                     }
                 }
             });
         } else {
-            bindObjDataToTreeView(room_cache_array);
+            bindObjDataToTreeView(obj_cache_array);
         }
     }
 
@@ -190,32 +190,35 @@
             return;
 
         rooms.forEach(function(room) {
-            $("div#dialog_body_target_list ul#root_ul").append(buildRoomListNode(room));
+            $("div#dialog_body_target_list ul#root_ul").append(buildFolderListNode(room));
         });
     }
 
-    function buildRoomListNode(room) {
-        console.log('buildRoomListNode: ' + JSON.stringify(room));
+    function bindObjDataToTreeView(objs) {
+        if (!objs || !(objs instanceof Array) || objs.length <= 0)
+            return;
+
+        objs.forEach(function(obj) {
+            $("div#dialog_body_target_list ul#root_ul").append(buildFolderListNode(obj));
+        });
+    }
+
+    function buildFolderListNode(node) {
         var result = "";
 
-        if (room.type === 'folder') {
-            result = '<li class="list-group-item"><span class="hasSub"><i class="glyphicon glyphicon-folder-open"></i>' + room.name + '</span><ul class="list-group expanded">';
-            if (room.children && room.children.length > 0) {
-                for (var i = 0; i < room.children.length; i++) {
-                    result += buildRoomListNode(room.children[i]);
+        if (node.type === 'folder') {
+            result = '<li class="list-group-item"><span class="hasSub"><i class="glyphicon glyphicon-folder-open"></i>' + node.name + '</span><ul class="list-group expanded">';
+            if (node.children && node.children.length > 0) {
+                for (var i = 0; i < node.children.length; i++) {
+                    result += buildFolderListNode(node.children[i]);
                 }
             }
             result += '</ul></li>';
-        } else if (room.type === 'file') {
+        } else if (node.type === 'file') {
             // result = '<li class="list-group-item li-choosable-item" value="' + room.pathname + '"><i class="glyphicon glyphicon-file"></i>' + room.name + '</li>'
-            result = '<li class="list-group-item li-choosable-item" value="' + room.pathname + '">' + room.name + '</li>'
+            result = '<li class="list-group-item li-choosable-item" value="' + node.pathname + '">' + node.name + '</li>'
         }
-        console.log(result);
         return result;
-    }
-
-    function bindObjDataToTreeView(objs) {
-
     }
 
     function getExitTableRow() {

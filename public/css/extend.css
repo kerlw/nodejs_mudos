@@ -1,36 +1,58 @@
-.fordtreeview ul{
-    display:none;
+.fordtreeview ul {
+    display: none;
     margin: 15px -16px;
-    list-style:none;
+    list-style: none;
 }
 
-.fordtreeview ul.expanded{
-    display:block;
+.fordtreeview ul.expanded {
+    display: block;
 }
 
-.fordtreeview ul li{
-    left:5px;
-    margin-right:10px;
+.fordtreeview ul li {
+    left: 5px;
+    margin-right: 10px;
     color: #333;
 }
 
-.fordtreeview > li:first-child{
-    display:block !important;
+.fordtreeview > li:first-child {
+    display: block !important;
 }
 
 .fordtreeview li,
-.fordtreeview a{
+.fordtreeview a {
     color: #333;
-    text-decoration:none;
-    cursor:pointer;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.fordtreeview i.glyphicon{
-    margin-right:5px;
+.fordtreeview i.glyphicon {
+    margin-right: 5px;
 }
 
 .subactivated,
-.fordtreeview > li:not(:first-child):hover{
+.fordtreeview > li:not(:first-child):hover {
     background-color: #f5f5f5;
 }
 
+/** 用于画线的css，未调好位置 */
+/*.fordtreeview li::before, .fordtreeview li::after {*/
+    /*content: '';*/
+    /*left: -20px;*/
+    /*position: absolute;*/
+    /*right: auto*/
+/*}*/
+
+/*.fordtreeview li::before {*/
+    /*border-left: 1px solid #999;*/
+    /*bottom: 50px;*/
+    /*height: 100%;*/
+    /*top: 0;*/
+    /*width: 1px*/
+/*}*/
+
+/*.fordtreeview li::after {*/
+    /*border-top: 1px solid #999;*/
+    /*height: 20px;*/
+    /*top: 25px;*/
+    /*width: 25px*/
+/*}*/
