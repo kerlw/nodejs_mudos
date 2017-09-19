@@ -88,8 +88,23 @@
 					return;
 				
 				if (room.query_tmp('lazy_init'))
-					room.lazy_init();
-				global._objs.rooms[id] = room;
+                    room.lazy_init();
+
+				//
+				//尝试从加载的room去判断哪些是继承自base的，哪些是重载或自己特有的属性和方法，参考下面代码.
+				//Object.getOwnPropertyNames(room)可以列出room的所有属性
+				//Object.getOwnPropertyNames(room.__proto__)可以列出room的所有方法
+				//----------------------------------------------------
+                // if (file === 'nandajie01.json') {
+                //     console.log(room.name + "  room property: ")
+                //     console.log(room.__proto__ ? Object.getOwnPropertyNames(room.__proto__).filter(function(key) {
+                //     		console.log(key + ": " +  room.__proto__[key] + "  " + room.__proto__.base[key] + " base is : " + room.__proto__.base);
+                //     		return  room.__proto__[key] !== room.__proto__.base[key];
+					// 	}) : "null");
+                // }
+				//----------------------------------------------------
+
+                global._objs.rooms[id] = room;
 				global._objs.areas[areaId] = global._objs.areas[areaId] || new Array();
 				global._objs.areas[areaId].push(id);
 			}
