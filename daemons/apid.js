@@ -94,7 +94,7 @@ function queryObjList(basePath, isInObjFolder) {
             stat = fs.lstatSync(pathname),
             fname = path.parse(file).name,
             extname = path.extname(file);
-        console.log("extname " + extname + " " + file + ": " + pathname);
+        // console.log("extname " + extname + " " + file + ": " + pathname);
 
         if (stat.isDirectory()) {
             var isIn = (isInObjFolder || fname === 'item' || fname === 'npc');

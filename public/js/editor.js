@@ -6,6 +6,7 @@
 
     var area_cache_array, obj_cache_array, room_cache_array;
     var choose_type;
+    var choose_for;
 
     $(function () {
         //可展开treeview node的点击处理
@@ -56,6 +57,15 @@
 
         $("body").on("click", "li.li-choosable-item", function() {
             console.log($(this).val() + " " + $(this).attr("value"));
+            $(this).parents("ul").find("li").removeClass("active");
+            $(this).addClass("active");
+
+            if (choose_for) {
+                choose_for.val($(this).text());
+                choose_for.attr("jx-target-data", $(this).attr("value"));
+            }
+
+            $("#modal_dialog_choose_target").modal("hide");
         });
 
         $("body").on("click", ".click-to-choose", function() {
@@ -64,12 +74,15 @@
             switch (choose_type) {
                 case "area":
                     $("#choose_dialog_title").text("选择房间所在区域");
+                    choose_for = $("#input_area");
                     break;
                 case "room":
                     $("#choose_dialog_title").text("选择目标房间");
+                    choose_for = $(this);
                     break;
                 case "obj":
                     $("#choose_dialog_title").text("选择目标对象");
+                    choose_for = $(this);
                     break;
             }
 
@@ -170,19 +183,19 @@
             bindAreaDataToTreeView(area.children, (lv || 0) + 1);
         });
 
-        //对于0层的数据，绑定完成后加入点击事件
-        if (!lv) {
-            $("div#dialog_body_target_list ul li").on("click", function () {
-                // $(this).closest("ul").find("li").removeClass("active");
-                $(this).siblings("li").removeClass("active");
-                $(this).addClass("active");
-
-                $("#input_area_show").val($(this).text());
-                $("#input_area").val($(this).attr("value"));
-
-                $("#modal_dialog_choose_target").modal("hide");
-            });
-        }
+        // //对于0层的数据，绑定完成后加入点击事件
+        // if (!lv) {
+        //     $("div#dialog_body_target_list ul li").on("click", function () {
+        //         // $(this).closest("ul").find("li").removeClass("active");
+        //         $(this).siblings("li").removeClass("active");
+        //         $(this).addClass("active");
+        //
+        //         $("#input_area_show").val($(this).text());
+        //         $("#input_area").val($(this).attr("value"));
+        //
+        //         $("#modal_dialog_choose_target").modal("hide");
+        //     });
+        // }
     }
 
     function bindRoomDataToTreeView(rooms) {
