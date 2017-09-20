@@ -51,6 +51,19 @@
             $("#room_objs_table").append(div);
         });
 
+        $("#btnAddAction").click(function() {
+            var div = $("<tr />");
+            div.html(getActionTableRow());
+            $("#room_actions_table").append(div);
+        });
+
+        $("#btnAddFunction").click(function() {
+            var div = $("<tr />");
+            div.html(getFunctionTableRow());
+            $("#room_functions_table").append(div);
+        });
+
+
         $("body").on("click", ".tbl_btn_remove", function () {
             $(this).closest("tr").remove();
         });
@@ -92,7 +105,6 @@
                 area = $("#input_area").val();
             var data = {
                 filename :  filename,
-                overwrite : true,
                 data : {
                     filename : filename
                 }
@@ -258,4 +270,18 @@
             + '<td><button type="button" class="btn btn-danger tbl_btn_remove"><i class="glyphicon glyphicon-remove-sign"></i></button></td>';
     }
 
+    function getActionTableRow() {
+        return '<td><div class="form-group"><div class="input-group"><input name="action_ename" type="text" class="form-control" placeholder="指令英文名" />'
+            + '<span class="input-group-btn"><button type="button" class="btn btn-danger tbl_btn_remove"><i class="glyphicon glyphicon-remove-sign"></i></button></span></span></div>'
+            + '<input name="action_cname" type="text" class="form-control input-md" placeholder="指令中文名" />'
+            + '<textarea name="action_fun" class="form-control input-md" rows="3" placeholder="指令处理函数"></textarea>'
+            +  '</div></td>';
+    }
+
+    function getFunctionTableRow() {
+        return '<td><div class="form-group"><div class="input-group"><input name="function_name" type="text" class="form-control" placeholder="函数名" />'
+            + '<span class="input-group-btn"><button type="button" class="btn btn-danger tbl_btn_remove"><i class="glyphicon glyphicon-remove-sign"></i></button></span></span></div>'
+            + '<textarea name="function_content" class="form-control input-md" rows="3" placeholder="函数内容"></textarea>'
+            +  '</div></td>';
+    }
 })();

@@ -87,8 +87,8 @@
                 <div class="form-group">
                     <div class="accordion-heading">
                         <span class="label label-default">特殊属性</span>
-                        <a class="accordion-toggle pull-right a-toggle-switcher" data-toggle="collapse" data-parent="#accordion_prop_one"
-                           href="#prop_one" aria-expanded="true" ></a>
+                        <a class="accordion-toggle pull-right a-toggle-switcher" data-toggle="collapse"
+                           data-parent="#accordion_prop_one" href="#prop_one" aria-expanded="true"></a>
                     </div>
                     <div class="table table-bordered inner-h-padding collapse in" id="prop_one">
                         <div class="checkbox">
@@ -116,6 +116,53 @@
                                 <textarea class="form-control input-md" rows="3" placeholder="进入房间的触发机关处理函数"></textarea>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="accordion_prop_two">
+                <div class="form-group">
+                    <div class="accordion-heading">
+                        <span class="label label-default">特殊指令</span>
+                        <a class="accordion-toggle pull-right a-toggle-switcher" data-toggle="collapse"
+                           data-parent="#accordion_prop_two" href="#prop_two" aria-expanded="true"></a>
+                    </div>
+                    <div class="table collapse in" id="prop_two">
+                        <table class="table table-responsive table-bordered">
+                            <tbody id="room_actions_table">
+                            </tbody>
+                            <tfoot>
+                            <th colspan="5">
+                                <button id="btnAddAction" type="button" class="btn btn-primary pull-right"
+                                        data-toggle="tooltip" data-original-title="Add more controls">
+                                    <i class="glyphicon glyphicon-plus-sign"></i>
+                                    &nbsp; 添加&nbsp;</button>
+                            </th>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion" id="accordion_prop_three">
+                <div class="form-group">
+                    <div class="accordion-heading">
+                        <span class="label label-default">自定义函数</span>
+                        <a class="accordion-toggle pull-right a-toggle-switcher" data-toggle="collapse"
+                           data-parent="#accordion_prop_three" href="#prop_three" aria-expanded="true"></a>
+                    </div>
+                    <div class="table table-bordered collapse in" id="prop_three">
+                        <table class="table table-responsive table-bordered">
+                            <tbody id="room_functions_table">
+                            </tbody>
+                            <tfoot>
+                            <th colspan="5">
+                                <button id="btnAddFunction" type="button" class="btn btn-primary pull-right"
+                                        data-toggle="tooltip" data-original-title="Add more controls">
+                                    <i class="glyphicon glyphicon-plus-sign"></i>
+                                    &nbsp; 添加&nbsp;</button>
+                            </th>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -154,7 +201,6 @@
         </div>
     </div>
 </div>
-
 
 <div id="footer">
     <div class="container">
