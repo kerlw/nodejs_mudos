@@ -56,3 +56,25 @@
     /*top: 25px;*/
     /*width: 25px*/
 /*}*/
+
+.inner-h-padding {
+    padding-left:10px;
+    padding-right:10px;
+}
+
+.inner-v-padding {
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+.inner-padding {
+    padding:10px;
+}
+
+a.a-toggle-switcher:before {
+    content:"折叠"
+}
+
+a.a-toggle-switcher.collapsed:before {
+    content:"展开"
+}

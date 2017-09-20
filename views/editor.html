@@ -18,6 +18,8 @@
     <div class="container">
         <div class="page-header">
             <h1>房间编辑器</h1>
+        </div>
+        <div class="container">
             <span class="label label-default">文件名</span>
             <input id="input_filename" type="text" class="form-control input-md" placeholder="保存到磁盘的文件名（不包括扩展名）">
             <span class="label label-default">所属区域</span>
@@ -33,7 +35,7 @@
             <span class="label label-default">描述</span>
             <textarea class="form-control input-md" rows="3" placeholder="游戏中显示的该房间的描述"></textarea>
             <span class="label label-default">出口</span>
-            <div class="table table-responsive">
+            <div class="table">
                 <table class="table table-responsive table-striped table-bordered">
                     <thead>
                     <tr>
@@ -57,7 +59,7 @@
                 </table>
             </div>
             <span class="label label-default">房间内对象</span>
-            <div class="table table-responsive">
+            <div class="table">
                 <table class="table table-responsive table-striped table-bordered">
                     <thead>
                     <tr>
@@ -81,61 +83,45 @@
                 </table>
             </div>
 
-            <div class="accordion" id="accordion_prop">
-                <div class="accordion-group">
+            <div class="accordion" id="accordion_prop_one">
+                <div class="form-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_prop" href="#propOne"
-                           aria-expanded="true">
-                            特殊属性
-                        </a>
+                        <span class="label label-default">特殊属性</span>
+                        <a class="accordion-toggle pull-right a-toggle-switcher" data-toggle="collapse" data-parent="#accordion_prop_one"
+                           href="#prop_one" aria-expanded="true" ></a>
                     </div>
-                    <div id="propOne" class="accordion-body collapse in" aria-expanded="true">
-                        <div class="accordion-inner">
+                    <div class="table table-bordered inner-h-padding collapse in" id="prop_one">
+                        <div class="checkbox">
+                            <label><input type="checkbox">禁止战斗</label>
+                        </div>
+                        <div class="form-group">
                             <div class="checkbox">
-                                <label><input type="checkbox">禁止战斗</label>
+                                <label data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                                       aria-controls="collapseOne">
+                                    <input type="checkbox"/>懒加载（需要提供函数内容）
+                                </label>
+                            </div>
+                            <div id="collapseOne" aria-expanded="false" class="collapse">
+                                <textarea class="form-control input-md" rows="3" placeholder="懒加载的处理函数"></textarea>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
-                                   aria-controls="collapseOne">
-                                <input type="checkbox"/>懒加载（需要提供函数内容）
-                            </label>
-                        </div>
-                    </div>
-                    <div id="collapseOne" aria-expanded="false" class="collapse">
-                        <textarea class="form-control input-md" rows="3" placeholder="懒加载的处理函数"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
-                                   aria-controls="collapseTwo">
-                                <input type="checkbox"/>进入房间触发机关(需要提供函数支持)
-                            </label>
-                        </div>
-                    </div>
-                    <div id="collapseTwo" aria-expanded="false" class="collapse">
-                        <textarea class="form-control input-md" rows="3" placeholder="进入房间的触发机关处理函数"></textarea>
-                    </div>
-                </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_prop"
-                           href="#propTwo">
-                            自定义函数
-                        </a>
-                    </div>
-                    <div id="propTwo" class="accordion-body collapse">
-                        <div class="accordion-inner">
-
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                       aria-controls="collapseTwo">
+                                    <input type="checkbox"/>进入房间触发机关(需要提供函数支持)
+                                </label>
+                            </div>
+                            <div id="collapseTwo" aria-expanded="false" class="collapse">
+                                <textarea class="form-control input-md" rows="3" placeholder="进入房间的触发机关处理函数"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="btn-group pull-right">
+        <div class="form-group btn-group pull-right">
             <button class="btn btn-warning" id="btn_cancel">取消</button>
             <button class="btn btn-primary" id="btn_save">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;保存&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
@@ -143,6 +129,7 @@
 
     </div>
 
+    <!--选择数据用的弹出对话框,支持 区域、房间、对象 选择 -->
     <div id="modal_dialog_choose_target" class="modal fade" role="modal" aria-labelledby="choose_dialog_title"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -177,6 +164,7 @@
 
 
 <script src="../public/js/jquery-3.2.1.min.js"></script>
+<script src="../public/js/jquery.scrollTo.min.js"></script>
 <script src="../public/js/bootstrap.min.js"></script>
 <script src="../public/js/editor.js"></script>
 </body>

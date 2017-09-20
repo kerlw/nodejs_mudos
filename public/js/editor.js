@@ -56,7 +56,6 @@
         });
 
         $("body").on("click", "li.li-choosable-item", function() {
-            console.log($(this).val() + " " + $(this).attr("value"));
             $(this).parents("ul").find("li").removeClass("active");
             $(this).addClass("active");
 
@@ -70,7 +69,6 @@
 
         $("body").on("click", ".click-to-choose", function() {
             choose_type = $(this).attr("target-type") || "";
-            console.log($(this) + " " + $(this).attr("target-type") + $(this).text());
             switch (choose_type) {
                 case "area":
                     $("#choose_dialog_title").text("选择房间所在区域");
@@ -167,7 +165,7 @@
         if (!areas || !(areas instanceof Array) || areas.length <= 0)
             return;
 
-        var selection = $("#input_area").val() || "";
+        var selection = $("#input_area").attr("jx-target-data") || "";
 
         var indent = '';
         var lvl = lv || 0;
@@ -182,6 +180,9 @@
             $("div#dialog_body_target_list ul").append('<li class="li-choosable-item list-group-item' + active + ' value="' + area.pathname + '">' + indent + area.name + '</li>');
             bindAreaDataToTreeView(area.children, (lv || 0) + 1);
         });
+
+        if ($("li .active"))
+            $("dvi#dialog_body_target_list").scrollTo("li .active");
 
         // //对于0层的数据，绑定完成后加入点击事件
         // if (!lv) {
@@ -205,6 +206,9 @@
         rooms.forEach(function(room) {
             $("div#dialog_body_target_list ul#root_ul").append(buildFolderListNode(room));
         });
+
+        if ($("li .active"))
+            $("dvi#dialog_body_target_list").scrollTo("li .active");
     }
 
     function bindObjDataToTreeView(objs) {
@@ -214,6 +218,9 @@
         objs.forEach(function(obj) {
             $("div#dialog_body_target_list ul#root_ul").append(buildFolderListNode(obj));
         });
+
+        if ($("li .active"))
+            $("dvi#dialog_body_target_list").scrollTo("li .active");
     }
 
     function buildFolderListNode(node) {
@@ -228,8 +235,12 @@
             }
             result += '</ul></li>';
         } else if (node.type === 'file') {
+            var selection = (choose_for || {}).attr("jx-target-data") || "";
+            var active = "";
+            if (selection === node.pathname)
+                active = " active";
             // result = '<li class="list-group-item li-choosable-item" value="' + room.pathname + '"><i class="glyphicon glyphicon-file"></i>' + room.name + '</li>'
-            result = '<li class="list-group-item li-choosable-item" value="' + node.pathname + '">' + node.name + '</li>'
+            result = '<li class="list-group-item li-choosable-item' + active + '" value="' + node.pathname + '">' + node.name + '</li>'
         }
         return result;
     }
