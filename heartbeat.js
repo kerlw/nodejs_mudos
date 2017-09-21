@@ -1,3 +1,5 @@
+var timer = require("timers");
+
 module.exports = hb;
 
 function hb() {
@@ -13,7 +15,7 @@ function hb() {
 	this.current_hb_obj = null;
 };
 
-hb.call_heart_beat = function() {
+function call_heart_beat() {
     global.logger.debug("hb start");
 	var cur_hb = null;
 	while (HB_ENGINE.hb_append_array.length > 0) {
@@ -67,7 +69,7 @@ hb.prototype.init = function() {
 }
 
 hb.prototype.start = function() {
-	setInterval(hb.call_heart_beat, __config.hb_interval);
+	timer.setInterval(call_heart_beat, __config.hb_interval);
 }
 
 hb.prototype.query_heart_beat = function(obj) {
@@ -124,7 +126,7 @@ hb.prototype.set_heart_beat = function(obj, to) {
 	if (to < 0 || !obj)
 		return;
 
-	console.log("[HB_ENGINE] " + obj.id + " is setting heart beat to " + to);
+	global.logger.debug("[HB_ENGINE] " + obj.id + " is setting heart beat to " + to);
 	var target_hb = this.find_target_hb(obj);
 	
 	if (to === 0) {

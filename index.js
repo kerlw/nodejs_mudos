@@ -25,10 +25,6 @@ app.use(cookieParser(__config.cookie_secret));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/public', express.static(__dirname + '/public'));
-// app.use(express.logger('dev'));
-//io.set('heartbeats', false);
-//io.set('heartbeats timeout', 50);
-//io.set('heartbeats interval', 20);
 
 app.use(session({
     'secret' : 'FTu5<{?DJ{*;0NDc@])FoB0fGB>LW;8q$^-856(B<B)[93TGe]M}.3vG-6c&S%SYVpdxjDl+Tu60r)5.b)qm/2]7n73j|:-.0|T`wof73Pxd<_+q{4ROBR%"/W_t>tVE',
@@ -37,6 +33,7 @@ app.use(session({
 }));
 
 app.get('/', function(req, res) {
+    global.logger.debug("request /");
     if (req.signedCookies) {
         if (req.signedCookies.sessionId) {
         	var passport = req.signedCookies.passport;
@@ -47,7 +44,7 @@ app.get('/', function(req, res) {
         			res.sendFile(path.join(__dirname,'/views/index.html'));
             });
 			return;
-        }   
+        }
     }
     res.redirect('/login');
     // res.render(path.join(__dirname,'/views/login.html'));
@@ -55,7 +52,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-    console.log("login request with redirect " + req.query.redirect);
+    global.logger.debug("login request with redirect " + req.query.redirect);
     res.render(path.join(__dirname,'/views/login.html'), {'redirect':req.query.redirect});
 });
 
@@ -67,7 +64,7 @@ app.get('/admin', function(req, res) {
             return;
         }
     }
-    console.log("redirect to login");
+    global.logger.debug("redirect to login");
     res.redirect('/login?redirect=admin');
 });
 
@@ -97,17 +94,18 @@ app.post('/editor', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-	console.log("socket connected from " + socket.handshake.address);
+    global.logger.info("socket connected from " + socket.handshake.address);
+
 	socket.on('login', function(msg) {
 		var passport = cookieParser.signedCookie(msg.passport, __config.cookie_secret);
-		_daemons.playerd.query_character(passport, function(err, charModel) { 
+		_daemons.playerd.query_character(passport, function(err, charModel) {
 			if (err || !charModel) {
 				return;
 			}
-			
+
 			var charId = charModel.id,
 				player = null;
-			
+
 			if ((player = _objs.players[charId])) {
 				player.other_login(socket);
 			} else {
@@ -121,17 +119,17 @@ io.on('connection', function(socket) {
 				if (start_room)
 					FUNCTIONS.move_object(player, start_room);
 			}
-			
+
 			player.command('look');
 			player.command('hp');
 		});
-		
+
 	});
 });
 
 
 http.listen(__config.port, '0.0.0.0', function() {
-    console.log('listening on *:' + __config.port);
+    global.logger.info('listening on *:' + __config.port);
     global.HB_ENGINE.start();
 });
 
@@ -228,13 +226,13 @@ app.post('/ucenter', function(req, res) {
                     //TODO log this action.
                     return;
                 }
-                
+
                 _daemons.playerd.create_character(req.body, function(err) {
                 	if (err) {
                 		res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
                         return;
                 	}
-                	
+
                 	res.send(JSON.stringify({'code':200,'msg':'create character succeed.'}));
                 });
             });
