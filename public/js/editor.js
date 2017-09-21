@@ -258,7 +258,8 @@
     }
 
     function getExitTableRow() {
-        return '<td><select name="" class="form-control"><option> 选择方向</option><option>north</option><option>south</option><option>east</option><option>west</option></select></td>'
+        return '<td><select name="" class="form-control"><option> 选择方向</option><option>north</option><option>south</option><option>east</option><option>west</option>'
+            + '<option>northeast</option><option>northwest</option><option>southeast</option><option>southwest</option></select></td>'
             + '<td><input name="target" type="text" class="form-control input-small click-to-choose" target-type="room" value="" placeholder="点我选择目标房间" readonly="true"/></td>'
             // + '<td class="vcenter"><span class="sp-click-to-choose" data-type="room">点我选择目标房间</span></td>'
             + '<td><button type="button" class="btn btn-danger tbl_btn_remove"><i class="glyphicon glyphicon-remove-sign"></i></button></td>';
