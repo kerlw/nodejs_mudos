@@ -13,7 +13,7 @@
     "hb_interval" : 2000,
     
     "db" : {
-        "url" : "mongodb://mudos:mudos@10.4.250.42:27017/mudos",
+        "url" : "mongodb://10.4.250.42:27017/mudos",
         "autoReconnect": true,
         "poolSize": 10
     },

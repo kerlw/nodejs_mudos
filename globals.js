@@ -1,5 +1,8 @@
 (function(r) {
-	global._cmds = {};
+    global.logger = r('log4js').getLogger();
+    global.logger.level = "debug";
+
+    global._cmds = {};
 	global._daemons = {};
 	global._std = {};
 	global.FUNCTIONS = {};
