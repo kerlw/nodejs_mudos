@@ -56,7 +56,7 @@
         var charDb = new (r('db').Character)();
         charDb.findOneChar(passport, function(err, model) {
         	if (err) {
-				console.log('[ERROR] charDb findOne got err: ' + err);
+                logger.error('[PlayerD] charDb findOne got err: ' + err);
 				if (callback)
 					callback(err);
         		return;

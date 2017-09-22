@@ -97,9 +97,9 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 	if (!base_attack_skill)
 		base_attack_skill = BASIC_ATTACK_SKILL;
 
-	console.log("do attack me=" + me.name + " basic_attack_skill = " + base_attack_skill);
+    logger.debug("[CombatD] do attack me=" + me.name + " basic_attack_skill = " + base_attack_skill);
 	var attack_skill = this.find_skill_to_use(me, base_attack_skill, other);
-	console.log("             attack_skill = " + attack_skill.name);
+    logger.debug("             attack_skill = " + attack_skill.name);
 	
 	//1. other may dodge, and if dodged, other may beat back.
 	var dodge = 1;
@@ -142,7 +142,7 @@ combatd.prototype.do_attack = function(me, other, weapon, type) {
 }
 
 combatd.prototype.fight = function(me, other) {
-	console.log("[COMBATD] " + me.id + " fight " + other.id);
+    logger.debug("[CombatD] " + me.id + " fight " + other.id);
 	if (!me.living())
 		return;
 	
@@ -213,7 +213,7 @@ combatd.prototype.find_skill_to_use = function(me, skill, other) {
 	}
 
 	if (!_objs.skills[attack_skill]) {
-		console.log("[ERROR] unknown attack_skill (" + attack_skill + ") in combatd:skill_damage "
+        logger.error("[CombatD] unknown attack_skill (" + attack_skill + ") in combatd:skill_damage "
 				+ me.id + " vs " + other.id);
 		attack_skill = BASIC_ATTACK_SKILL;
 	}

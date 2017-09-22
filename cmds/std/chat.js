@@ -6,7 +6,7 @@ function cmd_chat() {
 	
 	this.name = "chat";
 	this.execute = function(sender, args) {
-		console.log("cmd chat");
+        logger.debug("cmd chat");
 	};
 };
 

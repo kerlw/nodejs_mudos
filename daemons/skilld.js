@@ -20,7 +20,7 @@ skilld.prototype.init_all_skills = function(dir) {
 			skill = new (require(pathname))();
 			if (skill) {
 				_objs.skills[fname] = skill;
-				console.log("[SKILL] adding skill " + skill.name);
+                logger.debug("[SKILL] adding skill " + skill.name);
 			}
 		} else if (stat.isDirectory()) {
 			var skill = new (require(path.join(pathname, 'index.js')))();
@@ -35,7 +35,7 @@ skilld.prototype.init_all_skills = function(dir) {
 					
 					skill[fn] = require(pname)();
 				});
-				console.log("[SKILL] adding skill " + skill.name);
+                logger.debug("[SKILL] adding skill " + skill.name);
 				_objs.skills[fname] = skill;
 			}
 		}

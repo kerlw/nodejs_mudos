@@ -159,7 +159,7 @@ MObject.prototype.del_tmp = function(key) {
 }
 
 MObject.prototype.call_out = function(func, delay, param) {
-	console.log("call_out is invoked : " + func + " in " + delay + " seconds");
+	logger.debug("call_out is invoked : " + func + " in " + delay + " seconds, obj:" + this.toString());
 	if (delay <= 0)
 		delay = 1;
 
@@ -207,11 +207,16 @@ MObject.prototype.lazy_init = function() {
 }
 
 MObject.prototype.set_resetable = function(param) {
+    this.reset_round = 0;
 	this.call_out('reset', param.timeout, param);
 }
 
 MObject.prototype.reset = function(timeout, repeat) {
 	throw this.id + " set to resetable without reset implemented";
+}
+
+MObject.prototype.toString = function() {
+	return this.name + "(" + this.id + ")";
 }
 
 module.exports = MObject;

@@ -13,7 +13,7 @@ var NPC = extend(function() {
 
 NPC.loadFromJSON = function(data) {
 	for (var key in data) {
-		console.log('key is ' + key + ', value is' + data[key]);
+        logger.debug('key is ' + key + ', value is' + data[key]);
 	}
 }
 

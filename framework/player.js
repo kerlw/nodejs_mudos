@@ -64,7 +64,7 @@ var Player = extend(function(socket, model) {
 }, Char);
 
 Player.prototype.onDisconnected = function() {
-	console.log('user disconnected');
+    logger.debug('user disconnected');
 	this.interactive = 0;
 	this.disable_player('<断线中>');
 }
@@ -94,7 +94,7 @@ Player.prototype.is_newbie = function() {
 }
 
 Player.prototype.other_login = function(socket) {
-	console.log("kick others");
+    logger.debug("kick others");
 	FUNCTIONS.notify_fail(this, "有人从其它地方登录了此角色。");
 	this.socket.player = null;
 	this.socket.disconnect();

@@ -33,7 +33,7 @@ app.use(session({
 }));
 
 app.get('/', function(req, res) {
-    global.logger.debug("request /");
+    logger.debug("request /");
     if (req.signedCookies) {
         if (req.signedCookies.sessionId) {
         	var passport = req.signedCookies.passport;
@@ -52,7 +52,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-    global.logger.debug("login request with redirect " + req.query.redirect);
+    logger.debug("login request with redirect " + req.query.redirect);
     res.render(path.join(__dirname,'/views/login.html'), {'redirect':req.query.redirect});
 });
 
@@ -64,7 +64,7 @@ app.get('/admin', function(req, res) {
             return;
         }
     }
-    global.logger.debug("redirect to login");
+    logger.debug("redirect to login");
     res.redirect('/login?redirect=admin');
 });
 
@@ -94,7 +94,7 @@ app.post('/editor', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-    global.logger.info("socket connected from " + socket.handshake.address);
+    logger.info("socket connected from " + socket.handshake.address);
 
 	socket.on('login', function(msg) {
 		var passport = cookieParser.signedCookie(msg.passport, __config.cookie_secret);
@@ -129,8 +129,8 @@ io.on('connection', function(socket) {
 
 
 http.listen(__config.port, '0.0.0.0', function() {
-    global.logger.info('listening on *:' + __config.port);
-    global.HB_ENGINE.start();
+    logger.info('listening on *:' + __config.port);
+    HB_ENGINE.start();
 });
 
 app.post('/ucenter', function(req, res) {
@@ -145,7 +145,7 @@ app.post('/ucenter', function(req, res) {
         var user = new db.User();
         user.findOne(req.body.passport, function(err, loginUser) {
             if (err) {
-                console.log('err=' + err);
+                logger.error('err=' + err);
                 res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
                 return;
             }
@@ -156,7 +156,7 @@ app.post('/ucenter', function(req, res) {
                 return;
             }
 
-            console.log(req.body.passport + " login succeed " + new Date());
+            logger.info("[Login]" + req.body.passport + " login succeed " + new Date());
             var sessionId = req.body.passport + cryptPassword;
             sessionId = crypto.createHash("md5").update(sessionId).digest("hex");
             res.cookie('sessionId', sessionId, { signed : true})
@@ -174,7 +174,7 @@ app.post('/ucenter', function(req, res) {
         var user = new db.User();
         user.findOne(req.body.passport, function(err, oldUser) {
             if (err) {
-                console.log('err=' + err);
+                logger.error('err=' + err);
                 res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
                 return;
             }
@@ -187,13 +187,13 @@ app.post('/ucenter', function(req, res) {
             var cryptPassword = crypto.createHash("md5").update(req.body.password).digest("hex");
             user.add(req.body.passport, cryptPassword, function(err) {
                 if (err) {
-                    console.log('err=' + err);
+                    logger.error('err=' + err);
                     res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
                     return;
                 }
             });
 
-            console.log(req.body.passport + " register succeed " + new Date());
+            logger.info("[Register]" + req.body.passport + " register succeed " + new Date());
             var sessionId = req.body.passport + cryptPassword;
             sessionId = crypto.createHash("md5").update(sessionId).digest("hex");
             res.cookie('sessionId', sessionId, { signed : true}).cookie('passport', req.body.passport, {signed : true}).send(JSON.stringify({'code':200,'msg':'register succeed.'}));
@@ -210,7 +210,7 @@ app.post('/ucenter', function(req, res) {
         var character = new db.Character();
         user.findOne(req.body.passport, function(err, loginUser) {
             if (err) {
-                console.log('err=' + err);
+                logger.error('err=' + err);
                 res.send(JSON.stringify({'code':500,'msg':'Server error! err = ' + err}));
                 return;
             }
@@ -241,12 +241,12 @@ app.post('/ucenter', function(req, res) {
         });
         break;
     default:
-        console.log("Unknown action requested " + action);
+        logger.warn("Unknown action requested " + action);
         break;
     }
 });
 
 app.post('/api', function(req, res) {
-    console.log(req.body);
+    logger.debug(req.body);
     res.send(_daemons.apid.onAction(req.query.action, req.session, req.body));
 });

@@ -15,7 +15,6 @@ function onActionQueryStatus(session, param) {
 }
 
 function onActionQuery(session, param) {
-    console.log(param);
     if (!param || !param.type)
         return JSON.stringify({ 'code' : 101});
 

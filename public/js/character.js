@@ -46,14 +46,14 @@ $("document").ready(function(){
 			lck : $('#luck').val(),
 			cor : $('#courage').val()
 		};
-		console.log(info);
+        logger.debug(info);
 		$.ajax({
 			type : 'POST',
 			url : '/ucenter?action=createCharacter',
 			dataType : 'json',
 			data : info,
 			success : function(data) {
-				console.log(data);
+                logger.debug(data);
 				if (data.code != 200) {
 					$('#toast').text(data.msg).popup('open');
 				} else {

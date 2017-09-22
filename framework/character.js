@@ -65,7 +65,7 @@ Character.prototype.heart_beat = function() {
 	if (!FUNCTIONS.environment(this))	// if char is not in a container, skip heart_beat
 		return;
 
-	console.log("[HB_ENGINE] " + this.id + " is heart beating");
+    logger.debug("[HB_ENGINE] " + this.id + " is heart beating");
 	if (this.eff_vitality < 0) {
 		this.remove_all_enemy();
 		this.die();
@@ -97,7 +97,7 @@ Character.prototype.heart_beat = function() {
 }
 
 Character.prototype.fight = function(target) {
-	console.log("[CHAR] fight invoked, this is  " + this.id + ", and target is " + target.id);
+    logger.debug("[CHAR] fight invoked, this is  " + this.id + ", and target is " + target.id);
 	if (!target || target === this || !(target instanceof MObject))
 		return;
 	
@@ -279,10 +279,10 @@ Character.prototype.revive = function(quiet) {
 }
 
 Character.prototype.remove_all_killer = function() {
-	console.log(this.id + " remove all killer " + this.killer.length + " / " + this.enemy.length); 
+    logger.debug(this.id + " remove all killer " + this.killer.length + " / " + this.enemy.length);
 	this.killer = new Array();
 	while (this.enemy.length > 0) {
-		console.log("loop");
+        logger.debug("loop");
 		var en = this.enemy.shift();
 		var env = FUNCTIONS.environment(this);
 		if (!en || !(en = FUNCTIONS.present(en, env)) || !(en instanceof Character))
@@ -324,7 +324,7 @@ Character.prototype.clean_up_enemy = function() {
 }
 
 Character.prototype.remove_killer = function(ob) {
-	console.log(this.id + " remove killer " + ob.id + "  " + this.killer.indexOf(ob.id));
+    logger.debug(this.id + " remove killer " + ob.id + "  " + this.killer.indexOf(ob.id));
 	if (this.enemy.length == 0 || !ob || !(ob instanceof Character))
 		return;
 	
@@ -335,7 +335,7 @@ Character.prototype.remove_killer = function(ob) {
 	while (this.killer.length > 0) {
 		var killer = this.killer.shift();
 		if (killer === ob.id) {
-			console.log("   remove killer " + this.id + " : " + ob.id)
+            logger.debug("   remove killer " + this.id + " : " + ob.id)
 			continue;
 		}
 		
@@ -465,7 +465,7 @@ Character.prototype.heal_up = function() {
 
 Character.prototype.equip_skill = function(skill_name, lv) {
 	if (!BASE_SKILL[skill_name] && !_objs.skills[skill_name]) {
-		console.log("[ERROR] Unknown skill_name '" + skill_name + "' specified for Character:equip_skill.");
+        logger.error("Unknown skill_name '" + skill_name + "' specified for Character:equip_skill.");
 		return;
 	}
 	
@@ -474,12 +474,12 @@ Character.prototype.equip_skill = function(skill_name, lv) {
 
 Character.prototype.enable_skill = function(base, special) {
 	if (!BASE_SKILL[base]) {
-		console.log("[ERROR] Unknown base skill specified.")
+        logger.error("[ERROR] Unknown base skill specified.")
 		return;
 	}
 	
 	if (!_objs.skills[special]) {
-		console.log("[ERROR] Unknown special skill specified.");
+        logger.error("Unknown special skill specified.");
 		return;
 	}
 	

@@ -2,7 +2,7 @@ var fm = require("framework");
 
 exports.error = function(msg) {
 	if (msg)
-		console.log(msg);
+        logger.error(msg);
 	process.exit();
 }
 

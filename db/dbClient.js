@@ -12,7 +12,7 @@ var options = {
 
 var db = mongoose.createConnection(__config.db.url, options, function (err) {
                 if (!err) {
-                    global.logger.debug("[DB] connected to mongoDB succeed.");
+                    logger.debug("[DB] connected to mongoDB succeed.");
                 } else {
                     throw err;
                 }
@@ -20,7 +20,7 @@ var db = mongoose.createConnection(__config.db.url, options, function (err) {
 
 db.on('error', console.error.bind(console, '[DB] mongoose connection error:'));
 db.once('open', function callback () {
-    global.logger.debug('[DB] mongoose open success.');
+    logger.debug('[DB] mongoose open success.');
 });
 
 module.exports = mongoose;

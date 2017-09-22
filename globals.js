@@ -29,8 +29,8 @@
     global.DATA_PATH = path.normalize(path.join(global.__BASE_PATH, global.__config.data_dir));
     global.MAP_PATH = path.normalize(path.join(global.DATA_PATH, __config.map_dir));
 
-    console.log('DATA_PATH initialized to {0}', global.DATA_PATH);
-    console.log('MAP_PATH initialized to {0}', global.MAP_PATH);
+    logger.debug('DATA_PATH initialized to {0}', global.DATA_PATH);
+    logger.debug('MAP_PATH initialized to {0}', global.MAP_PATH);
 
 	r('std');
 	//init functions
@@ -46,7 +46,7 @@
 	_daemons.skilld.init_all_skills(path.join(global.DATA_PATH, 'skill'))
 	
 	//init rooms
-	init_rooms(path.join(global.DATA_PATH, 'map'));
+	init_rooms(global.MAP_PATH);
 
 	
 	///////////////////////////////////////////////////////////

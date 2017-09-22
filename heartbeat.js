@@ -16,7 +16,6 @@ function hb() {
 };
 
 function call_heart_beat() {
-    global.logger.debug("hb start");
 	var cur_hb = null;
 	while (HB_ENGINE.hb_append_array.length > 0) {
 		cur_hb = HB_ENGINE.hb_append_array.shift();
@@ -26,7 +25,7 @@ function call_heart_beat() {
 	
 	var now = new Date().valueOf();
 	HB_ENGINE.last_hb_at = now;
-    global.logger.debug("[HB_ENGINE] heart_beat begin at " + now + ", " + HB_ENGINE.hb_array.length + " objects in queue");
+    logger.debug("[HB_ENGINE] heart_beat begin at " + now + ", " + HB_ENGINE.hb_array.length + " objects in queue");
 	while (HB_ENGINE.hb_array.length > 0) {
 		cur_hb = HB_ENGINE.hb_array.shift();
 		if (cur_hb.deleted)
@@ -53,7 +52,7 @@ function call_heart_beat() {
 	}
 
 	HB_ENGINE.last_hb_elapse = (new Date().valueOf() - now);
-	global.logger.debug("[HB_ENGINE] heart_beat done. used " + HB_ENGINE.last_hb_elapse + "ms");
+	logger.debug("[HB_ENGINE] heart_beat done. used " + HB_ENGINE.last_hb_elapse + "ms");
 
 	
 	if (HB_ENGINE.hb_append_array.length > 0) {
@@ -62,7 +61,6 @@ function call_heart_beat() {
 		HB_ENGINE.hb_array = HB_ENGINE.hb_append_array;
 		HB_ENGINE.hb_append_array = tmp;
 	}
-    global.logger.debug("hb end");
 };
 
 hb.prototype.init = function() {
@@ -126,7 +124,7 @@ hb.prototype.set_heart_beat = function(obj, to) {
 	if (to < 0 || !obj)
 		return;
 
-	global.logger.debug("[HB_ENGINE] " + obj.id + " is setting heart beat to " + to);
+	logger.debug("[HB_ENGINE] " + obj.id + " is setting heart beat to " + to);
 	var target_hb = this.find_target_hb(obj);
 	
 	if (to === 0) {

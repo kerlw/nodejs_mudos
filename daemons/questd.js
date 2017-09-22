@@ -64,7 +64,7 @@ questd.prototype.quest_kill = function(who) {
 	if (murder.quest_kills[id])
 		if (murder.quest_kills[id].progress < murder.quest_kills[id].total) {
 			murder.quest_kills[id].progress++;
-			console.log("[QuestD] " + murder.id + "'s quest_kill '" + id + "' progress " + murder.quest_kills[id].progress + "/" + murder.quest_kills[id].total);
+            logger.info("[QuestD] " + murder.id + "'s quest_kill '" + id + "' progress " + murder.quest_kills[id].progress + "/" + murder.quest_kills[id].total);
 		}
 }
 
