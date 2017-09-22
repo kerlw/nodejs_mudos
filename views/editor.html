@@ -98,7 +98,7 @@
                             <div class="checkbox">
                                 <label data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
                                        aria-controls="collapseOne">
-                                    <input type="checkbox"/>懒加载（需要提供函数内容）
+                                    <input type="checkbox">懒加载（需要提供函数内容）
                                 </label>
                             </div>
                             <div id="collapseOne" aria-expanded="false" class="collapse">
@@ -109,11 +109,24 @@
                             <div class="checkbox">
                                 <label data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
                                        aria-controls="collapseTwo">
-                                    <input type="checkbox"/>进入房间触发机关(需要提供函数支持)
+                                    <input type="checkbox">进入房间触发机关(需要提供函数支持)
                                 </label>
                             </div>
                             <div id="collapseTwo" aria-expanded="false" class="collapse">
                                 <textarea class="form-control input-md" rows="3" placeholder="进入房间的触发机关处理函数"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                       aria-controls="collapseThree">
+                                    <input type="checkbox">定时刷新(需要提供函数支持)
+                                </label>
+                            </div>
+                            <div id="collapseThree" aria-expanded="false" class="table table-bordered inner-padding collapse">
+                                <div class="checkbox"><label><input type="checkbox">仅刷新一次</label></div>
+                                <input type="text" class="form-control input-md" placeholder="刷新时间间隔（单位：秒）">
+                                <textarea class="form-control input-md" rows="3" placeholder="房间刷新处理函数"></textarea>
                             </div>
                         </div>
                     </div>
