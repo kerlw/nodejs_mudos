@@ -101,11 +101,11 @@ Character.prototype.updateStatus = function (data, callback) {
 }
 
 Character.prototype.findOneChar = function (passport, callback) {
-    return this.charDb.findOne({'passport':passport}).exec(callback);
+    return this.charDb.findOne({'passport':passport}, callback);
 }
 
 Character.prototype.findOneStatus = function (charId, callback) {
-	return this.stDb.findOne({'charId' : charId}).exec(callback);
+	return this.stDb.findOne({'charId' : charId}, callback);
 }
 
 module.exports = Character;
