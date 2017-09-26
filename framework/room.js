@@ -132,7 +132,7 @@ ROOM.prototype.append_obj = function(objpath, count) {
 		return;
 	
 	while (i < count) {
-		var id = pathname + '#' + suffix;
+		var id = objpath + '#' + suffix;
 		suffix++;
 		if (this.contains[id]) {
 			continue;

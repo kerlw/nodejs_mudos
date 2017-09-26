@@ -30,7 +30,6 @@ db.once('open', function callback() {
     var Test = db.model("test-promises", {name: String});
     assert.equal(Test.collection.findOne().constructor, require('bluebird'));
     logger.debug('[DB] mongoose open success.');
-
 });
 
 module.exports = mongoose;
