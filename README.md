@@ -61,4 +61,42 @@ skill.base_skills = {
 ```
 
 
+## How to start
+create mongodb by using docker:
+
+### MongoDb
+```
+docker run -tid --name mudos-mongo \
+-p 27017:27017 \
+-e MONGO_INITDB_ROOT_USERNAME={root_user} \
+-e MONGO_INITDB_ROOT_PASSWORD={root_pwd} \
+-e MONGO_INITDB_DATABASE=mudos \
+--restart always \
+--volume ${mudos_mongo_datadir}:/data/db \
+mongo
+```
+### MongoDbExpress
+```
+ docker run -tid --link mudos-mongo:mongo \
+ -p 8081:8081 \
+-e ME_CONFIG_MONGODB_ADMINUSERNAME={root_user} \
+-e ME_CONFIG_MONGODB_ADMINPASSWORD={root_pwd} \
+--name mongo-web \
+mongo-express
+```
+
+### How to play
+start node server:
+```
+npm install
+node index.js
+```
+Then you could use browser to play this mud
+| address | comment |
+| ------- | ------- |
+|http://localhost:3000 | enter the mud world |
+|http://localhost:3000/admin | visit the admin site |
+|http://localhost:3000/editor | visit the room editor |
+
+
  

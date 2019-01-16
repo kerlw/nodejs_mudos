@@ -1,25 +1,26 @@
 {
-  "name": "NodeJS_MUDOS",
-  "version": "1.0.0",
-  "private": true,
-  "description": "A MUDOS implemented in node.js",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.14.2",
-    "cookie-parser": "^1.4.1",
-    "ejs": "^2.4.1",
-    "express": "^4.13.3",
-    "express-session": "^1.15.5",
-    "jquery": "^2.2.0",
-    "mongoose": "^4.11.10",
-    "socket.io": "^1.4.4",
-    "stringbuilder": "^0.0.11",
-    "log4js": "^2.3.3",
-    "bluebird": "^2.10.2"
-  }
+    "name": "NodeJS_MUDOS",
+    "version": "1.0.0",
+    "private": true,
+    "description": "A MUDOS implemented in node.js",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.14.2",
+        "cookie-parser": "^1.4.1",
+        "ejs": "^2.4.1",
+        "express": "^4.13.3",
+        "express-session": "^1.15.5",
+        "jquery": "^2.2.0",
+        "mongoose": "^4.11.10",
+        "socket.io": "^1.4.4",
+        "stringbuilder": "^0.0.11",
+        "log4js": "^2.3.3",
+        "bluebird": "^2.10.2"
+    }
 }
