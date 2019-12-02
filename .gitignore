@@ -3,3 +3,4 @@
 /.idea/
 /jx_mud/
 .project
+package-lock.json

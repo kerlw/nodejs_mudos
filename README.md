@@ -92,6 +92,7 @@ npm install
 node index.js
 ```
 Then you could use browser to play this mud
+
 | address | comment |
 | ------- | ------- |
 |http://localhost:3000 | enter the mud world |
