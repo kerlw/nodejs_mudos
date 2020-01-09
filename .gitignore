@@ -3,3 +3,5 @@
 /.idea/
 /jx_mud/
 .project
+.package-lock.json
+.DS_Store

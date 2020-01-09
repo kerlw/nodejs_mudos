@@ -15,15 +15,15 @@ ROOM.__DIRECTIONS__ = {
 	"west" : "西",
 	"north" : "北",
 	"south" : "南",
-	
+
 	"northeast" : "东北",
 	"southeast" : "东南",
 	"northwest" : "西北",
 	"southwest" : "西南",
-	
+
 	"up" : "上",
 	"down" : "下",
-	
+
 	"enter" : "内",
 	"out" : "外"
 }
@@ -33,15 +33,15 @@ ROOM.__DIR_OPPOSITE_NAME__ = {
 	"west" : "东面",
 	"north" : "南面",
 	"south" : "北面",
-	
+
 	"northeast" : "西南边",
 	"southeast" : "西北边",
 	"northwest" : "东南边",
 	"southwest" : "东北边",
-	
+
 	"up" : "下边",
 	"down" : "上面",
-	
+
 	"enter" : "外面",
 	"out" : "内面"
 }
@@ -56,7 +56,7 @@ ROOM.loadFromJSON = function(data) {
 	if (data.reset) {
 		ret.set_resetable(data.reset);
 	}
-	
+
 	var kvs = data.kvs || {};
 	for (var k in kvs) {
 		ret[k] = kvs[k];
@@ -78,11 +78,11 @@ ROOM.prototype.look_response = function(who, avoid) {
 			'exits' : {},
 			'objs' : {}
 	};
-	
+
 	for (var dir in this.exits) {
 		if (!(dir in ROOM.__DIRECTIONS__))
 			continue;
-			
+
 		var room_id = this.exits[dir];
 		if (_objs.rooms[room_id]) {
 			ret['exits'][dir] = {
@@ -93,14 +93,14 @@ ROOM.prototype.look_response = function(who, avoid) {
 			};
 		}
 	}
-	
+
 	for (var objId in this.contains) {
 		if (avoid && avoid[objId])
 			continue;
-		
+
 		ret.objs[this.contains[objId].id] = this.contains[objId].display_name();
 	}
-	
+
 	var actions = this.list_actions(who);
 	if (actions)
 		ret.actions = actions;
@@ -116,10 +116,10 @@ ROOM.prototype.setup = function() {
 ROOM.prototype.append_obj = function(objpath, count) {
 	if (!objpath || count <= 0)
 		return;
-	
+
 	if (count > ROOM.MAX_OBJECT_COUNT)
 		count = ROOM.MAX_OBJECT_COUNT;
-	
+
 	var i = 0,
 		suffix = this.start_suffix;
 		pathname = fm.find_file(DATA_PATH, objpath) || fm.find_file(MAP_PATH, objpath);
@@ -130,14 +130,14 @@ ROOM.prototype.append_obj = function(objpath, count) {
 	var ctor = require(pathname);
 	if (typeof ctor !== 'function')
 		return;
-	
+
 	while (i < count) {
 		var id = objpath + '#' + suffix;
 		suffix++;
 		if (this.contains[id]) {
 			continue;
 		}
-		
+
 		var obj = new ctor();
 		if (obj && obj instanceof fm.MObject) {
 			obj.id = id;
@@ -145,10 +145,10 @@ ROOM.prototype.append_obj = function(objpath, count) {
 				_objs.npcs[id] = obj;
 			else
 				_objs.items[id] = obj;
-			
+
 			if (obj.query_tmp('lazy_init'))
 				obj.lazy_init();
-			
+
 			obj.move_to(this);
 		}
 		i++;
@@ -158,21 +158,42 @@ ROOM.prototype.append_obj = function(objpath, count) {
 ROOM.prototype.reset = function(param) {
 	this.reset_round = (this.reset_round + 1) % ROOM.MAX_RESET_ROUND;
 	this.start_suffix = this.reset_round * ROOM.MAX_OBJECT_COUNT;
-	
+
 	for (var k in this.objs) {
 		var total = this.objs[k],
 			count = 0;
-		
+
 		for (var id in this.contains) {
 			if (FUNCTIONS.origin_id(id) == k)
 				count++;
 		}
 		this.append_obj(k, total - count);
 	}
-	
-	
+
+
 	if (param.repeat)
 		this.call_out('reset', param.timeout, param);
+}
+
+ROOM.create = function(options) {
+	let room = new ROOM();
+
+	ret.name = options.name || "unnamed";
+	ret.desc = options.desc || "";
+	ret.exits = options.exits || {};
+	ret.objs = options.objs || {};
+	ret.start_suffix = 0;
+	if (options.reset) {
+		ret.set_resetable(options.reset);
+	}
+
+	var kvs = options.kvs || {};
+	for (var k in kvs) {
+		ret[k] = kvs[k];
+	}
+
+	room.setup();
+	return room;
 }
 
 module.exports = ROOM;
